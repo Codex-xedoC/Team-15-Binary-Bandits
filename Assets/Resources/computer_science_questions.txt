@@ -1,0 +1,478 @@
+Question 1: What does RAM stand for?
+A) Readable Access Memory
+B) Random Access Memory
+C) Rapid Action Memory
+Answer: B
+
+Question 2: What is the primary function of an operating system?
+A) To perform calculations
+B) To manage system resources
+C) To control external devices
+Answer: B
+
+Question 3: Which language is primarily used for web development?
+A) Python
+B) HTML
+C) C++
+Answer: B
+
+Question 4: What is the main purpose of a compiler?
+A) To execute code
+B) To convert code to machine language
+C) To display errors
+Answer: B
+
+Question 5: Which type of memory is permanent?
+A) RAM
+B) Cache
+C) ROM
+Answer: C
+
+Question 6: What does the term ‘bit’ stand for?
+A) Binary Digit
+B) Basic Internet Transfer
+C) Byte Integrity Test
+Answer: A
+
+Question 7: Which data structure uses a FIFO method?
+A) Stack
+B) Queue
+C) Array
+Answer: B
+
+Question 8: What is used to uniquely identify a website?
+A) URL
+B) CPU
+C) HTML
+Answer: A
+
+Question 9: Which sorting algorithm has the best average-case time complexity?
+A) Bubble Sort
+B) Quick Sort
+C) Insertion Sort
+Answer: B
+
+Question 10: What is an algorithm?
+A) A hardware component
+B) A step-by-step procedure
+C) A data storage device
+Answer: B
+
+Question 11: Which protocol is used to browse websites?
+A) HTTP
+B) FTP
+C) SMTP
+Answer: A
+
+Question 12: What is the term for one thousand bytes?
+A) Kilobyte
+B) Megabyte
+C) Gigabyte
+Answer: A
+
+Question 13: What does CPU stand for?
+A) Central Programming Unit
+B) Central Processing Unit
+C) Central Power Unit
+Answer: B
+
+Question 14: What type of file is created by a compiler?
+A) Source file
+B) Executable file
+C) Text file
+Answer: B
+
+Question 15: What is a function in programming?
+A) A block of reusable code
+B) A user interface element
+C) A storage location
+Answer: A
+
+Question 16: What is the main purpose of a firewall?
+A) To manage system resources
+B) To protect against unauthorized access
+C) To increase processing speed
+Answer: B
+
+Question 17: What does GUI stand for?
+A) General User Interface
+B) Graphical User Interface
+C) Global Utility Interaction
+Answer: B
+
+Question 18: Which language is often used for system programming?
+A) C
+B) HTML
+C) CSS
+Answer: A
+
+Question 19: What is a loop in programming?
+A) A method to call functions
+B) A way to repeat code
+C) A data type
+Answer: B
+
+Question 20: What is the purpose of an IP address?
+A) To send emails
+B) To uniquely identify devices on a network
+C) To store data in the cloud
+Answer: B
+
+Question 21: Which language is mainly used for Android development?
+A) Java
+B) Python
+C) HTML
+Answer: A
+
+Question 22: What type of language is HTML?
+A) Scripting language
+B) Markup language
+C) Compiled language
+Answer: B
+
+Question 23: Which symbol is commonly used to end a statement in programming?
+A) !
+B) ;
+C) $
+Answer: B
+
+Question 24: What is the purpose of a database?
+A) To play videos
+B) To store and manage data
+C) To connect to networks
+Answer: B
+
+Question 25: What does LAN stand for?
+A) Local Access Network
+B) Local Area Network
+C) Large Area Network
+Answer: B
+
+Question 26: Which is an example of an operating system?
+A) Python
+B) Google
+C) Linux
+Answer: C
+
+Question 27: What does SQL stand for?
+A) Structured Query Language
+B) Standard Query List
+C) Simple Query Logic
+Answer: A
+
+Question 28: What does DNS stand for?
+A) Domain Name System
+B) Digital Network Storage
+C) Data Number Sequence
+Answer: A
+
+Question 29: What is cloud computing?
+A) A way to access files locally
+B) A way to store and access data over the internet
+C) A hardware component
+Answer: B
+
+Question 30: Which of the following is a high-level programming language?
+A) Assembly
+B) C++
+C) Machine Code
+Answer: B
+
+Question 31: Which storage device is fastest?
+A) SSD
+B) Hard Disk
+C) Optical Disk
+Answer: A
+
+Question 32: Which data structure uses LIFO?
+A) Queue
+B) Stack
+C) Tree
+Answer: B
+
+Question 33: Which language is known as a scripting language?
+A) C++
+B) Python
+C) Java
+Answer: B
+
+Question 34: Which operator is used for comparison?
+A) +
+B) &&
+C) ==
+Answer: C
+
+Question 35: What is binary code based on?
+A) Base-8
+B) Base-10
+C) Base-2
+Answer: C
+
+Question 36: Which is an example of a loop structure?
+A) if-else
+B) for
+C) return
+Answer: B
+
+Question 37: What does USB stand for?
+A) Universal Serial Bus
+B) Universal Storage Bank
+C) User Storage Base
+Answer: A
+
+Question 38: Which is not a relational database?
+A) MySQL
+B) PostgreSQL
+C) NoSQL
+Answer: C
+
+Question 39: What is a file extension for Python scripts?
+A) .py
+B) .exe
+C) .java
+Answer: A
+
+Question 40: What is pseudocode?
+A) Executable code
+B) English-like steps for algorithms
+C) Programming language syntax
+Answer: B
+Question 41: What does API stand for?
+A) Application Programming Interface
+B) Advanced Programming Information
+C) Application Process Integration
+Answer: A
+
+Question 42: Which is a NoSQL database?
+A) Oracle
+B) MongoDB
+C) SQL Server
+Answer: B
+
+Question 43: Which programming language is primarily used for data science?
+A) Python
+B) HTML
+C) JavaScript
+Answer: A
+
+Question 44: What is recursion in programming?
+A) A function that calls itself
+B) A type of loop
+C) A way to sort data
+Answer: A
+
+Question 45: What does GPU stand for?
+A) General Processing Unit
+B) Graphics Processing Unit
+C) Global Processing Utility
+Answer: B
+
+Question 46: Which command is used to clone a repository in Git?
+A) git commit
+B) git push
+C) git clone
+Answer: C
+
+Question 47: Which is a wireless communication technology?
+A) USB
+B) Bluetooth
+C) Ethernet
+Answer: B
+
+Question 48: What is object-oriented programming?
+A) Programming with objects and classes
+B) A way to compile code
+C) A database technology
+Answer: A
+
+Question 49: Which language is used for iOS app development?
+A) Swift
+B) PHP
+C) HTML
+Answer: A
+
+Question 50: What does 'null' represent in programming?
+A) An infinite value
+B) No value or empty
+C) A zero
+Answer: B
+
+Question 51: What is an IDE?
+A) Integrated Data Environment
+B) Integrated Development Environment
+C) Internal Database Editor
+Answer: B
+
+Question 52: What does XML stand for?
+A) Extensive Markup Language
+B) Extra Markup Language
+C) Extensible Markup Language
+Answer: C
+
+Question 53: What is a variable in programming?
+A) A memory location with a name and a value
+B) A loop structure
+C) A user interface element
+Answer: A
+
+Question 54: Which is used for frontend development?
+A) SQL
+B) CSS
+C) C++
+Answer: B
+
+Question 55: Which is a common data type?
+A) Protocol
+B) String
+C) Network
+Answer: B
+
+Question 56: What is a superclass?
+A) A class that inherits from another class
+B) A class that is inherited by other classes
+C) A function inside a class
+Answer: B
+
+Question 57: What does JSON stand for?
+A) JavaScript Object Notation
+B) Java Syntax Order Notation
+C) Java Serial Output Node
+Answer: A
+
+Question 58: Which language is commonly used for backend development?
+A) HTML
+B) PHP
+C) CSS
+Answer: B
+
+Question 59: Which type of network covers a large geographical area?
+A) LAN
+B) MAN
+C) WAN
+Answer: C
+
+Question 60: Which is a widely used version control system?
+A) Git
+B) JSON
+C) SQL
+Answer: A
+
+Question 61: What is polymorphism in OOP?
+A) A function that calls itself
+B) Objects of different types accessed through the same interface
+C) A way to sort data
+Answer: B
+
+Question 62: Which language is used for scripting on the web?
+A) Python
+B) C++
+C) JavaScript
+Answer: C
+
+Question 63: What is the purpose of an HTML tag?
+A) To store data in tables
+B) To define elements in a webpage
+C) To execute server commands
+Answer: B
+
+Question 64: What does CSS stand for?
+A) Cascading Style Sheets
+B) Custom Style Syntax
+C) Computer Style System
+Answer: A
+
+Question 65: What is HTTPS?
+A) A faster version of HTTP
+B) A secure version of HTTP
+C) A network protocol for images
+Answer: B
+
+Question 66: Which operator is used to assign a value?
+A) ==
+B) =
+C) &&
+Answer: B
+
+Question 67: What does URL stand for?
+A) Unified Resource Location
+B) Uniform Resource Locator
+C) Universal Resource List
+Answer: B
+
+Question 68: What is a constructor in a class?
+A) A function to build data structures
+B) A special function to initialize an object
+C) A method to delete an object
+Answer: B
+
+Question 69: Which is a command-line interface?
+A) GUI
+B) CLI
+C) API
+Answer: B
+
+Question 70: Which language is often used for artificial intelligence?
+A) Python
+B) HTML
+C) SQL
+Answer: A
+
+Question 71: What is an IP address?
+A) A unique address for devices on a network
+B) A server identification number
+C) A browser extension
+Answer: A
+
+Question 72: Which HTML tag is used for paragraphs?
+A) <div>
+B) <p>
+C) <h1>
+Answer: B
+
+Question 73: What does SaaS stand for?
+A) Software as a System
+B) System as a Software
+C) Software as a Service
+Answer: C
+
+Question 74: What is the main use of JavaScript?
+A) Backend programming
+B) Web browser scripting
+C) Data storage
+Answer: B
+
+Question 75: What is a syntax error?
+A) An error in logic
+B) An error in code structure
+C) An error in memory allocation
+Answer: B
+
+Question 76: What does 'void' mean in a function?
+A) The function has no arguments
+B) The function does not return a value
+C) The function returns a random value
+Answer: B
+
+Question 77: Which SQL command is used to retrieve data?
+A) INSERT
+B) DELETE
+C) SELECT
+Answer: C
+
+Question 78: What does IP stand for?
+A) Internet Protocol
+B) Internal Port
+C) Information Packet
+Answer: A
+
+Question 79: What is a 'commit' in Git?
+A) Saving changes to the repository
+B) Deleting a repository
+C) Pushing code to production
+Answer: A
+
+Question 80: Which of these is a storage device?
+A) CPU
+B) SSD
+C) RAM
+Answer: B
