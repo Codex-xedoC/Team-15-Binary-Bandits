@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 7155288f05eb92c4fb6d3f45ca05c781
+timeCreated: 1461277780
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 39540
+  packageName: Umbra Maze Magician
+  packageVersion: 5.6.0
+  assetPath: Assets/UmbraEvolution/MazeMagician/Example/SimpleObjects/UniqueTiles3D/UniqueTile3.prefab
+  uploadId: 642161

@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 0a9f0ff3c6ef9c441aac701bf23453b5
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 39540
+  packageName: Umbra Maze Magician
+  packageVersion: 5.6.0
+  assetPath: Assets/UmbraEvolution/MazeMagician/Example/PathfindingExample/Breadcrumb.prefab
+  uploadId: 642161

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 47e48d9f58298a5419b667fc00eb08ca
+timeCreated: 1434851863
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 39540
+  packageName: Umbra Maze Magician
+  packageVersion: 5.6.0
+  assetPath: Assets/UmbraEvolution/MazeMagician/Example/SimpleObjects/Floors3D/FloorPiece_Thick.prefab
+  uploadId: 642161

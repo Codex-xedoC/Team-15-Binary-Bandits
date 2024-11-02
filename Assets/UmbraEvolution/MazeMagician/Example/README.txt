@@ -1,0 +1,1 @@
+The simple one-colour materials used here are set up to use Unity's Standard shader. The asset itself, however, does not rely on any render pipeline.

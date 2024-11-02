@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 5ae7ea4665f2961479d5ffc5b7091b7a
+timeCreated: 1434851870
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 39540
+  packageName: Umbra Maze Magician
+  packageVersion: 5.6.0
+  assetPath: Assets/UmbraEvolution/MazeMagician/Example/SimpleObjects/Walls3D/Wall_20.prefab
+  uploadId: 642161

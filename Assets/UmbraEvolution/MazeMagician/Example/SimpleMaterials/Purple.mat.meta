@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: c3625fa390e7e7349b1ffbcbc4936ed7
+timeCreated: 1435993784
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 39540
+  packageName: Umbra Maze Magician
+  packageVersion: 5.6.0
+  assetPath: Assets/UmbraEvolution/MazeMagician/Example/SimpleMaterials/Purple.mat
+  uploadId: 642161

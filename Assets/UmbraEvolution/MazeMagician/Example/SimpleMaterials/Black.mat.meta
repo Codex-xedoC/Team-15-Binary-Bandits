@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 1ecff1b39ade08849b60ad8f81e637e9
+timeCreated: 1433992595
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 39540
+  packageName: Umbra Maze Magician
+  packageVersion: 5.6.0
+  assetPath: Assets/UmbraEvolution/MazeMagician/Example/SimpleMaterials/Black.mat
+  uploadId: 642161

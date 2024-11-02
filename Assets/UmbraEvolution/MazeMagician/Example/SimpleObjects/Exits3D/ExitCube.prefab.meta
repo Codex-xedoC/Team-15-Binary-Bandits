@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: ede5a17b89addc64ab3c62050bef7a8e
+timeCreated: 1461277780
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 39540
+  packageName: Umbra Maze Magician
+  packageVersion: 5.6.0
+  assetPath: Assets/UmbraEvolution/MazeMagician/Example/SimpleObjects/Exits3D/ExitCube.prefab
+  uploadId: 642161

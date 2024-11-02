@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 395f396aed2d2ce4dbaccba27f786899
+timeCreated: 1459763085
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 39540
+  packageName: Umbra Maze Magician
+  packageVersion: 5.6.0
+  assetPath: Assets/UmbraEvolution/MazeMagician/Example/SimpleObjects/Details2D/2DObject.prefab
+  uploadId: 642161

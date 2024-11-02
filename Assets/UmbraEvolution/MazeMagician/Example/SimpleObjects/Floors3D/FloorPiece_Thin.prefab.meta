@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 4e7b7a37db09c224aa0d60c822251028
+timeCreated: 1434851863
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 39540
+  packageName: Umbra Maze Magician
+  packageVersion: 5.6.0
+  assetPath: Assets/UmbraEvolution/MazeMagician/Example/SimpleObjects/Floors3D/FloorPiece_Thin.prefab
+  uploadId: 642161

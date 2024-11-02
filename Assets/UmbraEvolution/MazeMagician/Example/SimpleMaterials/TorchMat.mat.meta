@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: c179c8d5503c2b1499f3a6d709bf3095
+timeCreated: 1434858003
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 39540
+  packageName: Umbra Maze Magician
+  packageVersion: 5.6.0
+  assetPath: Assets/UmbraEvolution/MazeMagician/Example/SimpleMaterials/TorchMat.mat
+  uploadId: 642161

@@ -1,0 +1,27 @@
+fileFormatVersion: 2
+guid: 65ddc5d58192f6d4c911f4265d2e178d
+labels:
+- Crafter
+- Builder
+- Generation
+- Procedural
+- Labyrinth
+- Generator
+- Maze
+timeCreated: 1433989934
+licenseType: Store
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 39540
+  packageName: Umbra Maze Magician
+  packageVersion: 5.6.0
+  assetPath: Assets/UmbraEvolution/MazeMagician/Scripts/SerializableClasses/MazeMap.cs
+  uploadId: 642161

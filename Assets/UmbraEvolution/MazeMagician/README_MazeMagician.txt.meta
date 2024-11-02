@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: fa283402d8c294a48932c8f8042daca5
+timeCreated: 1436226483
+licenseType: Store
+TextScriptImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 39540
+  packageName: Umbra Maze Magician
+  packageVersion: 5.6.0
+  assetPath: Assets/UmbraEvolution/MazeMagician/README_MazeMagician.txt
+  uploadId: 642161
