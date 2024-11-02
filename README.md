@@ -3,6 +3,7 @@ The following game design plan has a much larger scope than the project that is 
 
 Guides & Tools:
 - Guide for generating a basic maze: https://medium.com/@Scriptie/3d-maze-generation-in-unity-ec36415b659a
+- Leaderboard Setup Guide - https://docs.unity.com/ugs/manual/leaderboards/manual/leaderboards
 
 Game Overview:
 The VR Maze Quiz Game is a dynamic blend of quiz-solving, maze exploration, and survival. Players must navigate a maze filled with doors that hold quiz questions, while being pursued by a monster that serves as a time limit. Players must use strategy to choose the right algorithm to navigate the maze, answer questions correctly to gain a low score, and ultimately reach the end of the maze with the least score possible.
