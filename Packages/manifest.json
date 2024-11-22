@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "com.unity.collab-proxy": "2.5.2",
+    "com.unity.device-simulator.devices": "1.0.0",
     "com.unity.feature.characters-animation": "1.0.0",
     "com.unity.feature.development": "1.0.2",
     "com.unity.feature.vr": "1.0.1",
@@ -13,8 +14,10 @@
     "com.unity.timeline": "1.8.7",
     "com.unity.ugui": "2.0.0",
     "com.unity.visualscripting": "1.9.4",
-    "com.unity.xr.interaction.toolkit": "3.0.5",
+    "com.unity.xr.hands": "1.5.0",
+    "com.unity.xr.interaction.toolkit": "3.0.7",
     "com.unity.xr.management": "4.5.0",
+    "com.unity.xr.mock-hmd": "1.4.0-preview.2",
     "com.unity.xr.openxr": "1.12.1",
     "com.unity.modules.accessibility": "1.0.0",
     "com.unity.modules.ai": "1.0.0",
