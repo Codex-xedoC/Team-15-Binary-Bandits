@@ -2,8 +2,23 @@
 The following game design plan has a much larger scope than the project that is expected. I will try to add as much as I think I can. 
 
 Guides & Tools:
-- Guide for generating a basic maze: https://medium.com/@Scriptie/3d-maze-generation-in-unity-ec36415b659a
-- Leaderboard Setup Guide - https://docs.unity.com/ugs/manual/leaderboards/manual/leaderboards
+
+- 2D quiz game setup: https://youtu.be/G9QDFB2RQGA?si=4shUMeb8W25G7BQq (Currently at  14.31s)
+
+- Popup up quiz when player reaches a certain point: https://discussions.unity.com/t/how-can-i-active-my-function-when-player-reaches-certain-point/86072/3
+
+- Colorblind mode: https://projectwilberforce.github.io/colorblind/
+
+- Global Font Change: https://stackoverflow.com/questions/26288757/how-to-change-font-in-realtime-in-unity
+
+- Font Changer Asset: https://assetstore.unity.com/packages/tools/gui/font-changer-30994
+
+- Game Setting Menu Asset: https://assetstore.unity.com/packages/tools/gui/settings-game-options-unified-menu-240015
+
+- Gameover 2d Popup screen tutorial: https://youtu.be/K4uOjb5p3Io?si=LKOIsxL_kDcbrYnI
+
+- Popup 2D game over screen: https://stackoverflow.com/questions/69201902/how-to-make-game-over-ui-pop-up-after-a-collision
+
 
 Game Overview:
 The VR Maze Quiz Game is a dynamic blend of quiz-solving, maze exploration, and survival. Players must navigate a maze filled with doors that hold quiz questions, while being pursued by a monster that serves as a time limit. Players must use strategy to choose the right algorithm to navigate the maze, answer questions correctly to gain a low score, and ultimately reach the end of the maze with the least score possible.
