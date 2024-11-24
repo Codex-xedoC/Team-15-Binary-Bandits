@@ -3,9 +3,9 @@ The following game design plan has a much larger scope than the project that is 
 
 Guides & Tools:
 
-- Popup up quiz when player reaches a certain point: https://discussions.unity.com/t/how-can-i-active-my-function-when-player-reaches-certain-point/86072/3
+- 2D quiz game setup: https://youtu.be/G9QDFB2RQGA?si=4shUMeb8W25G7BQq (Currently at  14.31s)
 
-- 2D quiz game setup: https://youtu.be/G9QDFB2RQGA?si=4shUMeb8W25G7BQq
+- Popup up quiz when player reaches a certain point: https://discussions.unity.com/t/how-can-i-active-my-function-when-player-reaches-certain-point/86072/3
 
 - Colorblind mode: https://projectwilberforce.github.io/colorblind/
 
