@@ -1,26 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.SocialPlatforms.Impl;
+//using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
 
 
 public class QuizManager : MonoBehaviour
 {
     public List<QuestionAnswerBank> QnA;
+    public List<Vector3> coords;
     public GameObject[] options;
     public int currentQuestion;
     //public bool flag;
     public Text QuestionTxt;
+    public Text timerText;
     public GameObject Quizpanel;
     public GameObject GoPanel;
     public GameObject ParentPanel;
-    //public int panelNum = 0;
+    public Text wrongAnswers;
+    public int panelNum = 0;
     public Text Time;
     public int wscore = 0;
     int totalQuestions = 0;
+    public GameObject XRRig;
     private void Start()
     {
         totalQuestions = QnA.Count;
@@ -28,25 +31,45 @@ public class QuizManager : MonoBehaviour
         generateQuestion();
     }
     
-
+   public void goBack()
+    {
+        XRRig.transform.position = new Vector3(-10,0,0);
+    }
     void GameOver()
     {
+        Time = timerText;
+        panelNum = 0;
+        //wrongAnswers.text = wscore.ToString();
         Quizpanel.SetActive(false);
         GoPanel.SetActive(true);
-        //Time.text = "Test";
+        GoPanel.transform.GetChild(0).GetComponent<Text>().text = Time.text;
     }
     public void correct()
     {
-        ParentPanel.transform.position = new Vector3(6.22f, 0.97f, 16.21f);
-        //Quizpanel.SetActive(false);
-        QnA.RemoveAt(currentQuestion);
-        generateQuestion();
+                            
+        if (panelNum <= 5) //5
+        {
+            ParentPanel.transform.position = coords[panelNum];
+            panelNum++;
+            QnA.RemoveAt(currentQuestion);
+            generateQuestion();
+        }
+        else
+        {
+            GameOver();
+        }
         
     }
 
     public void retry()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        goBack();
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void quit()
+    {
+        Application.Quit();
     }
     public void wrong()
     {
