@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: bc0dc945152ef47eaaa1332e959eb8ff
+TextScriptImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 22986
+  packageName: Animated Spider
+  packageVersion: 1.0
+  assetPath: Assets/PB_Spider/readme.txt
+  uploadId: 29532
