@@ -11,6 +11,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Aarons Folder/AaronsLevel.unity
     guid: 03097041804eb0f49bb9475e73ba66bc
+  - enabled: 1
+    path: Assets/Paulina's Folder/City Game.unity
+    guid: c62853553880e44688060031f1876e80
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: bfa1182bd221b4ca89619141f66f1260, type: 2}
     Unity.XR.WindowsMR.Settings: {fileID: 11400000, guid: dc5a169419fa04987b057f65238cf3ba, type: 2}

@@ -15,8 +15,18 @@ public class SceneManager : MonoBehaviour
         
     }
 
+    public void ReturnMainMenu()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu");
+    }
+
     public void AaronsLevelPressed()
     {
         UnityEngine.SceneManagement.SceneManager.LoadScene("AaronsLevel");
+    }
+
+    public void LinaLevelPressed()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene("City Game");
     }
 }
