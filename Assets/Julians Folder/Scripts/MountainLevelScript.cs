@@ -11,7 +11,9 @@ public class MountainLevelScript : MonoBehaviour
     public TextMeshProUGUI QuestionBoxText;
     //public XRLocomotionSystem locomotionSystem;
 
-    
+    public int points;
+    public int lives;
+
 
     public GameObject CorrectUI, WrongUI;
 
@@ -27,6 +29,8 @@ public class MountainLevelScript : MonoBehaviour
     void Start()
     {
         LoadQuestionsFromFile();
+        points = 0;
+        lives = 3;
     }
 
     // Loads all questions and answers from the .txt file into a list
@@ -127,11 +131,13 @@ public class MountainLevelScript : MonoBehaviour
         {
             CorrectUI.SetActive(true);
             Debug.Log("Correct Answer!");
+            points++;
         }
         else
         {
             WrongUI.SetActive(true);
             Debug.Log("Wrong Answer!");
+            lives--;
         }
 
         questionAnswered = true;
