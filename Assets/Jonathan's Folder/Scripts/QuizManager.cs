@@ -33,7 +33,7 @@ public class QuizManager : MonoBehaviour
     
    public void goBack()
     {
-        XRRig.transform.position = new Vector3(-10,0,0);
+        XRRig.transform.position = new Vector3(0,0.97f,1);
     }
     void GameOver()
     {
@@ -64,6 +64,7 @@ public class QuizManager : MonoBehaviour
     public void retry()
     {
         goBack();
+        timerText.text = "{0:00}";
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 

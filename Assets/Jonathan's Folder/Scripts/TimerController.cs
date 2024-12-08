@@ -24,4 +24,12 @@ public class TimerController : MonoBehaviour
         }
     }
 
+    public void Reset()
+    {
+        timeCounter = 0;
+        min = 0;
+        sec = 0;
+        timerText.text = "{0:00}";
+    }
+
 }
