@@ -11,13 +11,16 @@ public class MountainLevelScript : MonoBehaviour
     public TextMeshProUGUI QuestionBoxText;
     //public XRLocomotionSystem locomotionSystem;
 
-    public bool questionAnswered = false;
+    
 
     public GameObject CorrectUI, WrongUI;
 
     private string text;
 
     private List<string> questionsAndAnswers = new List<string>();
+    private string currentAnswer = "";
+    public bool questionDisplayed = false;
+    public bool questionAnswered = false;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -96,13 +99,17 @@ public class MountainLevelScript : MonoBehaviour
 
         string question = parts[0].Trim(); // Question and options
         string answer = parts[1].Trim(); // Correct answer
+        QuestionBoxText.text = question;
+
+        UIEmpty.SetActive(true);
+        questionDisplayed = true;
 
         return (question, answer);
         
         
        
     }
-
+    /*
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player") && !questionAnswered)
@@ -111,6 +118,32 @@ public class MountainLevelScript : MonoBehaviour
             GetRandomQuestion();
             
         }
+    }
+    */
+
+    private void HandleAnswer(string playerAnswer)
+    {
+        if (playerAnswer.Equals(currentAnswer, System.StringComparison.OrdinalIgnoreCase))
+        {
+            CorrectUI.SetActive(true);
+            Debug.Log("Correct Answer!");
+        }
+        else
+        {
+            WrongUI.SetActive(true);
+            Debug.Log("Wrong Answer!");
+        }
+
+        questionAnswered = true;
+        UIEmpty.SetActive(false); // Hide question UI
+        StartCoroutine(ResetUI());
+    }
+
+    private IEnumerator ResetUI()
+    {
+        yield return new WaitForSeconds(2f); // Display feedback for 2 seconds
+        CorrectUI.SetActive(false);
+        WrongUI.SetActive(false);
     }
 
 
