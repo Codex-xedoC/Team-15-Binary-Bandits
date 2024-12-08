@@ -14,6 +14,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Paulina's Folder/City Game.unity
     guid: c62853553880e44688060031f1876e80
+  - enabled: 1
+    path: Assets/Julians Folder/Scene/MountainClimb.unity
+    guid: 4e9fef26e6adb88479ad1b9834a32d94
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: bfa1182bd221b4ca89619141f66f1260, type: 2}
     Unity.XR.WindowsMR.Settings: {fileID: 11400000, guid: dc5a169419fa04987b057f65238cf3ba, type: 2}

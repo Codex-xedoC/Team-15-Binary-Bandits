@@ -29,4 +29,10 @@ public class SceneManager : MonoBehaviour
     {
         UnityEngine.SceneManagement.SceneManager.LoadScene("City Game");
     }
+
+    public void JulianLevelPressed()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene("MountainClimb");
+
+    }
 }
