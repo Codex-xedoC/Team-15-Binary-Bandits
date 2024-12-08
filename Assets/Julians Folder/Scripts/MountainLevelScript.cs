@@ -103,28 +103,21 @@ public class MountainLevelScript : MonoBehaviour
 
         string question = parts[0].Trim(); // Question and options
         string answer = parts[1].Trim(); // Correct answer
+
         QuestionBoxText.text = question;
 
         UIEmpty.SetActive(true);
         questionDisplayed = true;
+
+        Debug.Log("Question: " + question);
+        Debug.Log("Answer: " + answer);
 
         return (question, answer);
         
         
        
     }
-    /*
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player") && !questionAnswered)
-        {
-            //locomotionSystem.enabled = false;
-            GetRandomQuestion();
-            
-        }
-    }
-    */
-
+    
     private void HandleAnswer(string playerAnswer)
     {
         if (playerAnswer.Equals(currentAnswer, System.StringComparison.OrdinalIgnoreCase))
