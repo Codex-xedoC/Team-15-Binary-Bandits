@@ -152,6 +152,7 @@ public class AaronsLevelScript : MonoBehaviour
 
     private IEnumerator CorrectAnswerTimer(string fishNum)
     {
+        MainMenuHandler.Instance.questionCorrect();
         switch (fishNum)
         {
             case "1":
@@ -195,6 +196,7 @@ public class AaronsLevelScript : MonoBehaviour
 
     private IEnumerator WrongAnswerTimer()
     {
+        MainMenuHandler.Instance.questionWrong();
         WrongUI.SetActive(true);
 
         // Wait for the specified duration
