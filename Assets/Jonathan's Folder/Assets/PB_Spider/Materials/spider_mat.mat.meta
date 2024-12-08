@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: f73b6edfb0e1747debb82666f9db7597
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 22986
+  packageName: Animated Spider
+  packageVersion: 1.0
+  assetPath: Assets/PB_Spider/Materials/spider_mat.mat
+  uploadId: 29532
