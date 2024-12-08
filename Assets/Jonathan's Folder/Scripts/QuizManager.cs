@@ -1,9 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 //using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 
 public class QuizManager : MonoBehaviour
@@ -30,10 +30,10 @@ public class QuizManager : MonoBehaviour
         GoPanel.SetActive(false);
         generateQuestion();
     }
-    
-   public void goBack()
+
+    public void goBack()
     {
-        XRRig.transform.position = new Vector3(0,0.97f,1);
+        XRRig.transform.position = new Vector3(0, 0.97f, 1);
     }
     void GameOver()
     {
@@ -46,7 +46,7 @@ public class QuizManager : MonoBehaviour
     }
     public void correct()
     {
-                            
+
         if (panelNum <= 5) //5
         {
             ParentPanel.transform.position = coords[panelNum];
@@ -58,14 +58,14 @@ public class QuizManager : MonoBehaviour
         {
             GameOver();
         }
-        
+
     }
 
     public void retry()
     {
         goBack();
         timerText.text = "{0:00}";
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Maze1");
     }
 
     public void quit()
@@ -81,12 +81,12 @@ public class QuizManager : MonoBehaviour
 
     void setAnswers()
     {
-        for(int i = 0; i < options.Length; i++)
+        for (int i = 0; i < options.Length; i++)
         {
             options[i].GetComponent<AnswerScript>().isCorrect = false;
-            
-           // options[i].transform.GetChild(0).GetComponent<TextMeshPro>().text
-           //     = QnA[currentQuestion].Answers[i];
+
+            // options[i].transform.GetChild(0).GetComponent<TextMeshPro>().text
+            //     = QnA[currentQuestion].Answers[i];
             options[i].transform.GetChild(0).GetChild(0).GetComponent<Text>().text
                 = QnA[currentQuestion].Answers[i];
 
@@ -94,7 +94,7 @@ public class QuizManager : MonoBehaviour
             if (QnA[currentQuestion].CorrectAnswer == i + 1)
             {
                 options[i].GetComponent<AnswerScript>().isCorrect = true;
-                
+
             }
 
         }
