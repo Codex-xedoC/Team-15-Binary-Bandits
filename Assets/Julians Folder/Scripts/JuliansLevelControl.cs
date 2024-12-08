@@ -171,6 +171,10 @@ public class JuliansLevelControl : MonoBehaviour
 
         CorrectUI.SetActive(false);
 
+
+        player.transform.position = grabables[1 + index].transform.position + new Vector3(0, -1, -1.5f);
+        UIEmpty.transform.position = grabables[1 + index].transform.position + new Vector3(0.3f, 0.5f, 0);
+        index++;
         RestartGame();
     }
 
@@ -192,10 +196,6 @@ public class JuliansLevelControl : MonoBehaviour
         Button1.SetActive(true);
         Button2.SetActive(true);
         Button3.SetActive(true);
-
-        //player.transform.position = grabables[1 + index].transform.position + new Vector3(0, -1, -1.5f);
-        //UIEmpty.transform.position = grabables[1 + index].transform.position + new Vector3(0.3f, 0.5f, 0);
-        //index++;
 
         (string question, string answer) = GetRandomQuestion();
         text = answer;
