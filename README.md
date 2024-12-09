@@ -8,6 +8,9 @@ Collaborators:
 - @RottenH20 (Aaron K Arseneau)
 - @LameArk (Julian LaMark)
 
+![image](https://github.com/user-attachments/assets/39cc02ab-ee7f-4316-aa02-5c70cd53ca36)
+
+
   
 The following game design plan has a much larger scope than the project that is expected. I will try to add as much as I think I can. 
 
