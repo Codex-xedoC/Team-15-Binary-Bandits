@@ -12,16 +12,15 @@ Collaborators:
 Main Menu:
 ![image](https://github.com/user-attachments/assets/39cc02ab-ee7f-4316-aa02-5c70cd53ca36)
 
-
-![image](https://github.com/user-attachments/assets/d54e70ae-fc70-4256-8fa9-dfc3d530d817)
-
-
+Forest Maze Minigame:
 ![image](https://github.com/user-attachments/assets/9bad3518-0214-4e00-9345-a148cafdab2e)
 
 
+Fishing Minigame:
 ![image](https://github.com/user-attachments/assets/a66b633f-35a6-4420-8687-777eedaf95c8)
 
 
+OuterSpace Flying Minigame:
 ![image](https://github.com/user-attachments/assets/8e7b5a9e-ee4c-4a0a-9024-3ca745c96de3)
 
 
