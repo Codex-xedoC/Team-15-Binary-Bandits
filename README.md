@@ -1,4 +1,14 @@
   # CSCE-4901-Sponsor-Project
+
+Collaborators: 
+- @Codex-xedoC (Magdalena Pointer)
+- @jpbrosnan (Jonathan Brosnan)
+- @kwasnica (Ashlyn Kwasnica) 
+- @pr0ldan (Paulina Roldan)
+- @RottenH20 (Aaron K Arseneau)
+- @LameArk (Julian LaMark)
+
+  
 The following game design plan has a much larger scope than the project that is expected. I will try to add as much as I think I can. 
 
 Guides & Tools:
