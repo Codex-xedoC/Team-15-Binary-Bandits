@@ -35,4 +35,14 @@ public class SceneManager : MonoBehaviour
         UnityEngine.SceneManagement.SceneManager.LoadScene("MountainClimb");
 
     }
+
+    public void CodexLevelPressed()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene("CodexScene");
+    }
+
+    public void JonathanLevelPressed()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Maze1");
+    }
 }

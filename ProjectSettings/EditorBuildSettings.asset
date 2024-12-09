@@ -17,6 +17,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Julians Folder/Scene/MountainClimb.unity
     guid: 4e9fef26e6adb88479ad1b9834a32d94
+  - enabled: 1
+    path: Assets/Jonathan's Folder/Maze1.unity
+    guid: 0a545eb8d56499d47bf4e868e1c625d6
+  - enabled: 1
+    path: Assets/Codex Folder/CodexScene.unity
+    guid: f31d9328ab77ec04fa6cca784c369784
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: bfa1182bd221b4ca89619141f66f1260, type: 2}
     Unity.XR.WindowsMR.Settings: {fileID: 11400000, guid: dc5a169419fa04987b057f65238cf3ba, type: 2}
