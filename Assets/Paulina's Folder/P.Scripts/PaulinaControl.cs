@@ -144,7 +144,7 @@ public class PaulinaControl : MonoBehaviour
 
     private IEnumerator CorrectAnswerTimer()
     {
-       //MainMenuHandler.Instance.questionCorrect();
+       MainMenuHandler.Instance.questionCorrect();
 
         CorrectUI.SetActive(true);
 
@@ -160,7 +160,7 @@ public class PaulinaControl : MonoBehaviour
 
     private IEnumerator WrongAnswerTimer()
     {
-        //MainMenuHandler.Instance.questionWrong();
+        MainMenuHandler.Instance.questionWrong();
         WrongUI.SetActive(true);
 
         // Wait for the specified duration
