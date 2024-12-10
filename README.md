@@ -3,10 +3,10 @@
 Collaborators: 
 - @Codex-xedoC (Magdalena Pointer)
 - @jpbrosnan (Jonathan Brosnan)
-- @kwasnica (Ashlyn Kwasnica) 
 - @pr0ldan (Paulina Roldan)
 - @RottenH20 (Aaron K Arseneau)
 - @LameArk (Julian LaMark)
+- @kwasnica (Ashlyn Kwasnica) 
 
 
 Main Menu:
@@ -21,8 +21,8 @@ Ocean Fishing Minigame:
 ![image](https://github.com/user-attachments/assets/a66b633f-35a6-4420-8687-777eedaf95c8)
 
 
-City Rooftop Parkour Minigame:
-![image](https://github.com/user-attachments/assets/131521a3-843a-4b9c-87d5-cba5d1539803)
+City Rooftop Minigame:
+![image](https://github.com/user-attachments/assets/50b05907-1ba6-4a8e-a58a-a07298c5b84f)
 
 
 Mountain Climbing Minigame:
