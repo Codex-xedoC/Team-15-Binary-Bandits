@@ -8,20 +8,17 @@ public class PaulinaControl : MonoBehaviour
 {
     public GameObject UIEmpty;
     public TextMeshProUGUI QuestionBoxText;
-    public GameObject StartButton;
+    public GameObject StartUpUI;
 
     public GameObject Button1, Button2, Button3;
 
-    public GameObject CorrectUI, WrongUI, ErrorUI; 
-    public GameObject TutorialUI, MenuBttn;
+    public GameObject CorrectUI, WrongUI, ErrorUI;
 
     private string text;
 
     private List<string> questionsAndAnswers = new List<string>();
 
     private int index = 0;
-
-    public bool choicesActive = true;
 
 
     void Start()
@@ -106,7 +103,6 @@ public class PaulinaControl : MonoBehaviour
     public void answerChoice1Pressed()
     {
         inactiveChoices();
-        choicesActive = false;
 
         if (text == "A")
         {
@@ -121,7 +117,6 @@ public class PaulinaControl : MonoBehaviour
     public void answerChoice2Pressed()
     {
         inactiveChoices();
-        choicesActive = false;
 
         if (text == "B")
         {
@@ -136,7 +131,6 @@ public class PaulinaControl : MonoBehaviour
     public void answerChoice3Pressed()
     {
         inactiveChoices();
-        choicesActive = false;
 
         if (text == "C")
         {
@@ -161,7 +155,7 @@ public class PaulinaControl : MonoBehaviour
 
         CorrectUI.SetActive(false);
         UIEmpty.SetActive(false);
-
+        activeChoices();
     }
 
     private IEnumerator WrongAnswerTimer()
@@ -175,7 +169,6 @@ public class PaulinaControl : MonoBehaviour
         WrongUI.SetActive(false);
 
         activeChoices();
-        choicesActive = true;
     }
 
     private IEnumerator ErrorTimer()
@@ -191,7 +184,6 @@ public class PaulinaControl : MonoBehaviour
     private void RestartGame()
     {
         activeChoices();
-        choicesActive = true;
 
         (string question, string answer) = GetRandomQuestion();
         text = answer;
@@ -201,9 +193,7 @@ public class PaulinaControl : MonoBehaviour
 
     public void startGamePressed()
     {
-        StartButton.SetActive(false);
-        TutorialUI.SetActive(false);
-        MenuBttn.SetActive(false);
+        StartUpUI.SetActive(false);
     }
 
 
