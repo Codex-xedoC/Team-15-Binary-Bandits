@@ -1,12 +1,14 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class SceneManager : MonoBehaviour
 {
+    public FadeScreen fadeScreen;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        fadeScreen = GameObject.Find("Fader Screen").GetComponent<FadeScreen>();
     }
 
     // Update is called once per frame
@@ -15,34 +17,53 @@ public class SceneManager : MonoBehaviour
         
     }
 
+    public void GoToScene(string sceneName)
+    {
+        StartCoroutine(GoToSceneRoutine(sceneName));
+    }
+
+    IEnumerator GoToSceneRoutine(string sceneName)
+    {
+        fadeScreen.FadeOut();
+        yield return new WaitForSeconds(fadeScreen.fadeDuration);
+
+        UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName);
+    }
+
     public void ReturnMainMenu()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu");
+        GoToScene("MainMenu");
+        //UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu");
     }
 
     public void AaronsLevelPressed()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene("AaronsLevel");
+        GoToScene("AaronsLevel");
+        //UnityEngine.SceneManagement.SceneManager.LoadScene("AaronsLevel");
     }
 
     public void LinaLevelPressed()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene("City Game");
+        GoToScene("City Game");
+        //UnityEngine.SceneManagement.SceneManager.LoadScene("City Game");
     }
 
     public void JulianLevelPressed()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene("MountainClimb");
+        GoToScene("MountainClimb");
+        //UnityEngine.SceneManagement.SceneManager.LoadScene("MountainClimb");
 
     }
 
     public void CodexLevelPressed()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene("CodexScene");
+        GoToScene("CodexScene");
+        //UnityEngine.SceneManagement.SceneManager.LoadScene("CodexScene");
     }
 
     public void JonathanLevelPressed()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene("Maze1");
+        GoToScene("Maze1");
+        //UnityEngine.SceneManagement.SceneManager.LoadScene("Maze1");
     }
 }
