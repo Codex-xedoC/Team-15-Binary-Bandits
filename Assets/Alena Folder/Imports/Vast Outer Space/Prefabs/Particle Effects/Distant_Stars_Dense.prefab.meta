@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: aed921ccd7a51cd47bcf557c266c33fa
+timeCreated: 1429740812
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 38913
+  packageName: Vast Outer Space
+  packageVersion: 1.0
+  assetPath: Assets/Vast Outer Space/Prefabs/Particle Effects/Distant_Stars_Dense.prefab
+  uploadId: 67260

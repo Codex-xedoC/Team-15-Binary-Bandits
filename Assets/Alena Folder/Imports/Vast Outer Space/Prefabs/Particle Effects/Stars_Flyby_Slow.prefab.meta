@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 39332a43c68770e47ba274b4aadca0e6
+timeCreated: 1429740154
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 38913
+  packageName: Vast Outer Space
+  packageVersion: 1.0
+  assetPath: Assets/Vast Outer Space/Prefabs/Particle Effects/Stars_Flyby_Slow.prefab
+  uploadId: 67260

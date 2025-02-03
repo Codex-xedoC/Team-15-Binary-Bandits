@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 265b123a61169ae42bf9883e3f6da947
+timeCreated: 1433284465
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 38913
+  packageName: Vast Outer Space
+  packageVersion: 1.0
+  assetPath: Assets/Vast Outer Space/Prefabs/Skyboxes/Skybox.prefab
+  uploadId: 67260

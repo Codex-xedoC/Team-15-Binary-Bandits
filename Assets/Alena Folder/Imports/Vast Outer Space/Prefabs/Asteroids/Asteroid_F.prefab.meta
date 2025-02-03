@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 72776d15a565f3f499c3d02414de971e
+timeCreated: 1433275497
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 38913
+  packageName: Vast Outer Space
+  packageVersion: 1.0
+  assetPath: Assets/Vast Outer Space/Prefabs/Asteroids/Asteroid_F.prefab
+  uploadId: 67260

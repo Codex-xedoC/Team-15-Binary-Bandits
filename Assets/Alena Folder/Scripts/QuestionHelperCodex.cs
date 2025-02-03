@@ -8,23 +8,25 @@ public class QuestionHelperCodex : MonoBehaviour
 {
     public GameObject UIEmpty;
     public TextMeshProUGUI QuestionBoxText;
-
     public GameObject Button1, Button2, Button3;
-
-    public GameObject CorrectUI, WrongUI;
+    public GameObject CorrectUI, WrongUI;  // Correct/Incorrect UI Panels
     public TextMeshProUGUI score;
+    public TextMeshProUGUI healthText;
+
+    public GameObject QuestionPanel;  // Reference to the Question Panel
+    public GameObject AnswerPanelA, AnswerPanelB, AnswerPanelC;
+
     int scoreI = 0;
-    public GameObject player;
+    int health = 100;  // Set initial health value (100)
 
     private string text;
-
     private List<string> questionsAndAnswers = new List<string>();
-
     private int index = 0;
 
     void Start()
     {
         LoadQuestionsFromFile();
+        UpdateHealthUI();
     }
 
     // Loads all questions and answers from the .txt file into a list
@@ -50,11 +52,10 @@ public class QuestionHelperCodex : MonoBehaviour
                     questionsAndAnswers.Add(questionEntry.Trim());
                 }
 
-                // Remove "Question X:" prefix
                 int colonIndex = line.IndexOf(":");
                 if (colonIndex != -1 && colonIndex + 1 < line.Length)
                 {
-                    questionEntry = line.Substring(colonIndex + 1).Trim(); // Start a new question without the prefix
+                    questionEntry = line.Substring(colonIndex + 1).Trim();
                 }
                 else
                 {
@@ -63,11 +64,10 @@ public class QuestionHelperCodex : MonoBehaviour
             }
             else
             {
-                questionEntry += "\n" + line; // Append to the current question block
+                questionEntry += "\n" + line;
             }
         }
 
-        // Add the last question entry
         if (!string.IsNullOrEmpty(questionEntry))
         {
             questionsAndAnswers.Add(questionEntry.Trim());
@@ -86,7 +86,6 @@ public class QuestionHelperCodex : MonoBehaviour
         int randomIndex = Random.Range(0, questionsAndAnswers.Count);
         string randomQuestionEntry = questionsAndAnswers[randomIndex];
 
-        // Split the entry into question text and answer
         string[] parts = randomQuestionEntry.Split(new[] { "Answer:" }, System.StringSplitOptions.None);
 
         if (parts.Length < 2)
@@ -95,16 +94,13 @@ public class QuestionHelperCodex : MonoBehaviour
             return ("", "");
         }
 
-        string question = parts[0].Trim(); // Question and options
-        string answer = parts[1].Trim(); // Correct answer
+        string question = parts[0].Trim();
+        string answer = parts[1].Trim();
 
         return (question, answer);
     }
 
-
-
-
-
+    // Called when answer choice 1 is pressed
     public void answerChoice1Pressed()
     {
         Button1.SetActive(false);
@@ -121,6 +117,7 @@ public class QuestionHelperCodex : MonoBehaviour
         }
     }
 
+    // Called when answer choice 2 is pressed
     public void answerChoice2Pressed()
     {
         Button1.SetActive(false);
@@ -137,6 +134,7 @@ public class QuestionHelperCodex : MonoBehaviour
         }
     }
 
+    // Called when answer choice 3 is pressed
     public void answerChoice3Pressed()
     {
         Button1.SetActive(false);
@@ -153,40 +151,31 @@ public class QuestionHelperCodex : MonoBehaviour
         }
     }
 
-    private IEnumerator CorrectAnswerTimer(string fishNum)
+    // Handles the correct answer feedback
+    private IEnumerator CorrectAnswerTimer(string choice)
     {
-        //MainMenuHandler.Instance.questionCorrect();
-
-
         scoreI++;
         score.text = "Score: " + scoreI;
-        CorrectUI.SetActive(true);
+        CorrectUI.SetActive(true); // Show Correct Panel
 
-
-        // Wait for the specified duration
-        yield return new WaitForSeconds(3f);
-
-
-
-        CorrectUI.SetActive(false);
-
+        yield return new WaitForSeconds(3f);  // Wait before switching back
+        CorrectUI.SetActive(false);  // Hide Correct Panel
 
         RestartGame();
     }
 
+    // Handles the wrong answer feedback
     private IEnumerator WrongAnswerTimer()
     {
-        //MainMenuHandler.Instance.questionWrong();
-        WrongUI.SetActive(true);
+        WrongUI.SetActive(true);  // Show Wrong Panel
 
-        // Wait for the specified duration
-        yield return new WaitForSeconds(3f);
-
-        WrongUI.SetActive(false);
+        yield return new WaitForSeconds(3f);  // Wait before switching back
+        WrongUI.SetActive(false);  // Hide Wrong Panel
 
         RestartGame();
     }
 
+    // Resets the game UI for the next question
     private void RestartGame()
     {
         Button1.SetActive(true);
@@ -194,23 +183,62 @@ public class QuestionHelperCodex : MonoBehaviour
         Button3.SetActive(true);
 
         UIEmpty.SetActive(false);
-        //(string question, string answer) = GetRandomQuestion();
-        //text = answer;
-        //QuestionBoxText.text = question;
 
-
-    }
-
-    public void startGamePressed(GameObject button)
-    {
-        UIEmpty.transform.position = button.transform.position + new Vector3(0f, 0, 0);
-
-
-        button.SetActive(false);
-        UIEmpty.SetActive(true);
-
+        // Reset UI for new question
         (string question, string answer) = GetRandomQuestion();
         text = answer;
         QuestionBoxText.text = question;
+
+        // Hide the Question Panel and Answer Panels when done
+        QuestionPanel.SetActive(false);
+        AnswerPanelA.SetActive(false);
+        AnswerPanelB.SetActive(false);
+        AnswerPanelC.SetActive(false);
+    }
+
+    // Updates the health UI text
+    private void UpdateHealthUI()
+    {
+        healthText.text = "Health: " + health;
+    }
+
+    // Updates health when the player collides with an asteroid
+    public void UpdateHealth(int damage)
+    {
+        health -= damage;
+        if (health <= 0)
+        {
+            // Handle Game Over scenario
+            health = 0;
+            GameOver();
+        }
+        UpdateHealthUI();
+    }
+
+    // Game over logic
+    private void GameOver()
+    {
+        // You can call a Game Over screen or stop the game
+        Debug.Log("Game Over!");
+        // Optionally show GameOver UI, disable further interactions, etc.
+    }
+
+    // When the player presses Start, the game begins
+    public void startGamePressed(GameObject button)
+    {
+        UIEmpty.transform.position = button.transform.position + new Vector3(0f, 0, 0);
+        button.SetActive(false);
+        UIEmpty.SetActive(true);
+
+        // Get a new question to start the game
+        (string question, string answer) = GetRandomQuestion();
+        text = answer;
+        QuestionBoxText.text = question;
+
+        // Show the Question Panel
+        QuestionPanel.SetActive(true);
+        AnswerPanelA.SetActive(true);
+        AnswerPanelB.SetActive(true);
+        AnswerPanelC.SetActive(true);
     }
 }

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: df5f76c77be83cc43886fa83cdbadf57
+timeCreated: 1431300971
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 38913
+  packageName: Vast Outer Space
+  packageVersion: 1.0
+  assetPath: Assets/Vast Outer Space/Prefabs/Particle Effects/Warp_Drive_A.prefab
+  uploadId: 67260
