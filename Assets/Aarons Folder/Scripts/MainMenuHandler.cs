@@ -4,14 +4,14 @@ using UnityEngine.SceneManagement;
 
 public class MainMenuHandler : MonoBehaviour
 {
-     TextMeshProUGUI numCorrectT;
-     TextMeshProUGUI numWrongT;
-     TextMeshProUGUI numStreakT;
-     TextMeshProUGUI AccuracyRateT;
+    TextMeshProUGUI numCorrectT;
+    TextMeshProUGUI numWrongT;
+    TextMeshProUGUI numStreakT;
+    TextMeshProUGUI AccuracyRateT;
 
-     TextMeshProUGUI tenCorrectT;
-     TextMeshProUGUI hundredCorrectT;
-     TextMeshProUGUI tenStreakT;
+    TextMeshProUGUI tenCorrectT;
+    TextMeshProUGUI hundredCorrectT;
+    TextMeshProUGUI tenStreakT;
 
     int numCorrect = 0;
     int numWrong = 0;
@@ -47,6 +47,13 @@ public class MainMenuHandler : MonoBehaviour
         UnityEngine.SceneManagement.SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
+    // Codex Added LoadScene Method
+    public void LoadScene(string sceneName)
+    {
+        Debug.Log("Loading scene: " + sceneName);
+        UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName);
+    }
+
     public void questionCorrect()
     {
         numCorrect++;
@@ -60,8 +67,6 @@ public class MainMenuHandler : MonoBehaviour
         numStreak = 0;
         AccuracyRate = (numCorrect / (numWrong + numCorrect)) * 100;
     }
-
-
 
     void OnDestroy()
     {
@@ -84,8 +89,6 @@ public class MainMenuHandler : MonoBehaviour
             tenCorrectT = GameObject.Find("tenCorrect").GetComponent<TextMeshProUGUI>();
             hundredCorrectT = GameObject.Find("hundredCorrect").GetComponent<TextMeshProUGUI>();
             tenStreakT = GameObject.Find("tenStreak").GetComponent<TextMeshProUGUI>();
-
-
 
             UpdateMainMenuText();
         }
