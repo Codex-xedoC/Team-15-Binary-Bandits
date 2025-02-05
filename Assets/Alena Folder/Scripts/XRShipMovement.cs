@@ -18,7 +18,6 @@ public class XRShipMovement : MonoBehaviour
         // ? Restore Rigidbody settings from when it worked before
         rb.isKinematic = false;
         rb.useGravity = false;
-        rb.linearDamping = 2f;  // Prevents excessive drifting
         rb.angularDamping = 5f;  // Prevents unwanted spin
     }
 
@@ -35,11 +34,11 @@ public class XRShipMovement : MonoBehaviour
         if (move.sqrMagnitude > 0.01f) // Only move if joystick input detected
         {
             Vector3 moveDirection = (transform.forward * move.y) + (transform.right * move.x);
-            rb.linearVelocity = moveDirection * speed;  
+            rb.linearVelocity = moveDirection * speed;  // Use velocity instead of linearVelocity
         }
         else
         {
-            rb.linearVelocity = Vector3.zero;  //  Stops movement when joystick is idle
+            rb.linearVelocity = Vector3.zero;  // Stops movement when joystick is idle
         }
     }
 }
