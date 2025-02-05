@@ -1,35 +1,90 @@
 using UnityEngine;
-using System.IO;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEngine.UI;
 
 public class QuestionHelperCodex : MonoBehaviour
 {
     public GameObject UIEmpty;
     public TextMeshProUGUI QuestionBoxText;
     public GameObject Button1, Button2, Button3;
-    public GameObject CorrectUI, WrongUI;  // Correct/Incorrect UI Panels
+    public GameObject CorrectUI, WrongUI;
     public TextMeshProUGUI score;
     public TextMeshProUGUI healthText;
 
-    public GameObject QuestionPanel;  // Reference to the Question Panel
+    public GameObject QuestionPanel;
     public GameObject AnswerPanelA, AnswerPanelB, AnswerPanelC;
 
-    int scoreI = 0;
-    int health = 100;  // Set initial health value (100)
+    public GameObject environmentObjects;  // Contains planets & asteroids
+    public GameObject startButton;  //  The actual Start Button (Text Poke Button)
 
-    private string text;
+    private int scoreI = 0;
+    private int health = 100;
     private List<string> questionsAndAnswers = new List<string>();
     private int index = 0;
+    private bool isGameActive = false;
+    private string correctAnswer;
 
     void Start()
     {
         LoadQuestionsFromFile();
         UpdateHealthUI();
+        ResetGame(); // Ensure everything starts hidden
+
+        //  Ensure Start Button is assigned and linked to StartGame()
+        if (startButton != null)
+        {
+            Button btn = startButton.GetComponent<Button>();
+            if (btn != null)
+            {
+                btn.onClick.AddListener(StartGame);
+            }
+            else
+            {
+                Debug.LogError("Start Button is missing a Button component!");
+            }
+        }
+        else
+        {
+            Debug.LogError("Start Button not assigned in Inspector!");
+        }
     }
 
-    // Loads all questions and answers from the .txt file into a list
+    //  Hides everything until game starts
+    private void ResetGame()
+    {
+        if (environmentObjects != null)
+            environmentObjects.SetActive(false);
+
+        QuestionPanel.SetActive(false);
+        AnswerPanelA.SetActive(false);
+        AnswerPanelB.SetActive(false);
+        AnswerPanelC.SetActive(false);
+        CorrectUI.SetActive(false);
+        WrongUI.SetActive(false);
+        UIEmpty.SetActive(false);
+    }
+
+    //  Called when Start Button is clicked
+    public void StartGame()
+    {
+        if (environmentObjects != null)
+            environmentObjects.SetActive(true);  // Show planets & asteroids
+
+        if (startButton != null)
+            startButton.SetActive(false);  // Hide the Start Button
+
+        isGameActive = true;
+        scoreI = 0;
+        health = 100;
+        UpdateHealthUI();
+        UpdateScoreUI();
+
+        Debug.Log("Game Started! Environment Activated.");
+    }
+
+    //  Loads questions and answers from the text file
     private void LoadQuestionsFromFile()
     {
         TextAsset questionFile = Resources.Load<TextAsset>("computer_science_questions");
@@ -74,171 +129,137 @@ public class QuestionHelperCodex : MonoBehaviour
         }
     }
 
-    // Gets a random question and its answer
-    public (string question, string answer) GetRandomQuestion()
+    //  Displays the next question when interacting with a planet
+    public void ShowQuestionAtPlanet()
     {
-        if (questionsAndAnswers.Count == 0)
+        if (!isGameActive) return;
+
+        index++;
+        if (index >= questionsAndAnswers.Count)
         {
-            Debug.LogError("No questions loaded!");
-            return ("", "");
+            index = 0;
         }
 
-        int randomIndex = Random.Range(0, questionsAndAnswers.Count);
-        string randomQuestionEntry = questionsAndAnswers[randomIndex];
+        Debug.Log("Displaying Question Index: " + index);
 
-        string[] parts = randomQuestionEntry.Split(new[] { "Answer:" }, System.StringSplitOptions.None);
+        (string question, string answer) = GetQuestionByIndex();
+        correctAnswer = answer;
+        QuestionBoxText.text = question;
 
+        QuestionPanel.SetActive(true);
+        AnswerPanelA.SetActive(true);
+        AnswerPanelB.SetActive(true);
+        AnswerPanelC.SetActive(true);
+    }
+
+    //  Retrieves a question by index
+    private (string question, string answer) GetQuestionByIndex()
+    {
+        string questionEntry = questionsAndAnswers[index];
+
+        string[] parts = questionEntry.Split(new[] { "Answer:" }, System.StringSplitOptions.None);
         if (parts.Length < 2)
         {
             Debug.LogError("Invalid question format!");
             return ("", "");
         }
 
-        string question = parts[0].Trim();
-        string answer = parts[1].Trim();
-
-        return (question, answer);
+        return (parts[0].Trim(), parts[1].Trim());
     }
 
-    // Called when answer choice 1 is pressed
-    public void answerChoice1Pressed()
+    //  Hides the question when the player flies away from a planet
+    public void HideQuestion()
     {
-        Button1.SetActive(false);
-        Button2.SetActive(false);
-        Button3.SetActive(false);
-
-        if (text == "A")
-        {
-            StartCoroutine(CorrectAnswerTimer("1"));
-        }
-        else
-        {
-            StartCoroutine(WrongAnswerTimer());
-        }
-    }
-
-    // Called when answer choice 2 is pressed
-    public void answerChoice2Pressed()
-    {
-        Button1.SetActive(false);
-        Button2.SetActive(false);
-        Button3.SetActive(false);
-
-        if (text == "B")
-        {
-            StartCoroutine(CorrectAnswerTimer("2"));
-        }
-        else
-        {
-            StartCoroutine(WrongAnswerTimer());
-        }
-    }
-
-    // Called when answer choice 3 is pressed
-    public void answerChoice3Pressed()
-    {
-        Button1.SetActive(false);
-        Button2.SetActive(false);
-        Button3.SetActive(false);
-
-        if (text == "C")
-        {
-            StartCoroutine(CorrectAnswerTimer("3"));
-        }
-        else
-        {
-            StartCoroutine(WrongAnswerTimer());
-        }
-    }
-
-    // Handles the correct answer feedback
-    private IEnumerator CorrectAnswerTimer(string choice)
-    {
-        scoreI++;
-        score.text = "Score: " + scoreI;
-        CorrectUI.SetActive(true); // Show Correct Panel
-
-        yield return new WaitForSeconds(3f);  // Wait before switching back
-        CorrectUI.SetActive(false);  // Hide Correct Panel
-
-        RestartGame();
-    }
-
-    // Handles the wrong answer feedback
-    private IEnumerator WrongAnswerTimer()
-    {
-        WrongUI.SetActive(true);  // Show Wrong Panel
-
-        yield return new WaitForSeconds(3f);  // Wait before switching back
-        WrongUI.SetActive(false);  // Hide Wrong Panel
-
-        RestartGame();
-    }
-
-    // Resets the game UI for the next question
-    private void RestartGame()
-    {
-        Button1.SetActive(true);
-        Button2.SetActive(true);
-        Button3.SetActive(true);
-
-        UIEmpty.SetActive(false);
-
-        // Reset UI for new question
-        (string question, string answer) = GetRandomQuestion();
-        text = answer;
-        QuestionBoxText.text = question;
-
-        // Hide the Question Panel and Answer Panels when done
         QuestionPanel.SetActive(false);
         AnswerPanelA.SetActive(false);
         AnswerPanelB.SetActive(false);
         AnswerPanelC.SetActive(false);
     }
 
-    // Updates the health UI text
+    //  Called when the player answers a question
+    public void AnswerChoicePressed(string choice)
+    {
+        Button1.SetActive(false);
+        Button2.SetActive(false);
+        Button3.SetActive(false);
+
+        if (choice == correctAnswer)
+        {
+            StartCoroutine(CorrectAnswerFeedback());
+        }
+        else
+        {
+            StartCoroutine(WrongAnswerFeedback());
+        }
+    }
+
+    //  Handles correct answer
+    private IEnumerator CorrectAnswerFeedback()
+    {
+        scoreI += 10;
+        UpdateScoreUI();
+        CorrectUI.SetActive(true);
+
+        yield return new WaitForSeconds(3f);
+        CorrectUI.SetActive(false);
+        HideQuestion();
+
+        if (scoreI >= 100)
+        {
+            GameOver(true); // Player wins
+        }
+    }
+
+    //  Handles incorrect answer
+    private IEnumerator WrongAnswerFeedback()
+    {
+        WrongUI.SetActive(true);
+
+        yield return new WaitForSeconds(3f);
+        WrongUI.SetActive(false);
+        HideQuestion();
+    }
+
+    //  Updates health UI when hitting an asteroid
+    public void UpdateHealth(int damage)
+    {
+        if (!isGameActive) return;
+
+        health -= damage;
+        if (health <= 0)
+        {
+            health = 0;
+            GameOver(false); // Player loses
+        }
+        UpdateHealthUI();
+    }
+
+    //  Game over logic (win or lose)
+    private void GameOver(bool won)
+    {
+        isGameActive = false;
+        Debug.Log(won ? "Victory! 100 Points Reached!" : "Game Over! Health Depleted!");
+
+        StartCoroutine(ResetAfterDelay());
+    }
+
+    //  Resets everything after 10 seconds
+    private IEnumerator ResetAfterDelay()
+    {
+        yield return new WaitForSeconds(10f);
+        ResetGame();
+        if (startButton != null)
+            startButton.SetActive(true);
+    }
+
+    //  Updates the UI
     private void UpdateHealthUI()
     {
         healthText.text = "Health: " + health;
     }
 
-    // Updates health when the player collides with an asteroid
-    public void UpdateHealth(int damage)
+    private void UpdateScoreUI()
     {
-        health -= damage;
-        if (health <= 0)
-        {
-            // Handle Game Over scenario
-            health = 0;
-            GameOver();
-        }
-        UpdateHealthUI();
-    }
-
-    // Game over logic
-    private void GameOver()
-    {
-        // You can call a Game Over screen or stop the game
-        Debug.Log("Game Over!");
-        // Optionally show GameOver UI, disable further interactions, etc.
-    }
-
-    // When the player presses Start, the game begins
-    public void startGamePressed(GameObject button)
-    {
-        UIEmpty.transform.position = button.transform.position + new Vector3(0f, 0, 0);
-        button.SetActive(false);
-        UIEmpty.SetActive(true);
-
-        // Get a new question to start the game
-        (string question, string answer) = GetRandomQuestion();
-        text = answer;
-        QuestionBoxText.text = question;
-
-        // Show the Question Panel
-        QuestionPanel.SetActive(true);
-        AnswerPanelA.SetActive(true);
-        AnswerPanelB.SetActive(true);
-        AnswerPanelC.SetActive(true);
+        score.text = "Score: " + scoreI;
     }
 }

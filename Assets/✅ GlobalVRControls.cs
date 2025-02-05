@@ -1,62 +1,101 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Utilities; 
 
-public class GlobalVRControls : MonoBehaviour
+public class GlobalVRControls : IInputActionCollection, IDisposable
 {
-    public InputAction Move;     // Movement (translation) action
-    public InputAction Rotate;   // Rotation (formerly Look) action
-    public InputAction Interact; // Interaction action
-    public InputAction Crouch;   // Crouch action
-    public InputAction Jump;     // Jump action
-    public InputAction Sprint;   // Sprint action
+    public InputActionAsset asset { get; }
 
-    private void Awake()
+    public GlobalVRControls()
     {
-        Move = new InputAction("Move", binding: "<XRController>{LeftHand}/primary2DAxis");
-        Rotate = new InputAction("Rotate", binding: "<XRController>{RightHand}/primary2DAxis");
-        Interact = new InputAction("Interact", binding: "<XRController>{LeftHand}/trigger");
-        Crouch = new InputAction("Crouch", binding: "<XRController>{LeftHand}/primaryButton"); // example of crouch
-        Jump = new InputAction("Jump", binding: "<XRController>{RightHand}/primaryButton"); // example of jump
-        Sprint = new InputAction("Sprint", binding: "<XRController>{LeftHand}/secondaryButton"); // example of sprint
+        asset = InputActionAsset.FromJson(@"{
+            ""name"": ""GlobalVRControls"",
+            ""maps"": [
+                {
+                    ""name"": ""Player"",
+                    ""actions"": [
+                        { ""name"": ""Move"", ""type"": ""Value"", ""expectedControlType"": ""Vector2"" },
+                        { ""name"": ""Rotate"", ""type"": ""Value"", ""expectedControlType"": ""Vector2"" },
+                        { ""name"": ""Jump"", ""type"": ""Button"", ""expectedControlType"": ""Button"" },
+                        { ""name"": ""Sprint"", ""type"": ""Button"", ""expectedControlType"": ""Button"" },
+                        { ""name"": ""Climb"", ""type"": ""Button"", ""expectedControlType"": ""Button"" },
+                        { ""name"": ""Interact"", ""type"": ""Button"", ""expectedControlType"": ""Button"" },
+                        { ""name"": ""SelectA"", ""type"": ""Button"", ""expectedControlType"": ""Button"" },
+                        { ""name"": ""SelectB"", ""type"": ""Button"", ""expectedControlType"": ""Button"" },
+                        { ""name"": ""SelectC"", ""type"": ""Button"", ""expectedControlType"": ""Button"" }
+                    ],
+                    ""bindings"": [
+                        { ""path"": ""<XRController>{RightHand}/primary2DAxis"", ""action"": ""Move"" },
+                        { ""path"": ""<XRController>{RightHand}/primary2DAxis"", ""action"": ""Rotate"" },
+                        { ""path"": ""<XRController>{RightHand}/primaryButton"", ""action"": ""Jump"" },
+                        { ""path"": ""<XRController>{LeftHand}/primaryButton"", ""action"": ""Sprint"" },
+                        { ""path"": ""<XRController>{RightHand}/secondaryButton"", ""action"": ""Climb"" },
+                        { ""path"": ""<XRController>{RightHand}/trigger"", ""action"": ""Interact"" },
+                        { ""path"": ""<XRController>{RightHand}/buttonSouth"", ""action"": ""SelectA"" },
+                        { ""path"": ""<XRController>{RightHand}/buttonWest"", ""action"": ""SelectB"" },
+                        { ""path"": ""<XRController>{RightHand}/buttonNorth"", ""action"": ""SelectC"" }
+                    ]
+                }
+            ],
+            ""controlSchemes"": []
+        }");
+
+        // Setup Action Maps
+        m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
+        m_Move = m_Player.FindAction("Move", throwIfNotFound: true);
+        m_Rotate = m_Player.FindAction("Rotate", throwIfNotFound: true);
+        m_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
+        m_Sprint = m_Player.FindAction("Sprint", throwIfNotFound: true);
+        m_Climb = m_Player.FindAction("Climb", throwIfNotFound: true);
+        m_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
+        m_SelectA = m_Player.FindAction("SelectA", throwIfNotFound: true);
+        m_SelectB = m_Player.FindAction("SelectB", throwIfNotFound: true);
+        m_SelectC = m_Player.FindAction("SelectC", throwIfNotFound: true);
     }
 
-    // Enable all actions
-    public void Enable()
-    {
-        Move.Enable();
-        Rotate.Enable();
-        Interact.Enable();
-        Crouch.Enable();
-        Jump.Enable();
-        Sprint.Enable();
-    }
+    public void Dispose() => UnityEngine.Object.Destroy(asset);
+    public InputBinding? bindingMask { get; set; }
+    public ReadOnlyArray<InputDevice>? devices { get; set; } // FIXED ReadOnlyArray<> ERROR
+    public ReadOnlyArray<InputControlScheme> controlSchemes => asset.controlSchemes; // FIXED
 
-    // Disable all actions
-    public void Disable()
-    {
-        Move.Disable();
-        Rotate.Disable();
-        Interact.Disable();
-        Crouch.Disable();
-        Jump.Disable();
-        Sprint.Disable();
-    }
+    public IEnumerator<InputAction> GetEnumerator() => asset.GetEnumerator();
+    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+    public bool Contains(InputAction action) => asset.Contains(action);
+    public void Enable() => asset.Enable();
+    public void Disable() => asset.Disable();
 
-    // Get Movement Input
-    public Vector2 GetMovementInput()
-    {
-        return Move.ReadValue<Vector2>();
-    }
+    // Player Action Map
+    private readonly InputActionMap m_Player;
+    private readonly InputAction m_Move;
+    private readonly InputAction m_Rotate;
+    private readonly InputAction m_Jump;
+    private readonly InputAction m_Sprint;
+    private readonly InputAction m_Climb;
+    private readonly InputAction m_Interact;
+    private readonly InputAction m_SelectA;
+    private readonly InputAction m_SelectB;
+    private readonly InputAction m_SelectC;
 
-    // Get Rotation Input
-    public Vector2 GetRotationInput()
+    // Access Player Actions
+    public struct PlayerActions
     {
-        return Rotate.ReadValue<Vector2>();
+        private GlobalVRControls m_Wrapper;
+        public PlayerActions(GlobalVRControls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Move => m_Wrapper.m_Move;
+        public InputAction @Rotate => m_Wrapper.m_Rotate;
+        public InputAction @Jump => m_Wrapper.m_Jump;
+        public InputAction @Sprint => m_Wrapper.m_Sprint;
+        public InputAction @Climb => m_Wrapper.m_Climb;
+        public InputAction @Interact => m_Wrapper.m_Interact;
+        public InputAction @SelectA => m_Wrapper.m_SelectA;
+        public InputAction @SelectB => m_Wrapper.m_SelectB;
+        public InputAction @SelectC => m_Wrapper.m_SelectC;
+        public InputActionMap Get() { return m_Wrapper.m_Player; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
     }
-
-    // Check if Interact Button is pressed
-    public bool IsInteractPressed()
-    {
-        return Interact.ReadValue<float>() > 0.5f; // Trigger is pressed if value is > 0.5
-    }
+    public PlayerActions @Player => new PlayerActions(this);
 }

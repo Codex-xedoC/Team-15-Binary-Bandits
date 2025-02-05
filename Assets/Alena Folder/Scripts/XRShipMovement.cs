@@ -3,64 +3,43 @@ using UnityEngine.InputSystem;
 
 public class XRShipMovement : MonoBehaviour
 {
-    public GlobalVRControls controls; // Reference to GlobalVRControls
-    public float movementSpeed = 2.0f; // Speed of the ship
-    public float rotationSpeed = 100.0f; // Rotation speed of the ship
+    [Header("Movement Settings")]
+    public float speed = 10f;
+
+    [Header("Input Actions")]
+    public InputActionProperty moveInput;  // Assign "Move" from GlobalVRControls in Unity
+
     private Rigidbody rb;
 
-    private Vector2 movementInput; // Stores movement input values
-    private Vector2 rotationInput; // Stores rotation input values
-
-    private void Start()
+    void Start()
     {
-        // Ensure the ship is NOT parented to PlanetContainer or AsteroidContainer
-        if (transform.parent != null)
-        {
-            Debug.LogWarning("Ship is parented to " + transform.parent.name + ". Detaching to prevent unwanted movement.");
-            transform.parent = null; // Remove parent to stop inheriting transformations
-        }
-
-        // Ensure Rigidbody isn't causing unwanted rotation
         rb = GetComponent<Rigidbody>();
-        if (rb != null)
+
+        // ? Restore Rigidbody settings from when it worked before
+        rb.isKinematic = false;
+        rb.useGravity = false;
+        rb.linearDamping = 2f;  // Prevents excessive drifting
+        rb.angularDamping = 5f;  // Prevents unwanted spin
+    }
+
+    void FixedUpdate()
+    {
+        if (moveInput.action == null)
         {
-            rb.freezeRotation = true;  // Prevents external forces from rotating the ship
-            rb.angularDamping = 1.0f; // FIX: Use angularDamping instead of angularDrag
+            Debug.LogWarning("? Move Input is NOT assigned! Assign it in Unity.");
+            return;
         }
-    }
 
-    private void Update()
-    {
-        // Get movement and rotation input from VR controllers
-        movementInput = controls.GetMovementInput();
-        rotationInput = controls.GetRotationInput();
+        Vector2 move = moveInput.action.ReadValue<Vector2>();
 
-        // Handle movement and rotation based on VR input
-        HandleMovement();
-        HandleRotation();
-    }
-
-    private void HandleMovement()
-    {
-        if (movementInput.magnitude > 0.1f) // Ignore small movements
+        if (move.sqrMagnitude > 0.01f) // Only move if joystick input detected
         {
-            Vector3 moveDirection = new Vector3(movementInput.x, 0, movementInput.y) * movementSpeed * Time.deltaTime;
-            transform.Translate(moveDirection, Space.Self);
+            Vector3 moveDirection = (transform.forward * move.y) + (transform.right * move.x);
+            rb.linearVelocity = moveDirection * speed;  
         }
-    }
-
-    private void HandleRotation()
-    {
-        if (rotationInput.magnitude > 0.1f) // Ignore small rotation inputs
+        else
         {
-            float rotationX = rotationInput.x * rotationSpeed * Time.deltaTime;
-            float rotationY = -rotationInput.y * rotationSpeed * Time.deltaTime;
-
-            transform.Rotate(Vector3.up, rotationX, Space.World);
-            transform.Rotate(Vector3.right, rotationY, Space.World);
-
-            // **Fix: Reset Rotation Input to Prevent Unwanted Continuous Rotation**
-            rotationInput = Vector2.zero;
+            rb.linearVelocity = Vector3.zero;  //  Stops movement when joystick is idle
         }
     }
 }

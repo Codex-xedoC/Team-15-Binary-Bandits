@@ -1,13 +1,29 @@
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit;
+using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
 public class StartButtonScript : MonoBehaviour
 {
-    // Reference to Aaron's SceneManager
     public SceneManager sceneManager;
+
+    private void Start()
+    {
+        // Add XR Interaction event listener
+        XRSimpleInteractable interactable = GetComponent<XRSimpleInteractable>();
+        if (interactable != null)
+        {
+            interactable.selectEntered.AddListener(OnInteract);
+        }
+    }
+
+    public void OnInteract(SelectEnterEventArgs args)
+    {
+        Debug.Log("Start Button Pressed!");
+        StartGame();
+    }
 
     public void StartGame()
     {
-        // Call CodexLevelPressed() from Aaron's SceneManager to load the CodexScene
         if (sceneManager != null)
         {
             sceneManager.CodexLevelPressed();
