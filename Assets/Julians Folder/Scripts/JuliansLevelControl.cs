@@ -206,8 +206,10 @@ public class JuliansLevelControl : MonoBehaviour
             Button2.SetActive(false);
             Button3.SetActive(false);
 
-            // Show the end button
-            EndButton.SetActive(true);
+            
+            
+            // Show the end button -- should be true but the menu button is already there => redundant
+            EndButton.SetActive(false);
             return; // Stop asking new questions
         }
 
