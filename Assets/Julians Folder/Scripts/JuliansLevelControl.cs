@@ -18,6 +18,10 @@ public class JuliansLevelControl : MonoBehaviour
 
     public GameObject player;
 
+    public GameObject EndButton; // Button to restart or return to menu
+    private int questionLimit = 16; // Max number of questions
+    private int questionCount = 0;  // Tracks how many questions have been asked
+
     private string text;
 
     private List<string> questionsAndAnswers = new List<string>();
@@ -193,6 +197,20 @@ public class JuliansLevelControl : MonoBehaviour
 
     private void RestartGame()
     {
+        questionCount++; // Increment question count
+
+        if (questionCount >= questionLimit)
+        {
+            // Hide answer buttons
+            Button1.SetActive(false);
+            Button2.SetActive(false);
+            Button3.SetActive(false);
+
+            // Show the end button
+            EndButton.SetActive(true);
+            return; // Stop asking new questions
+        }
+
         Button1.SetActive(true);
         Button2.SetActive(true);
         Button3.SetActive(true);
@@ -206,11 +224,25 @@ public class JuliansLevelControl : MonoBehaviour
 
     public void startGamePressed()
     {
+        questionCount = 0; // Reset count when restarting
         StartButton.SetActive(false);
         UIEmpty.SetActive(true);
 
         (string question, string answer) = GetRandomQuestion();
         text = answer;
         QuestionBoxText.text = question;
+    }
+
+    public void EndGame()
+    {
+        // Reset question count
+        questionCount = 0;
+        index = 0;
+
+        // Hide the end button
+        EndButton.SetActive(false);
+
+        // Show start button to let player choose next action
+        StartButton.SetActive(true);
     }
 }
