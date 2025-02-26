@@ -17,7 +17,7 @@ public class QuestionHelperCodex : MonoBehaviour
     public GameObject AnswerPanelA, AnswerPanelB, AnswerPanelC;
 
     public GameObject environmentObjects;  // Contains planets & asteroids
-    public GameObject startButton;  //  The actual Start Button (Text Poke Button)
+    public GameObject startButton;  // The actual Start Button (Text Poke Button)
 
     private int scoreI = 0;
     private int health = 100;
@@ -32,7 +32,6 @@ public class QuestionHelperCodex : MonoBehaviour
         UpdateHealthUI();
         ResetGame(); // Ensure everything starts hidden
 
-        //  Ensure Start Button is assigned and linked to StartGame()
         if (startButton != null)
         {
             Button btn = startButton.GetComponent<Button>();
@@ -51,7 +50,6 @@ public class QuestionHelperCodex : MonoBehaviour
         }
     }
 
-    //  Hides everything until game starts
     private void ResetGame()
     {
         if (environmentObjects != null)
@@ -66,14 +64,13 @@ public class QuestionHelperCodex : MonoBehaviour
         UIEmpty.SetActive(false);
     }
 
-    //  Called when Start Button is clicked
     public void StartGame()
     {
         if (environmentObjects != null)
-            environmentObjects.SetActive(true);  // Show planets & asteroids
+            environmentObjects.SetActive(true);
 
         if (startButton != null)
-            startButton.SetActive(false);  // Hide the Start Button
+            startButton.SetActive(false);
 
         isGameActive = true;
         scoreI = 0;
@@ -84,7 +81,6 @@ public class QuestionHelperCodex : MonoBehaviour
         Debug.Log("Game Started! Environment Activated.");
     }
 
-    //  Loads questions and answers from the text file
     private void LoadQuestionsFromFile()
     {
         TextAsset questionFile = Resources.Load<TextAsset>("computer_science_questions");
@@ -129,17 +125,11 @@ public class QuestionHelperCodex : MonoBehaviour
         }
     }
 
-    //  Displays the next question when interacting with a planet
     public void ShowQuestionAtPlanet()
     {
         if (!isGameActive) return;
 
-        index++;
-        if (index >= questionsAndAnswers.Count)
-        {
-            index = 0;
-        }
-
+        index = Random.Range(0, questionsAndAnswers.Count);  // ? Pick a random question
         Debug.Log("Displaying Question Index: " + index);
 
         (string question, string answer) = GetQuestionByIndex();
@@ -150,9 +140,10 @@ public class QuestionHelperCodex : MonoBehaviour
         AnswerPanelA.SetActive(true);
         AnswerPanelB.SetActive(true);
         AnswerPanelC.SetActive(true);
+
+        Debug.Log("Question Displayed: " + question);
     }
 
-    //  Retrieves a question by index
     private (string question, string answer) GetQuestionByIndex()
     {
         string questionEntry = questionsAndAnswers[index];
@@ -167,7 +158,6 @@ public class QuestionHelperCodex : MonoBehaviour
         return (parts[0].Trim(), parts[1].Trim());
     }
 
-    //  Hides the question when the player flies away from a planet
     public void HideQuestion()
     {
         QuestionPanel.SetActive(false);
@@ -176,7 +166,6 @@ public class QuestionHelperCodex : MonoBehaviour
         AnswerPanelC.SetActive(false);
     }
 
-    //  Called when the player answers a question
     public void AnswerChoicePressed(string choice)
     {
         Button1.SetActive(false);
@@ -193,7 +182,6 @@ public class QuestionHelperCodex : MonoBehaviour
         }
     }
 
-    //  Handles correct answer
     private IEnumerator CorrectAnswerFeedback()
     {
         scoreI += 10;
@@ -206,11 +194,10 @@ public class QuestionHelperCodex : MonoBehaviour
 
         if (scoreI >= 100)
         {
-            GameOver(true); // Player wins
+            GameOver(true);
         }
     }
 
-    //  Handles incorrect answer
     private IEnumerator WrongAnswerFeedback()
     {
         WrongUI.SetActive(true);
@@ -220,7 +207,6 @@ public class QuestionHelperCodex : MonoBehaviour
         HideQuestion();
     }
 
-    //  Updates health UI when hitting an asteroid
     public void UpdateHealth(int damage)
     {
         if (!isGameActive) return;
@@ -229,12 +215,11 @@ public class QuestionHelperCodex : MonoBehaviour
         if (health <= 0)
         {
             health = 0;
-            GameOver(false); // Player loses
+            GameOver(false);
         }
         UpdateHealthUI();
     }
 
-    //  Game over logic (win or lose)
     private void GameOver(bool won)
     {
         isGameActive = false;
@@ -243,7 +228,6 @@ public class QuestionHelperCodex : MonoBehaviour
         StartCoroutine(ResetAfterDelay());
     }
 
-    //  Resets everything after 10 seconds
     private IEnumerator ResetAfterDelay()
     {
         yield return new WaitForSeconds(10f);
@@ -252,7 +236,6 @@ public class QuestionHelperCodex : MonoBehaviour
             startButton.SetActive(true);
     }
 
-    //  Updates the UI
     private void UpdateHealthUI()
     {
         healthText.text = "Health: " + health;

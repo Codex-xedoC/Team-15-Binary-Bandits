@@ -4,10 +4,12 @@ using UnityEngine.InputSystem;
 public class XRShipMovement : MonoBehaviour
 {
     [Header("Movement Settings")]
-    public float speed = 10f;
+    public float speed = 300f;  // SIGNIFICANTLY faster
+    public float acceleration = 50f;  // Added acceleration for smoother speed-up
+    public float maxSpeed = 500f;  // Ship won't be clamped artificially
 
     [Header("Input Actions")]
-    public InputActionProperty moveInput;  // Assign "Move" from GlobalVRControls in Unity
+    public InputActionProperty moveInput;
 
     private Rigidbody rb;
 
@@ -15,10 +17,11 @@ public class XRShipMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
 
-        // ? Restore Rigidbody settings from when it worked before
+        // Enable smooth movement
         rb.isKinematic = false;
         rb.useGravity = false;
-        rb.angularDamping = 5f;  // Prevents unwanted spin
+        rb.linearDamping = 0.05f;  // Reduce drag so it moves freely
+        rb.angularDamping = 1f;  // Less restrictive turning
     }
 
     void FixedUpdate()
@@ -31,14 +34,20 @@ public class XRShipMovement : MonoBehaviour
 
         Vector2 move = moveInput.action.ReadValue<Vector2>();
 
-        if (move.sqrMagnitude > 0.01f) // Only move if joystick input detected
+        if (move.sqrMagnitude > 0.01f)
         {
             Vector3 moveDirection = (transform.forward * move.y) + (transform.right * move.x);
-            rb.linearVelocity = moveDirection * speed;  // Use velocity instead of linearVelocity
+            rb.AddForce(moveDirection * acceleration, ForceMode.Acceleration);
+
+            // Cap speed so it doesn't go out of control
+            if (rb.linearVelocity.magnitude > maxSpeed)
+            {
+                rb.linearVelocity = rb.linearVelocity.normalized * maxSpeed;
+            }
         }
         else
         {
-            rb.linearVelocity = Vector3.zero;  // Stops movement when joystick is idle
+            rb.linearVelocity *= 0.98f;  // Smooth deceleration instead of instant stop
         }
     }
 }

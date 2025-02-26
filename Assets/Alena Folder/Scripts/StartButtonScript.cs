@@ -1,36 +1,49 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;  // ? Ensure this is included
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
 public class StartButtonScript : MonoBehaviour
 {
-    public SceneManager sceneManager;
+    public GameObject startButton;
+    public GameObject planetContainer;
 
-    private void Start()
+    private XRSimpleInteractable interactable;
+
+    void Start()
     {
-        // Add XR Interaction event listener
-        XRSimpleInteractable interactable = GetComponent<XRSimpleInteractable>();
-        if (interactable != null)
+        interactable = startButton.GetComponent<XRSimpleInteractable>();
+
+        if (interactable == null)
         {
-            interactable.selectEntered.AddListener(OnInteract);
-        }
-    }
-
-    public void OnInteract(SelectEnterEventArgs args)
-    {
-        Debug.Log("Start Button Pressed!");
-        StartGame();
-    }
-
-    public void StartGame()
-    {
-        if (sceneManager != null)
-        {
-            sceneManager.CodexLevelPressed();
+            Debug.LogWarning("No XRSimpleInteractable found on the Start Button.");
         }
         else
         {
-            Debug.LogError("SceneManager is not assigned!");
+            interactable.selectEntered.AddListener(OnButtonClicked);
+        }
+
+        if (planetContainer != null)
+        {
+            DontDestroyOnLoad(planetContainer);
+        }
+        else
+        {
+            Debug.LogWarning("PlanetContainer not assigned.");
+        }
+    }
+
+    private void OnButtonClicked(SelectEnterEventArgs args)
+    {
+        Debug.Log("Start button clicked! Attempting to load scene: CodexScene");
+
+        try
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadScene("CodexScene");  // ? Force explicit reference
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError("Failed to load scene: " + e.Message);
         }
     }
 }

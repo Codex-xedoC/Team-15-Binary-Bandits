@@ -276,7 +276,7 @@ public partial class @GlobalVRControls: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""1c04ea5f-b012-41d1-a6f7-02e963b52893"",
-                    ""path"": ""<Keyboard>/e"",
+                    ""path"": ""<Keyboard>/z"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
@@ -331,7 +331,7 @@ public partial class @GlobalVRControls: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""0afed87f-ca09-4234-918d-e1ad369fbed6"",
-                    ""path"": ""<Keyboard>/a"",
+                    ""path"": ""<Keyboard>/1"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
@@ -364,7 +364,7 @@ public partial class @GlobalVRControls: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""e02e0c7a-def5-422c-af75-0078776d9b83"",
-                    ""path"": ""<Keyboard>/b"",
+                    ""path"": ""<Keyboard>/2"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
@@ -397,7 +397,7 @@ public partial class @GlobalVRControls: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""66cc1938-c640-4358-904c-50dcbabec927"",
-                    ""path"": ""<Keyboard>/c"",
+                    ""path"": ""<Keyboard>/3"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",

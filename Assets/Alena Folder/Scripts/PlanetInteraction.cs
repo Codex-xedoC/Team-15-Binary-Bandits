@@ -1,25 +1,34 @@
 using UnityEngine;
-using TMPro;
+using UnityEngine.XR.Interaction.Toolkit;
 
-public class PlanetInteraction : MonoBehaviour
+public class PlanetInteractionScript : MonoBehaviour
 {
-    public GameObject questionPanel; // Assign in Inspector
-    private bool playerNearby = false;
+    private bool isPlayerNear = false;
+    public QuestionHelperCodex questionHelper;
 
-    void Update()
+    void Start()
     {
-        // Detect player pressing X (VR trigger can be used here)
-        if (playerNearby && Input.GetKeyDown(KeyCode.X))  // Replace with VR button later if needed
+        if (questionHelper == null)
         {
-            questionPanel.SetActive(true); // Show question panel when player interacts
+            questionHelper = FindObjectOfType<QuestionHelperCodex>();
+        }
+    }
+
+    // Trigger VR Interaction (instead of KeyCode.Z)
+    public void OnInteract()
+    {
+        if (isPlayerNear)
+        {
+            Debug.Log("? VR Interaction triggered on " + gameObject.name);
+            questionHelper.ShowQuestionAtPlanet();
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player")) // Ensure the spaceship has the "Player" tag
+        if (other.CompareTag("Player"))
         {
-            playerNearby = true;
+            isPlayerNear = true;
         }
     }
 
@@ -27,8 +36,7 @@ public class PlanetInteraction : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            playerNearby = false;
-            questionPanel.SetActive(false); // Hide question panel when the player leaves the area
+            isPlayerNear = false;
         }
     }
 }
