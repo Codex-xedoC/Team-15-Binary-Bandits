@@ -43,6 +43,7 @@ public class QuizManager : MonoBehaviour
         Quizpanel.SetActive(false);
         GoPanel.SetActive(true);
         GoPanel.transform.GetChild(0).GetComponent<Text>().text = Time.text;
+        SceneManager.LoadScene("Maze1");
     }
     public void correct()
     {
@@ -65,7 +66,7 @@ public class QuizManager : MonoBehaviour
     {
         goBack();
         timerText.text = "{0:00}";
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        SceneManager.LoadScene("Maze1");
     }
 
     public void quit()

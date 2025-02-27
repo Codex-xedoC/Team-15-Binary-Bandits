@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class TimerController : MonoBehaviour
@@ -22,6 +23,10 @@ public class TimerController : MonoBehaviour
             sec = Mathf.FloorToInt(timeCounter - min * 60);
             timerText.text = string.Format("{0:00}:{1:00}", min, sec);
         }
+
+        if(min >= 5)
+            GameOver();
+        
     }
 
     public void Reset()
@@ -30,6 +35,12 @@ public class TimerController : MonoBehaviour
         min = 0;
         sec = 0;
         timerText.text = "{0:00}";
+    }
+
+    private void GameOver()
+    {
+        Reset();
+        SceneManager.LoadScene("Maze1");
     }
 
 }
