@@ -1,49 +1,41 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;  // ? Ensure this is included
-using UnityEngine.XR.Interaction.Toolkit;
-using UnityEngine.XR.Interaction.Toolkit.Interactables;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement; // Ensure this is included!
 
-public class StartButtonScript : MonoBehaviour
+public class StartButtonScript : MonoBehaviour, IPointerClickHandler
 {
-    public GameObject startButton;
-    public GameObject planetContainer;
-
-    private XRSimpleInteractable interactable;
+    public Button startButton; // Assign in Inspector
+    public string gameSceneName = "GameScene"; // Change to your actual game scene name
 
     void Start()
     {
-        interactable = startButton.GetComponent<XRSimpleInteractable>();
-
-        if (interactable == null)
+        if (startButton != null)
         {
-            Debug.LogWarning("No XRSimpleInteractable found on the Start Button.");
+            startButton.onClick.AddListener(StartGame);
         }
         else
         {
-            interactable.selectEntered.AddListener(OnButtonClicked);
-        }
-
-        if (planetContainer != null)
-        {
-            DontDestroyOnLoad(planetContainer);
-        }
-        else
-        {
-            Debug.LogWarning("PlanetContainer not assigned.");
+            Debug.LogError("Start Button not assigned in Inspector!");
         }
     }
 
-    private void OnButtonClicked(SelectEnterEventArgs args)
+    public void StartGame()
     {
-        Debug.Log("Start button clicked! Attempting to load scene: CodexScene");
+        if (Application.CanStreamedLevelBeLoaded(gameSceneName))
+        {
+            Debug.Log("Start Button Pressed! Loading Game...");
+            UnityEngine.SceneManagement.SceneManager.LoadScene(gameSceneName);
+        }
+        else
+        {
+            Debug.LogError($"Scene '{gameSceneName}' not found. Ensure it is added in Build Settings.");
+        }
+    }
 
-        try
-        {
-            UnityEngine.SceneManagement.SceneManager.LoadScene("CodexScene");  // ? Force explicit reference
-        }
-        catch (System.Exception e)
-        {
-            Debug.LogError("Failed to load scene: " + e.Message);
-        }
+    // Handles mouse clicks on the button
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        StartGame();
     }
 }

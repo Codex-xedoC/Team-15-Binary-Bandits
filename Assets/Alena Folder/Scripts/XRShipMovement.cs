@@ -3,51 +3,56 @@ using UnityEngine.InputSystem;
 
 public class XRShipMovement : MonoBehaviour
 {
-    [Header("Movement Settings")]
-    public float speed = 300f;  // SIGNIFICANTLY faster
-    public float acceleration = 50f;  // Added acceleration for smoother speed-up
-    public float maxSpeed = 500f;  // Ship won't be clamped artificially
-
-    [Header("Input Actions")]
-    public InputActionProperty moveInput;
+    public float speed = 10f;
+    public float rotationSpeed = 100f;
 
     private Rigidbody rb;
+    private Vector3 moveDirection;
+
+    // VR Input
+    public InputActionProperty moveInput;
+    public InputActionProperty rotateInput; // Uses GlobalVRInputManager
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
 
-        // Enable smooth movement
-        rb.isKinematic = false;
-        rb.useGravity = false;
-        rb.linearDamping = 0.05f;  // Reduce drag so it moves freely
-        rb.angularDamping = 1f;  // Less restrictive turning
+        // ?? Ensure Camera Offset is Parented to PlayerShip
+        Transform cameraOffset = transform.Find("Camera Offset");
+        if (cameraOffset != null && cameraOffset.parent != transform)
+        {
+            cameraOffset.SetParent(transform);
+            Debug.Log("Camera Offset parented to PlayerShip.");
+        }
     }
 
-    void FixedUpdate()
+    void Update()
     {
-        if (moveInput.action == null)
-        {
-            Debug.LogWarning("? Move Input is NOT assigned! Assign it in Unity.");
-            return;
-        }
+        // ?? Keyboard Movement (WASD)
+        float moveX = Input.GetAxis("Horizontal"); // A/D or Left/Right Arrow
+        float moveZ = Input.GetAxis("Vertical");   // W/S or Up/Down Arrow
 
-        Vector2 move = moveInput.action.ReadValue<Vector2>();
+        // ?? VR Joystick Movement
+        Vector2 vrMove = moveInput.action.ReadValue<Vector2>();
 
-        if (move.sqrMagnitude > 0.01f)
-        {
-            Vector3 moveDirection = (transform.forward * move.y) + (transform.right * move.x);
-            rb.AddForce(moveDirection * acceleration, ForceMode.Acceleration);
+        // ?? Combine VR & Keyboard Movement
+        moveDirection = new Vector3(moveX + vrMove.x, 0, moveZ + vrMove.y);
+        moveDirection = transform.TransformDirection(moveDirection) * speed;
 
-            // Cap speed so it doesn't go out of control
-            if (rb.linearVelocity.magnitude > maxSpeed)
-            {
-                rb.linearVelocity = rb.linearVelocity.normalized * maxSpeed;
-            }
-        }
-        else
+        // ?? Apply Movement
+        rb.linearVelocity = moveDirection; // Updated from velocity to linearVelocity
+
+        // ?? Handle Rotation Using GlobalVRInputManager
+        Vector2 vrRotate = rotateInput.action.ReadValue<Vector2>(); // Right joystick for looking
+        transform.Rotate(Vector3.up * vrRotate.x * rotationSpeed * Time.deltaTime);
+
+        // ?? Mouse Look (Only if VR isn't active)
+        if (!moveInput.action.enabled) // Allow mouse look when VR joystick isn't used
         {
-            rb.linearVelocity *= 0.98f;  // Smooth deceleration instead of instant stop
+            float mouseX = Input.GetAxis("Mouse X") * rotationSpeed * Time.deltaTime;
+            float mouseY = -Input.GetAxis("Mouse Y") * rotationSpeed * Time.deltaTime;
+            transform.Rotate(Vector3.up * mouseX);
+            Camera.main.transform.Rotate(Vector3.right * mouseY);
         }
     }
 }

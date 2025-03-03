@@ -116,20 +116,18 @@ public partial class @GlobalVRControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""VerticalMove"",
+                    ""type"": ""Button"",
+                    ""id"": ""62a2bd40-798c-49c0-87b2-0d2c682f7b1d"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
-                {
-                    ""name"": """",
-                    ""id"": ""1635d3fe-58b6-4ba9-a4e2-f4b964f6b5c8"",
-                    ""path"": ""<XRController>{RightHand}/{Primary2DAxis}"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""XR"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
                 {
                     ""name"": """",
                     ""id"": ""9dd9400e-01c6-4e82-93fa-a5cf4d8dbbbb"",
@@ -298,7 +296,7 @@ public partial class @GlobalVRControls: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""e206bdbf-6d02-4b81-9c50-a2c08295a1f2"",
-                    ""path"": ""<XRController>/{PrimaryButton}"",
+                    ""path"": ""<XRController>{RightHand}/{PrimaryButton}"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";XR"",
@@ -446,6 +444,17 @@ public partial class @GlobalVRControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": "";XR"",
                     ""action"": ""Climb"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e286350a-c619-4daa-aae0-279c3f3c4418"",
+                    ""path"": ""<XRController>{RightHand}/{GripButton}"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";XR"",
+                    ""action"": ""VerticalMove"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1043,6 +1052,7 @@ public partial class @GlobalVRControls: IInputActionCollection2, IDisposable
         m_Player_SelectB = m_Player.FindAction("Select B", throwIfNotFound: true);
         m_Player_SelectC = m_Player.FindAction("Select C", throwIfNotFound: true);
         m_Player_Climb = m_Player.FindAction("Climb", throwIfNotFound: true);
+        m_Player_VerticalMove = m_Player.FindAction("VerticalMove", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1132,6 +1142,7 @@ public partial class @GlobalVRControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_SelectB;
     private readonly InputAction m_Player_SelectC;
     private readonly InputAction m_Player_Climb;
+    private readonly InputAction m_Player_VerticalMove;
     public struct PlayerActions
     {
         private @GlobalVRControls m_Wrapper;
@@ -1146,6 +1157,7 @@ public partial class @GlobalVRControls: IInputActionCollection2, IDisposable
         public InputAction @SelectB => m_Wrapper.m_Player_SelectB;
         public InputAction @SelectC => m_Wrapper.m_Player_SelectC;
         public InputAction @Climb => m_Wrapper.m_Player_Climb;
+        public InputAction @VerticalMove => m_Wrapper.m_Player_VerticalMove;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1185,6 +1197,9 @@ public partial class @GlobalVRControls: IInputActionCollection2, IDisposable
             @Climb.started += instance.OnClimb;
             @Climb.performed += instance.OnClimb;
             @Climb.canceled += instance.OnClimb;
+            @VerticalMove.started += instance.OnVerticalMove;
+            @VerticalMove.performed += instance.OnVerticalMove;
+            @VerticalMove.canceled += instance.OnVerticalMove;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -1219,6 +1234,9 @@ public partial class @GlobalVRControls: IInputActionCollection2, IDisposable
             @Climb.started -= instance.OnClimb;
             @Climb.performed -= instance.OnClimb;
             @Climb.canceled -= instance.OnClimb;
+            @VerticalMove.started -= instance.OnVerticalMove;
+            @VerticalMove.performed -= instance.OnVerticalMove;
+            @VerticalMove.canceled -= instance.OnVerticalMove;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -1411,6 +1429,7 @@ public partial class @GlobalVRControls: IInputActionCollection2, IDisposable
         void OnSelectB(InputAction.CallbackContext context);
         void OnSelectC(InputAction.CallbackContext context);
         void OnClimb(InputAction.CallbackContext context);
+        void OnVerticalMove(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

@@ -1,42 +1,50 @@
 using UnityEngine;
-using UnityEngine.XR.Interaction.Toolkit;
+using UnityEngine.UI;
 
-public class PlanetInteractionScript : MonoBehaviour
+public class PlanetInteraction : MonoBehaviour
 {
-    private bool isPlayerNear = false;
-    public QuestionHelperCodex questionHelper;
+    public GameObject questionPanel; // Assign the Question UI Panel in Inspector
+    public Text questionText; // Assign UI Text to display questions
+    private bool isNearPlanet = false;
 
     void Start()
     {
-        if (questionHelper == null)
+        if (questionPanel != null)
+            questionPanel.SetActive(false);
+    }
+
+    void Update()
+    {
+        if (isNearPlanet && Input.GetKeyDown(KeyCode.X)) // Press X to interact
         {
-            questionHelper = FindObjectOfType<QuestionHelperCodex>();
+            ShowQuestion();
         }
     }
 
-    // Trigger VR Interaction (instead of KeyCode.Z)
-    public void OnInteract()
+    private void ShowQuestion()
     {
-        if (isPlayerNear)
+        if (questionPanel != null)
         {
-            Debug.Log("? VR Interaction triggered on " + gameObject.name);
-            questionHelper.ShowQuestionAtPlanet();
+            questionPanel.SetActive(true);
+            questionText.text = "What is the correct answer for this planet?";
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Planet"))
         {
-            isPlayerNear = true;
+            isNearPlanet = true;
+            Debug.Log("Near a Planet! Press X to interact.");
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Planet"))
         {
-            isPlayerNear = false;
+            isNearPlanet = false;
+            questionPanel.SetActive(false);
         }
     }
 }
