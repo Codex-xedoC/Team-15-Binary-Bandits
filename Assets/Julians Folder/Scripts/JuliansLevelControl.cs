@@ -175,11 +175,18 @@ public class JuliansLevelControl : MonoBehaviour
 
         CorrectUI.SetActive(false);
 
-
-        player.transform.position = grabables[1 + index].transform.position + new Vector3(0, -1, -1.5f);
-        UIEmpty.transform.position = grabables[1 + index].transform.position + new Vector3(0.3f, 0.5f, 0);
-        index++;
-        RestartGame();
+        if (index + 1 < grabables.Length)
+        {
+            player.transform.position = grabables[1 + index].transform.position + new Vector3(0, -1, -1.5f);
+            UIEmpty.transform.position = grabables[1 + index].transform.position + new Vector3(0.3f, 0.5f, 0);
+            index++;
+            RestartGame();
+        }
+        else
+        {
+            Debug.Log("All questions answered. Showing End Button.");
+            //EndButton.SetActive(true);
+        }
     }
 
     private IEnumerator WrongAnswerTimer()
