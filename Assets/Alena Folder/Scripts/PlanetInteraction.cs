@@ -1,34 +1,50 @@
 using UnityEngine;
-using TMPro;
+using UnityEngine.UI;
 
 public class PlanetInteraction : MonoBehaviour
 {
-    public GameObject questionPanel; // Assign in Inspector
-    private bool playerNearby = false;
+    public GameObject questionPanel; // Assign the Question UI Panel in Inspector
+    public Text questionText; // Assign UI Text to display questions
+    private bool isNearPlanet = false;
+
+    void Start()
+    {
+        if (questionPanel != null)
+            questionPanel.SetActive(false);
+    }
 
     void Update()
     {
-        // Detect player pressing X (VR trigger can be used here)
-        if (playerNearby && Input.GetKeyDown(KeyCode.X))  // Replace with VR button later if needed
+        if (isNearPlanet && Input.GetKeyDown(KeyCode.X)) // Press X to interact
         {
-            questionPanel.SetActive(true); // Show question panel when player interacts
+            ShowQuestion();
+        }
+    }
+
+    private void ShowQuestion()
+    {
+        if (questionPanel != null)
+        {
+            questionPanel.SetActive(true);
+            questionText.text = "What is the correct answer for this planet?";
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player")) // Ensure the spaceship has the "Player" tag
+        if (other.CompareTag("Planet"))
         {
-            playerNearby = true;
+            isNearPlanet = true;
+            Debug.Log("Near a Planet! Press X to interact.");
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Planet"))
         {
-            playerNearby = false;
-            questionPanel.SetActive(false); // Hide question panel when the player leaves the area
+            isNearPlanet = false;
+            questionPanel.SetActive(false);
         }
     }
 }

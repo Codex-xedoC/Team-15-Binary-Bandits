@@ -1,36 +1,41 @@
 using UnityEngine;
-using UnityEngine.XR.Interaction.Toolkit;
-using UnityEngine.XR.Interaction.Toolkit.Interactables;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement; // Ensure this is included!
 
-public class StartButtonScript : MonoBehaviour
+public class StartButtonScript : MonoBehaviour, IPointerClickHandler
 {
-    public SceneManager sceneManager;
+    public Button startButton; // Assign in Inspector
+    public string gameSceneName = "GameScene"; // Change to your actual game scene name
 
-    private void Start()
+    void Start()
     {
-        // Add XR Interaction event listener
-        XRSimpleInteractable interactable = GetComponent<XRSimpleInteractable>();
-        if (interactable != null)
+        if (startButton != null)
         {
-            interactable.selectEntered.AddListener(OnInteract);
+            startButton.onClick.AddListener(StartGame);
         }
-    }
-
-    public void OnInteract(SelectEnterEventArgs args)
-    {
-        Debug.Log("Start Button Pressed!");
-        StartGame();
+        else
+        {
+            Debug.LogError("Start Button not assigned in Inspector!");
+        }
     }
 
     public void StartGame()
     {
-        if (sceneManager != null)
+        if (Application.CanStreamedLevelBeLoaded(gameSceneName))
         {
-            sceneManager.CodexLevelPressed();
+            Debug.Log("Start Button Pressed! Loading Game...");
+            UnityEngine.SceneManagement.SceneManager.LoadScene(gameSceneName);
         }
         else
         {
-            Debug.LogError("SceneManager is not assigned!");
+            Debug.LogError($"Scene '{gameSceneName}' not found. Ensure it is added in Build Settings.");
         }
+    }
+
+    // Handles mouse clicks on the button
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        StartGame();
     }
 }

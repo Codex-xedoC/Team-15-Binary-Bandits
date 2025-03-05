@@ -1,44 +1,48 @@
 using UnityEngine;
 using TMPro;
 
-public class HealthUI : MonoBehaviour
+public class XRShipHealth : MonoBehaviour
 {
-    public TextMeshProUGUI healthText; // Assign this in the Inspector
-    public TextMeshProUGUI scoreText;  // Assign this in the Inspector
-    private int health = 100; // Total Health
-    private int score = 0; // Initial Score
+    public static XRShipHealth Instance;
+
+    [Header("Health Settings")]
+    public int maxHealth = 100;
+    public int currentHealth;
+
+    [Header("UI Elements")]
+    public TextMeshProUGUI healthText;
+    public GameObject GameOverUI;
+
+    void Awake()
+    {
+        Instance = this;
+    }
 
     void Start()
     {
+        currentHealth = maxHealth;
         UpdateHealthUI();
-        UpdateScoreUI();
     }
 
-    public void DecreaseHealth(int damage)
+    public void TakeDamage(int damage)
     {
-        health -= damage;
-        if (health <= 0)
+        currentHealth -= damage;
+        UpdateHealthUI();
+
+        if (currentHealth <= 0)
         {
-            health = 0;
-            // Trigger Game Over (can be a UI popup or scene change)
-            Debug.Log("GAME OVER");
+            GameOver();
         }
-        UpdateHealthUI();
-    }
-
-    public void IncreaseScore(int points)
-    {
-        score += points;
-        UpdateScoreUI();
     }
 
     private void UpdateHealthUI()
     {
-        healthText.text = "Health: " + health;
+        healthText.text = "Health: " + currentHealth;
     }
 
-    private void UpdateScoreUI()
+    private void GameOver()
     {
-        scoreText.text = "Score: " + score;
+        GameOverUI.SetActive(true);
+        Debug.Log("Game Over! Ship Destroyed.");
     }
 }

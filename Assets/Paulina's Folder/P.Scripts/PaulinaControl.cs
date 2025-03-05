@@ -13,6 +13,7 @@ public class PaulinaControl : MonoBehaviour
     public GameObject Button1, Button2, Button3;
 
     public GameObject CorrectUI, WrongUI, ErrorUI;
+    TextMeshProUGUI numCorrectT;
 
     private string text;
 
@@ -142,6 +143,11 @@ public class PaulinaControl : MonoBehaviour
         }
     }
 
+    public TextMeshProUGUI numCorrectText; // Assign this in Unity Inspector
+    private int numCorrect = 0; // Counter for correct answers
+
+    
+
     private IEnumerator CorrectAnswerTimer()
     {
        MainMenuHandler.Instance.questionCorrect();
@@ -156,6 +162,9 @@ public class PaulinaControl : MonoBehaviour
         CorrectUI.SetActive(false);
         UIEmpty.SetActive(false);
         activeChoices();
+
+        numCorrect++; // Increment the correct answers count
+        numCorrectText.text = numCorrect.ToString(); // Update the UI
     }
 
     private IEnumerator WrongAnswerTimer()
@@ -220,4 +229,6 @@ public class PaulinaControl : MonoBehaviour
         QuestionBoxText.text = question;
     }
 
+
 }
+
