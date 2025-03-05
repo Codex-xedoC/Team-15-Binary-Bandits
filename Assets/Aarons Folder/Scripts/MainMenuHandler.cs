@@ -10,12 +10,14 @@ public class MainMenuHandler : MonoBehaviour
     TextMeshProUGUI numStreakT;
     TextMeshProUGUI AccuracyRateT;
 
+    public ScoreManager scoreManager;
+
     TextMeshProUGUI tenCorrectT;
     TextMeshProUGUI hundredCorrectT;
     TextMeshProUGUI tenStreakT;
 
-    int numCorrect = 0;
-    int numWrong = 0;
+    public int numCorrect = 0;
+    public int numWrong = 0;
     int numStreak = 0;
     float AvgTimePerQuest = 0;
     int AccuracyRate = 0;
@@ -59,6 +61,8 @@ public class MainMenuHandler : MonoBehaviour
     {
         numCorrect++;
         numStreak++;
+        if (scoreManager != null)
+            scoreManager.inputScore = numCorrect;
         AccuracyRate = (numCorrect / (numWrong + numCorrect)) * 100;
     }
 

@@ -10,10 +10,17 @@ public class AaronsLevelScript : MonoBehaviour
     public TextMeshProUGUI QuestionBoxText;
     public GameObject StartButton;
 
+    public GameObject fishSpawnPoint;
+    public GameObject[] fishSpawns;
+
     public GameObject Fish1, Fish2, Fish3;
     public GameObject Button1, Button2, Button3;
 
     public GameObject CorrectUI, WrongUI;
+
+    public GameObject shark;
+
+    bool sharkQuestion = false;
 
     private string text;
 
@@ -108,6 +115,11 @@ public class AaronsLevelScript : MonoBehaviour
         Button2.SetActive(false);
         Button3.SetActive(false);
 
+        if (sharkQuestion)
+        {
+            sharkQuestion = false;
+        }
+
         if (text == "A")
         {
             StartCoroutine(CorrectAnswerTimer("1"));
@@ -124,6 +136,11 @@ public class AaronsLevelScript : MonoBehaviour
         Button2.SetActive(false);
         Button3.SetActive(false);
 
+        if (sharkQuestion)
+        {
+            sharkQuestion = false;
+        }
+
         if (text == "B")
         {
             StartCoroutine(CorrectAnswerTimer("2"));
@@ -139,6 +156,11 @@ public class AaronsLevelScript : MonoBehaviour
         Button1.SetActive(false);
         Button2.SetActive(false);
         Button3.SetActive(false);
+
+        if (sharkQuestion)
+        {
+            sharkQuestion = false;
+        }
 
         if (text == "C")
         {
@@ -167,7 +189,10 @@ public class AaronsLevelScript : MonoBehaviour
             default:
                 break;
         }
-        
+
+        int randomNumber = Random.Range(0, 3); // Upper bound is exclusive, so use 6
+        Instantiate(fishSpawns[randomNumber], fishSpawnPoint.transform.position, fishSpawnPoint.transform.rotation);
+
         CorrectUI.SetActive(true);
 
 
@@ -212,11 +237,25 @@ public class AaronsLevelScript : MonoBehaviour
         Button1.SetActive(true);
         Button2.SetActive(true);
         Button3.SetActive(true);
+        shark.SetActive(false);
+
+        if (MainMenuHandler.Instance.numCorrect > MainMenuHandler.Instance.numWrong)
+        {
+            int randomNumber = Random.Range(1, 6); // Upper bound is exclusive, so use 6
+            if (randomNumber == 1)
+            {
+                sharkQuestion = true;
+            }
+        }
 
         (string question, string answer) = GetRandomQuestion();
         text = answer;
         QuestionBoxText.text = question;
 
+        if (sharkQuestion)
+        {
+            shark.SetActive(true);
+        }
 
     }
 
