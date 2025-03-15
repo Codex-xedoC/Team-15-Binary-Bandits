@@ -1,6 +1,5 @@
 using UnityEngine;
-using UnityEngine.SceneManagement; // Ensure this is included at the top
-
+using UnityEngine.SceneManagement; 
 public class OuterSpaceGameManager : MonoBehaviour
 {
     public static OuterSpaceGameManager instance;

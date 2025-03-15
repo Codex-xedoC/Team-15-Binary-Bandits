@@ -3,56 +3,49 @@ using UnityEngine.InputSystem;
 
 public class XRShipMovement : MonoBehaviour
 {
-    public float speed = 10f;
-    public float rotationSpeed = 100f;
+    public Transform shipTransform;
+    public Transform xrOriginTransform; // XR Origin (Headset Parent)
 
-    private Rigidbody rb;
-    private Vector3 moveDirection;
+    public InputActionReference moveAction;
+    public InputActionReference rotateAction;
+    public InputActionReference rightGripAction;
+    public InputActionReference leftGripAction;
 
-    // VR Input
-    public InputActionProperty moveInput;
-    public InputActionProperty rotateInput; // Uses GlobalVRInputManager
+    public float moveSpeed = 20f;
+    public float rotationSpeed = 30f;
+    public float verticalSpeed = 10f;
 
-    void Start()
-    {
-        rb = GetComponent<Rigidbody>();
-
-        // ?? Ensure Camera Offset is Parented to PlayerShip
-        Transform cameraOffset = transform.Find("Camera Offset");
-        if (cameraOffset != null && cameraOffset.parent != transform)
-        {
-            cameraOffset.SetParent(transform);
-            Debug.Log("Camera Offset parented to PlayerShip.");
-        }
-    }
+    private Vector2 moveInput;
+    private Vector2 rotateInput;
+    private float rightGripValue;
+    private float leftGripValue;
 
     void Update()
     {
-        // ?? Keyboard Movement (WASD)
-        float moveX = Input.GetAxis("Horizontal"); // A/D or Left/Right Arrow
-        float moveZ = Input.GetAxis("Vertical");   // W/S or Up/Down Arrow
+        // Get joystick inputs
+        moveInput = moveAction.action.ReadValue<Vector2>();
+        rotateInput = rotateAction.action.ReadValue<Vector2>();
+        rightGripValue = rightGripAction.action.ReadValue<float>();
+        leftGripValue = leftGripAction.action.ReadValue<float>();
 
-        // ?? VR Joystick Movement
-        Vector2 vrMove = moveInput.action.ReadValue<Vector2>();
+        // Move forward/backward and strafe left/right
+        Vector3 moveDirection = new Vector3(moveInput.x, 0, moveInput.y);
+        shipTransform.Translate(moveDirection * moveSpeed * Time.deltaTime);
 
-        // ?? Combine VR & Keyboard Movement
-        moveDirection = new Vector3(moveX + vrMove.x, 0, moveZ + vrMove.y);
-        moveDirection = transform.TransformDirection(moveDirection) * speed;
-
-        // ?? Apply Movement
-        rb.linearVelocity = moveDirection; // Updated from velocity to linearVelocity
-
-        // ?? Handle Rotation Using GlobalVRInputManager
-        Vector2 vrRotate = rotateInput.action.ReadValue<Vector2>(); // Right joystick for looking
-        transform.Rotate(Vector3.up * vrRotate.x * rotationSpeed * Time.deltaTime);
-
-        // ?? Mouse Look (Only if VR isn't active)
-        if (!moveInput.action.enabled) // Allow mouse look when VR joystick isn't used
+        // **Rotate ship left/right using right joystick**
+        if (Mathf.Abs(rotateInput.x) > 0.1f)
         {
-            float mouseX = Input.GetAxis("Mouse X") * rotationSpeed * Time.deltaTime;
-            float mouseY = -Input.GetAxis("Mouse Y") * rotationSpeed * Time.deltaTime;
-            transform.Rotate(Vector3.up * mouseX);
-            Camera.main.transform.Rotate(Vector3.right * mouseY);
+            shipTransform.Rotate(Vector3.up * rotateInput.x * rotationSpeed * Time.deltaTime);
+        }
+
+        // **Vertical movement (right grip = up, left grip = down)**
+        if (rightGripValue > 0.1f)
+        {
+            shipTransform.Translate(Vector3.up * verticalSpeed * Time.deltaTime);
+        }
+        if (leftGripValue > 0.1f)
+        {
+            shipTransform.Translate(Vector3.down * verticalSpeed * Time.deltaTime);
         }
     }
 }

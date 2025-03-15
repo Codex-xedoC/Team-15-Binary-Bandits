@@ -1,10 +1,12 @@
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 public class PlanetInteraction : MonoBehaviour
 {
-    public GameObject questionPanel; // Assign the Question UI Panel in Inspector
-    public Text questionText; // Assign UI Text to display questions
+    public QuestionHelperCodex questionHelper; // Reference to the Question system
+    public GameObject questionPanel; // UI Panel for displaying questions
+    public InputActionProperty interactAction; // Assign the XR Controller Trigger
+
     private bool isNearPlanet = false;
 
     void Start()
@@ -15,7 +17,8 @@ public class PlanetInteraction : MonoBehaviour
 
     void Update()
     {
-        if (isNearPlanet && Input.GetKeyDown(KeyCode.X)) // Press X to interact
+        // Check if player is near a planet and presses the trigger button
+        if (isNearPlanet && interactAction.action.WasPressedThisFrame())
         {
             ShowQuestion();
         }
@@ -23,28 +26,36 @@ public class PlanetInteraction : MonoBehaviour
 
     private void ShowQuestion()
     {
-        if (questionPanel != null)
+        if (questionPanel != null && questionHelper != null)
         {
-            questionPanel.SetActive(true);
-            questionText.text = "What is the correct answer for this planet?";
+            questionPanel.SetActive(true); // Show the question UI
+            questionHelper.DisplayNewQuestion(); // Pull and display a new question
+        }
+        else
+        {
+            Debug.LogWarning("Question UI or Helper is missing in PlanetInteraction.");
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Planet"))
+        if (other.CompareTag("Player")) // Detect if the player enters the planet’s trigger
         {
             isNearPlanet = true;
-            Debug.Log("Near a Planet! Press X to interact.");
+            Debug.Log("Player is near a planet! Press the trigger to interact.");
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Planet"))
+        if (other.CompareTag("Player")) // Detect when the player leaves the planet’s trigger
         {
             isNearPlanet = false;
-            questionPanel.SetActive(false);
+            if (questionPanel != null)
+            {
+                questionPanel.SetActive(false); // Hide question UI when flying away
+            }
+            Debug.Log("Player left the planet’s interaction zone.");
         }
     }
 }
