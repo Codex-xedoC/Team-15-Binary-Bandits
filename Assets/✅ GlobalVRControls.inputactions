@@ -94,20 +94,18 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "VerticalMove",
+                    "type": "Button",
+                    "id": "62a2bd40-798c-49c0-87b2-0d2c682f7b1d",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
-                {
-                    "name": "",
-                    "id": "1635d3fe-58b6-4ba9-a4e2-f4b964f6b5c8",
-                    "path": "<XRController>{RightHand}/{Primary2DAxis}",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "XR",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
                 {
                     "name": "",
                     "id": "9dd9400e-01c6-4e82-93fa-a5cf4d8dbbbb",
@@ -254,7 +252,7 @@
                 {
                     "name": "",
                     "id": "1c04ea5f-b012-41d1-a6f7-02e963b52893",
-                    "path": "<Keyboard>/e",
+                    "path": "<Keyboard>/z",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
@@ -276,7 +274,7 @@
                 {
                     "name": "",
                     "id": "e206bdbf-6d02-4b81-9c50-a2c08295a1f2",
-                    "path": "<XRController>/{PrimaryButton}",
+                    "path": "<XRController>{RightHand}/{PrimaryButton}",
                     "interactions": "",
                     "processors": "",
                     "groups": ";XR",
@@ -309,7 +307,7 @@
                 {
                     "name": "",
                     "id": "0afed87f-ca09-4234-918d-e1ad369fbed6",
-                    "path": "<Keyboard>/a",
+                    "path": "<Keyboard>/1",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
@@ -342,7 +340,7 @@
                 {
                     "name": "",
                     "id": "e02e0c7a-def5-422c-af75-0078776d9b83",
-                    "path": "<Keyboard>/b",
+                    "path": "<Keyboard>/2",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
@@ -375,7 +373,7 @@
                 {
                     "name": "",
                     "id": "66cc1938-c640-4358-904c-50dcbabec927",
-                    "path": "<Keyboard>/c",
+                    "path": "<Keyboard>/3",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
@@ -424,6 +422,17 @@
                     "processors": "",
                     "groups": ";XR",
                     "action": "Climb",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e286350a-c619-4daa-aae0-279c3f3c4418",
+                    "path": "<XRController>{RightHand}/{GripButton}",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";XR",
+                    "action": "VerticalMove",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

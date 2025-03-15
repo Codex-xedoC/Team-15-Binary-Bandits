@@ -3,42 +3,56 @@ using UnityEngine.InputSystem;
 
 public class XRShipMovement : MonoBehaviour
 {
-    [Header("Movement Settings")]
     public float speed = 10f;
-
-    [Header("Input Actions")]
-    public InputActionProperty moveInput;  // Assign "Move" from GlobalVRControls in Unity
+    public float rotationSpeed = 100f;
 
     private Rigidbody rb;
+    private Vector3 moveDirection;
+
+    // VR Input
+    public InputActionProperty moveInput;
+    public InputActionProperty rotateInput; // Uses GlobalVRInputManager
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
 
-        // ? Restore Rigidbody settings from when it worked before
-        rb.isKinematic = false;
-        rb.useGravity = false;
-        rb.angularDamping = 5f;  // Prevents unwanted spin
+        // ?? Ensure Camera Offset is Parented to PlayerShip
+        Transform cameraOffset = transform.Find("Camera Offset");
+        if (cameraOffset != null && cameraOffset.parent != transform)
+        {
+            cameraOffset.SetParent(transform);
+            Debug.Log("Camera Offset parented to PlayerShip.");
+        }
     }
 
-    void FixedUpdate()
+    void Update()
     {
-        if (moveInput.action == null)
-        {
-            Debug.LogWarning("? Move Input is NOT assigned! Assign it in Unity.");
-            return;
-        }
+        // ?? Keyboard Movement (WASD)
+        float moveX = Input.GetAxis("Horizontal"); // A/D or Left/Right Arrow
+        float moveZ = Input.GetAxis("Vertical");   // W/S or Up/Down Arrow
 
-        Vector2 move = moveInput.action.ReadValue<Vector2>();
+        // ?? VR Joystick Movement
+        Vector2 vrMove = moveInput.action.ReadValue<Vector2>();
 
-        if (move.sqrMagnitude > 0.01f) // Only move if joystick input detected
+        // ?? Combine VR & Keyboard Movement
+        moveDirection = new Vector3(moveX + vrMove.x, 0, moveZ + vrMove.y);
+        moveDirection = transform.TransformDirection(moveDirection) * speed;
+
+        // ?? Apply Movement
+        rb.linearVelocity = moveDirection; // Updated from velocity to linearVelocity
+
+        // ?? Handle Rotation Using GlobalVRInputManager
+        Vector2 vrRotate = rotateInput.action.ReadValue<Vector2>(); // Right joystick for looking
+        transform.Rotate(Vector3.up * vrRotate.x * rotationSpeed * Time.deltaTime);
+
+        // ?? Mouse Look (Only if VR isn't active)
+        if (!moveInput.action.enabled) // Allow mouse look when VR joystick isn't used
         {
-            Vector3 moveDirection = (transform.forward * move.y) + (transform.right * move.x);
-            rb.linearVelocity = moveDirection * speed;  // Use velocity instead of linearVelocity
-        }
-        else
-        {
-            rb.linearVelocity = Vector3.zero;  // Stops movement when joystick is idle
+            float mouseX = Input.GetAxis("Mouse X") * rotationSpeed * Time.deltaTime;
+            float mouseY = -Input.GetAxis("Mouse Y") * rotationSpeed * Time.deltaTime;
+            transform.Rotate(Vector3.up * mouseX);
+            Camera.main.transform.Rotate(Vector3.right * mouseY);
         }
     }
 }

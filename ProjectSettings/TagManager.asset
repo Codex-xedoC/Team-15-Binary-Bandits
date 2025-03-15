@@ -6,8 +6,9 @@ TagManager:
   tags:
   - Anchor
   - Planet
-  - Astroid
+  - Asteroid
   - teleportArea
+  - StartButton
   layers:
   - Default
   - TransparentFX
