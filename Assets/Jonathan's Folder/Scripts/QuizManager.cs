@@ -43,11 +43,11 @@ public class QuizManager : MonoBehaviour
         Quizpanel.SetActive(false);
         GoPanel.SetActive(true);
         GoPanel.transform.GetChild(0).GetComponent<Text>().text = Time.text;
-        SceneManager.LoadScene("Maze1");
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Maze1");
     }
     public void correct()
     {
-                            
+        MainMenuHandler.Instance.questionCorrect();
         if (panelNum <= 5) //5
         {
             ParentPanel.transform.position = coords[panelNum];
@@ -66,7 +66,7 @@ public class QuizManager : MonoBehaviour
     {
         goBack();
         timerText.text = "{0:00}";
-        SceneManager.LoadScene("Maze1");
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Maze1");
     }
 
     public void quit()

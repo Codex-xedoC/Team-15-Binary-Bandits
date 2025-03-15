@@ -40,7 +40,7 @@ public class TimerController : MonoBehaviour
     private void GameOver()
     {
         Reset();
-        SceneManager.LoadScene("Maze1");
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Maze1");
     }
 
 }
