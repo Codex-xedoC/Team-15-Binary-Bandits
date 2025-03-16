@@ -4,12 +4,10 @@ using UnityEngine.InputSystem;
 public class XRShipMovement : MonoBehaviour
 {
     public Transform shipTransform;
-    public Transform xrOriginTransform; // XR Origin (Headset Parent)
-
     public InputActionReference moveAction;
     public InputActionReference rotateAction;
-    public InputActionReference rightGripAction;
-    public InputActionReference leftGripAction;
+    public InputActionReference verticalUpAction;
+    public InputActionReference verticalDownAction;
 
     public float moveSpeed = 20f;
     public float rotationSpeed = 30f;
@@ -17,35 +15,63 @@ public class XRShipMovement : MonoBehaviour
 
     private Vector2 moveInput;
     private Vector2 rotateInput;
-    private float rightGripValue;
-    private float leftGripValue;
+    private float verticalUpInput;
+    private float verticalDownInput;
+
+    void Start()
+    {
+        if (moveAction == null || rotateAction == null || verticalUpAction == null || verticalDownAction == null)
+        {
+            Debug.LogError("One or more input actions are NOT assigned in XRShipMovement.");
+            return;
+        }
+
+        moveAction.action.Enable();
+        rotateAction.action.Enable();
+        verticalUpAction.action.Enable();
+        verticalDownAction.action.Enable();
+
+        Debug.Log("XRShipMovement input actions enabled.");
+    }
 
     void Update()
     {
-        // Get joystick inputs
         moveInput = moveAction.action.ReadValue<Vector2>();
         rotateInput = rotateAction.action.ReadValue<Vector2>();
-        rightGripValue = rightGripAction.action.ReadValue<float>();
-        leftGripValue = leftGripAction.action.ReadValue<float>();
+        verticalUpInput = verticalUpAction.action.ReadValue<float>();
+        verticalDownInput = verticalDownAction.action.ReadValue<float>();
 
-        // Move forward/backward and strafe left/right
-        Vector3 moveDirection = new Vector3(moveInput.x, 0, moveInput.y);
-        shipTransform.Translate(moveDirection * moveSpeed * Time.deltaTime);
+        MoveShip();
+        RotateShip();
+        HandleVerticalMovement();
+    }
 
-        // **Rotate ship left/right using right joystick**
+    private void MoveShip()
+    {
+        if (moveInput.magnitude > 0)
+        {
+            Vector3 moveDirection = new Vector3(moveInput.x, 0, moveInput.y);
+            shipTransform.Translate(moveDirection * moveSpeed * Time.deltaTime, Space.Self);
+        }
+    }
+
+    private void RotateShip()
+    {
         if (Mathf.Abs(rotateInput.x) > 0.1f)
         {
             shipTransform.Rotate(Vector3.up * rotateInput.x * rotationSpeed * Time.deltaTime);
         }
+    }
 
-        // **Vertical movement (right grip = up, left grip = down)**
-        if (rightGripValue > 0.1f)
+    private void HandleVerticalMovement()
+    {
+        if (verticalUpInput > 0.1f)
         {
-            shipTransform.Translate(Vector3.up * verticalSpeed * Time.deltaTime);
+            shipTransform.Translate(Vector3.up * verticalSpeed * Time.deltaTime, Space.World);
         }
-        if (leftGripValue > 0.1f)
+        if (verticalDownInput > 0.1f)
         {
-            shipTransform.Translate(Vector3.down * verticalSpeed * Time.deltaTime);
+            shipTransform.Translate(Vector3.down * verticalSpeed * Time.deltaTime, Space.World);
         }
     }
 }
