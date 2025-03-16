@@ -158,13 +158,12 @@ public class PaulinaControl : MonoBehaviour
         // Wait for the specified duration
         yield return new WaitForSeconds(5f);
 
+        numCorrect++; // Increment the correct answers count
+        numCorrectText.text = numCorrect.ToString(); // Update the UI
 
         CorrectUI.SetActive(false);
         UIEmpty.SetActive(false);
         activeChoices();
-
-        numCorrect++; // Increment the correct answers count
-        numCorrectText.text = numCorrect.ToString(); // Update the UI
     }
 
     private IEnumerator WrongAnswerTimer()
