@@ -60,19 +60,10 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Manipulate Left",
-                    "type": "Button",
-                    "id": "07c46cc4-c35d-4364-a878-68fad8ab8c64",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "Manipulate Right",
                     "type": "Button",
                     "id": "307cb608-f32e-48a3-8ce6-d1cd83a5fb90",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -330,17 +321,6 @@
                     "action": "Keyboard Y Translate",
                     "isComposite": false,
                     "isPartOfComposite": true
-                },
-                {
-                    "name": "",
-                    "id": "fcfb16fb-edee-474c-b1f2-f10b2a0a3569",
-                    "path": "<Keyboard>/leftShift",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Manipulate Left",
-                    "isComposite": false,
-                    "isPartOfComposite": false
                 },
                 {
                     "name": "",

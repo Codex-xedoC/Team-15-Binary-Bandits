@@ -29,7 +29,7 @@
                     "id": "852140f2-7766-474d-8707-702459ba45f3",
                     "expectedControlType": "",
                     "processors": "",
-                    "interactions": "Hold",
+                    "interactions": "",
                     "initialStateCheck": false
                 },
                 {
@@ -96,9 +96,18 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "VerticalMove",
+                    "name": "VerticalMoveUp",
                     "type": "Button",
                     "id": "62a2bd40-798c-49c0-87b2-0d2c682f7b1d",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "VerticalMoveDown",
+                    "type": "Button",
+                    "id": "df5cf87f-8388-4b26-9ca0-89bec4b5b642",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -251,17 +260,6 @@
                 },
                 {
                     "name": "",
-                    "id": "1c04ea5f-b012-41d1-a6f7-02e963b52893",
-                    "path": "<Keyboard>/z",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard&Mouse",
-                    "action": "Interact",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "b3f66d0b-7751-423f-908b-a11c5bd95930",
                     "path": "<Gamepad>/buttonNorth",
                     "interactions": "",
@@ -273,8 +271,8 @@
                 },
                 {
                     "name": "",
-                    "id": "e206bdbf-6d02-4b81-9c50-a2c08295a1f2",
-                    "path": "<XRController>{RightHand}/{PrimaryButton}",
+                    "id": "cce6014c-498b-4e0e-ab7e-ac3ec6e1177b",
+                    "path": "<XRController>{RightHand}/{PrimaryTrigger}",
                     "interactions": "",
                     "processors": "",
                     "groups": ";XR",
@@ -432,7 +430,18 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";XR",
-                    "action": "VerticalMove",
+                    "action": "VerticalMoveUp",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ac73a7c3-aa82-4b5b-9720-0d8857f0ce94",
+                    "path": "<XRController>{LeftHand}/{GripButton}",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "VerticalMoveDown",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -480,9 +489,9 @@
                 },
                 {
                     "name": "Click",
-                    "type": "PassThrough",
+                    "type": "Button",
                     "id": "3c7022bf-7922-4f7c-a998-c437916075ad",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
@@ -893,6 +902,28 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "XR",
+                    "action": "Click",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "30bc1d8e-ca60-4af1-ba78-a82d6ad9e5f5",
+                    "path": "<XRController>{RightHand}/{TriggerButton}",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";XR",
+                    "action": "Click",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "74100ada-6175-431c-a8d3-bc4b5a650228",
+                    "path": "<XRController>{RightHand}/{PrimaryButton}",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";XR",
                     "action": "Click",
                     "isComposite": false,
                     "isPartOfComposite": false
