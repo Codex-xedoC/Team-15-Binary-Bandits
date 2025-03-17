@@ -18,34 +18,35 @@ public class QuestionHelperCodex : MonoBehaviour
     void Start()
     {
         LoadQuestionsFromFile();
+        DisplayNewQuestion(); // ? Now accessible from other scripts
     }
 
     private void LoadQuestionsFromFile()
     {
-        // Ensure file loads correctly from Resources
-        TextAsset questionFile = Resources.Load<TextAsset>("computer_science_questions"); // No ".txt"
+        TextAsset questionFile = Resources.Load<TextAsset>("computer_science_questions");
 
         if (questionFile == null)
         {
-            Debug.LogError("Question file not found. Expected path: Assets/Resources/computer_science_questions.txt");
+            Debug.LogError("? Question file not found!");
             return;
         }
-
-        Debug.Log("Question file successfully loaded.");
 
         string[] lines = questionFile.text.Split(new[] { '\n', '\r' }, System.StringSplitOptions.RemoveEmptyEntries);
         string questionEntry = "";
 
         foreach (string line in lines)
         {
-            if (line.StartsWith("#"))
+            if (line.StartsWith("Question"))
             {
                 if (!string.IsNullOrEmpty(questionEntry))
                 {
                     questionsAndAnswers.Add(questionEntry.Trim());
                 }
 
-                questionEntry = line.Substring(line.IndexOf(" ") + 1).Trim(); // Remove "#. " prefix
+                int colonIndex = line.IndexOf(":");
+                questionEntry = (colonIndex != -1 && colonIndex + 1 < line.Length)
+                    ? line.Substring(colonIndex + 1).Trim()
+                    : line;
             }
             else
             {
@@ -57,15 +58,14 @@ public class QuestionHelperCodex : MonoBehaviour
         {
             questionsAndAnswers.Add(questionEntry.Trim());
         }
-
-        Debug.Log($"Loaded {questionsAndAnswers.Count} questions.");
     }
 
+    // ? **Now Public: Can Be Called from `PlanetInteraction.cs`**
     public void DisplayNewQuestion()
     {
         if (questionsAndAnswers.Count == 0)
         {
-            Debug.LogError("No questions loaded.");
+            Debug.LogError("? No questions loaded!");
             return;
         }
 
@@ -76,19 +76,12 @@ public class QuestionHelperCodex : MonoBehaviour
 
         if (parts.Length < 2)
         {
-            Debug.LogError("Invalid question format. Expected format: 'Question... Answer: A'");
+            Debug.LogError("? Invalid question format!");
             return;
         }
 
         questionText.text = parts[0].Trim();
         correctAnswer = parts[1].Trim();
-
-        Debug.Log($"New Question: {questionText.text} (Correct Answer: {correctAnswer})");
-    }
-
-    public string GetCorrectAnswer()
-    {
-        return correctAnswer;
     }
 
     public void SelectA() => CheckAnswer("A");

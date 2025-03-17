@@ -55,15 +55,6 @@ public partial class @GlobalVRControls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""PlanetInteract"",
-                    ""type"": ""Button"",
-                    ""id"": ""58c9ce65-1edb-451f-b7a8-50309d56204e"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
                     ""name"": ""Crouch"",
                     ""type"": ""Button"",
                     ""id"": ""27c5f898-bc57-4ee1-8800-db469aca5fe3"",
@@ -85,6 +76,33 @@ public partial class @GlobalVRControls: IInputActionCollection2, IDisposable
                     ""name"": ""Sprint"",
                     ""type"": ""Button"",
                     ""id"": ""641cd816-40e6-41b4-8c3d-04687c349290"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Select A"",
+                    ""type"": ""Button"",
+                    ""id"": ""68a11692-b40f-49cd-974b-a9f2fda1428e"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Select B"",
+                    ""type"": ""Button"",
+                    ""id"": ""79676157-6198-4c55-91ce-a04c34950199"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Select C"",
+                    ""type"": ""Button"",
+                    ""id"": ""5f9e87a2-3cb8-40d3-89bf-e526515cd0d5"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
@@ -264,34 +282,23 @@ public partial class @GlobalVRControls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""b3f66d0b-7751-423f-908b-a11c5bd95930"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""cce6014c-498b-4e0e-ab7e-ac3ec6e1177b"",
                     ""path"": ""<XRController>{RightHand}/{PrimaryTrigger}"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";XR"",
                     ""action"": ""Interact"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""81a1c0b2-507e-4eb5-9c8e-3d39243c7c60"",
-                    ""path"": ""<XRController>{LeftHand}/{PrimaryTrigger}"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";XR"",
-                    ""action"": ""Interact"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""83ffb4b1-0838-4637-b591-ea6473d3347f"",
-                    ""path"": ""<XRController>{RightHand}/{PrimaryButton}"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";XR"",
-                    ""action"": ""PlanetInteract"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -314,6 +321,105 @@ public partial class @GlobalVRControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""Crouch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0afed87f-ca09-4234-918d-e1ad369fbed6"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Select A"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9d650128-60b9-4611-9a51-92c307395480"",
+                    ""path"": ""<Gamepad>/dpad/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""Select A"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a78f2f44-d6c1-4b4a-a0fd-f7005e2103be"",
+                    ""path"": ""<XRController>/{PrimaryButton}"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";XR"",
+                    ""action"": ""Select A"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e02e0c7a-def5-422c-af75-0078776d9b83"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Select B"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8f70c5f5-28ab-4721-ad54-c79dcd158a11"",
+                    ""path"": ""<Gamepad>/dpad/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""Select B"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""679a3d2d-b2f0-4437-ba18-2446cc3ab7c3"",
+                    ""path"": ""<XRController>/{SecondaryButton}"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";XR"",
+                    ""action"": ""Select B"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""66cc1938-c640-4358-904c-50dcbabec927"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Select C"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d9b1a29f-1e04-4232-9e5c-6b71b6930bc9"",
+                    ""path"": ""<Gamepad>/dpad/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""Select C"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4f63bdf0-5d7f-4bd2-a3b0-33d691835688"",
+                    ""path"": ""<XRController>/{GripButton}"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";XR"",
+                    ""action"": ""Select C"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -970,10 +1076,12 @@ public partial class @GlobalVRControls: IInputActionCollection2, IDisposable
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
         m_Player_Rotate = m_Player.FindAction("Rotate", throwIfNotFound: true);
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
-        m_Player_PlanetInteract = m_Player.FindAction("PlanetInteract", throwIfNotFound: true);
         m_Player_Crouch = m_Player.FindAction("Crouch", throwIfNotFound: true);
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_Sprint = m_Player.FindAction("Sprint", throwIfNotFound: true);
+        m_Player_SelectA = m_Player.FindAction("Select A", throwIfNotFound: true);
+        m_Player_SelectB = m_Player.FindAction("Select B", throwIfNotFound: true);
+        m_Player_SelectC = m_Player.FindAction("Select C", throwIfNotFound: true);
         m_Player_Climb = m_Player.FindAction("Climb", throwIfNotFound: true);
         m_Player_VerticalMoveUp = m_Player.FindAction("VerticalMoveUp", throwIfNotFound: true);
         m_Player_VerticalMoveDown = m_Player.FindAction("VerticalMoveDown", throwIfNotFound: true);
@@ -1059,10 +1167,12 @@ public partial class @GlobalVRControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Move;
     private readonly InputAction m_Player_Rotate;
     private readonly InputAction m_Player_Interact;
-    private readonly InputAction m_Player_PlanetInteract;
     private readonly InputAction m_Player_Crouch;
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_Sprint;
+    private readonly InputAction m_Player_SelectA;
+    private readonly InputAction m_Player_SelectB;
+    private readonly InputAction m_Player_SelectC;
     private readonly InputAction m_Player_Climb;
     private readonly InputAction m_Player_VerticalMoveUp;
     private readonly InputAction m_Player_VerticalMoveDown;
@@ -1073,10 +1183,12 @@ public partial class @GlobalVRControls: IInputActionCollection2, IDisposable
         public InputAction @Move => m_Wrapper.m_Player_Move;
         public InputAction @Rotate => m_Wrapper.m_Player_Rotate;
         public InputAction @Interact => m_Wrapper.m_Player_Interact;
-        public InputAction @PlanetInteract => m_Wrapper.m_Player_PlanetInteract;
         public InputAction @Crouch => m_Wrapper.m_Player_Crouch;
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
         public InputAction @Sprint => m_Wrapper.m_Player_Sprint;
+        public InputAction @SelectA => m_Wrapper.m_Player_SelectA;
+        public InputAction @SelectB => m_Wrapper.m_Player_SelectB;
+        public InputAction @SelectC => m_Wrapper.m_Player_SelectC;
         public InputAction @Climb => m_Wrapper.m_Player_Climb;
         public InputAction @VerticalMoveUp => m_Wrapper.m_Player_VerticalMoveUp;
         public InputAction @VerticalMoveDown => m_Wrapper.m_Player_VerticalMoveDown;
@@ -1098,9 +1210,6 @@ public partial class @GlobalVRControls: IInputActionCollection2, IDisposable
             @Interact.started += instance.OnInteract;
             @Interact.performed += instance.OnInteract;
             @Interact.canceled += instance.OnInteract;
-            @PlanetInteract.started += instance.OnPlanetInteract;
-            @PlanetInteract.performed += instance.OnPlanetInteract;
-            @PlanetInteract.canceled += instance.OnPlanetInteract;
             @Crouch.started += instance.OnCrouch;
             @Crouch.performed += instance.OnCrouch;
             @Crouch.canceled += instance.OnCrouch;
@@ -1110,6 +1219,15 @@ public partial class @GlobalVRControls: IInputActionCollection2, IDisposable
             @Sprint.started += instance.OnSprint;
             @Sprint.performed += instance.OnSprint;
             @Sprint.canceled += instance.OnSprint;
+            @SelectA.started += instance.OnSelectA;
+            @SelectA.performed += instance.OnSelectA;
+            @SelectA.canceled += instance.OnSelectA;
+            @SelectB.started += instance.OnSelectB;
+            @SelectB.performed += instance.OnSelectB;
+            @SelectB.canceled += instance.OnSelectB;
+            @SelectC.started += instance.OnSelectC;
+            @SelectC.performed += instance.OnSelectC;
+            @SelectC.canceled += instance.OnSelectC;
             @Climb.started += instance.OnClimb;
             @Climb.performed += instance.OnClimb;
             @Climb.canceled += instance.OnClimb;
@@ -1132,9 +1250,6 @@ public partial class @GlobalVRControls: IInputActionCollection2, IDisposable
             @Interact.started -= instance.OnInteract;
             @Interact.performed -= instance.OnInteract;
             @Interact.canceled -= instance.OnInteract;
-            @PlanetInteract.started -= instance.OnPlanetInteract;
-            @PlanetInteract.performed -= instance.OnPlanetInteract;
-            @PlanetInteract.canceled -= instance.OnPlanetInteract;
             @Crouch.started -= instance.OnCrouch;
             @Crouch.performed -= instance.OnCrouch;
             @Crouch.canceled -= instance.OnCrouch;
@@ -1144,6 +1259,15 @@ public partial class @GlobalVRControls: IInputActionCollection2, IDisposable
             @Sprint.started -= instance.OnSprint;
             @Sprint.performed -= instance.OnSprint;
             @Sprint.canceled -= instance.OnSprint;
+            @SelectA.started -= instance.OnSelectA;
+            @SelectA.performed -= instance.OnSelectA;
+            @SelectA.canceled -= instance.OnSelectA;
+            @SelectB.started -= instance.OnSelectB;
+            @SelectB.performed -= instance.OnSelectB;
+            @SelectB.canceled -= instance.OnSelectB;
+            @SelectC.started -= instance.OnSelectC;
+            @SelectC.performed -= instance.OnSelectC;
+            @SelectC.canceled -= instance.OnSelectC;
             @Climb.started -= instance.OnClimb;
             @Climb.performed -= instance.OnClimb;
             @Climb.canceled -= instance.OnClimb;
@@ -1338,10 +1462,12 @@ public partial class @GlobalVRControls: IInputActionCollection2, IDisposable
         void OnMove(InputAction.CallbackContext context);
         void OnRotate(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
-        void OnPlanetInteract(InputAction.CallbackContext context);
         void OnCrouch(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnSprint(InputAction.CallbackContext context);
+        void OnSelectA(InputAction.CallbackContext context);
+        void OnSelectB(InputAction.CallbackContext context);
+        void OnSelectC(InputAction.CallbackContext context);
         void OnClimb(InputAction.CallbackContext context);
         void OnVerticalMoveUp(InputAction.CallbackContext context);
         void OnVerticalMoveDown(InputAction.CallbackContext context);
