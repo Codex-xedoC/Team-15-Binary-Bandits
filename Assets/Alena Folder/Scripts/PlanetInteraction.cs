@@ -250,7 +250,7 @@ public class PlanetInteraction : MonoBehaviour
         wrongPanel.SetActive(false);
         CloseQuestionPanel();
     }
-    /*
+    
     void OnDestroy()
     {
         if (planetInteractAction != null)
@@ -262,5 +262,5 @@ public class PlanetInteraction : MonoBehaviour
         {
             rightTriggerAction.action.performed -= ctx => TryOpenQuestionPanel();
         }
-    }*/ 
+    }
 }

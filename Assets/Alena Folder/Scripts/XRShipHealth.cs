@@ -1,94 +1,87 @@
-using UnityEngine;
-using TMPro;
-
-public class XRShipHealth : MonoBehaviour
+namespace AlenaScripts
 {
-    public static XRShipHealth Instance;
+    using UnityEngine;
+    using TMPro;
 
-    [Header("Health Settings")]
-    public int maxHealth = 100;
-    public int currentHealth;
-
-    [Header("Score Settings")]
-    public int score = 0; // Tracks the player's score
-
-    [Header("UI Elements")]
-    public TextMeshProUGUI healthText;
-    public TextMeshProUGUI scoreText;
-    public GameObject GameOverUI;
-
-    void Awake()
+    public class XRShipHealth : MonoBehaviour
     {
-        if (Instance == null)
-        {
-            Instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-    }
+        public static XRShipHealth Instance;
 
-    void Start()
-    {
-        currentHealth = maxHealth;
-        UpdateHealthUI();
-        UpdateScoreUI();
+        [Header("Health Settings")]
+        public int maxHealth = 100;
+        public int currentHealth;
 
-        if (GameOverUI != null)
-        {
-            GameOverUI.SetActive(false);
-        }
-    }
+        [Header("Score Settings")]
+        public int score = 0;
 
-    public void TakeDamage(int damage)
-    {
-        currentHealth -= damage;
-        UpdateHealthUI();
+        [Header("UI Elements")]
+        public TextMeshProUGUI healthText;
+        public TextMeshProUGUI scoreText;
+        public GameObject GameOverUI;
 
-        if (currentHealth <= 0)
+        void Awake()
         {
-            GameOver();
-        }
-    }
-
-    public void AddScore(int points)
-    {
-        score += points;
-        UpdateScoreUI();
-    }
-
-    private void UpdateHealthUI()
-    {
-        if (healthText != null)
-        {
-            healthText.text = "Health: " + currentHealth;
-        }
-        else
-        {
-            Debug.LogError("[XRShipHealth] Health UI Text is not assigned in the Inspector.");
-        }
-    }
-
-    private void UpdateScoreUI()
-    {
-        if (scoreText != null)
-        {
-            scoreText.text = "Score: " + score;
-        }
-        else
-        {
-            Debug.LogError("[XRShipHealth] Score UI Text is not assigned in the Inspector.");
-        }
-    }
-
-    private void GameOver()
-    {
-        if (GameOverUI != null)
-        {
-            GameOverUI.SetActive(true);
+            if (Instance == null)
+            {
+                Instance = this;
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
         }
 
-        Debug.Log("Game Over! Ship Destroyed.");
+        void Start()
+        {
+            currentHealth = maxHealth;
+            UpdateHealthUI();
+            UpdateScoreUI();
+
+            if (GameOverUI != null)
+            {
+                GameOverUI.SetActive(false);
+            }
+        }
+
+        public void TakeDamage(int damage)
+        {
+            currentHealth -= damage;
+            UpdateHealthUI();
+
+            if (currentHealth <= 0)
+            {
+                GameOver();
+            }
+        }
+
+        public void AddScore(int points)
+        {
+            score += points;
+            UpdateScoreUI();
+        }
+
+        private void UpdateHealthUI()
+        {
+            if (healthText != null)
+            {
+                healthText.text = "Health: " + currentHealth;
+            }
+        }
+
+        private void UpdateScoreUI()
+        {
+            if (scoreText != null)
+            {
+                scoreText.text = "Score: " + score;
+            }
+        }
+
+        private void GameOver()
+        {
+            if (GameOverUI != null)
+            {
+                GameOverUI.SetActive(true);
+            }
+        }
     }
 }

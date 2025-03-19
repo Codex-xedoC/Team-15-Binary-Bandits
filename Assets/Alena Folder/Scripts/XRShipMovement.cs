@@ -22,7 +22,7 @@ public class XRShipMovement : MonoBehaviour
     {
         if (moveAction == null || rotateAction == null || verticalUpAction == null || verticalDownAction == null)
         {
-            Debug.LogError("One or more input actions are NOT assigned in XRShipMovement.");
+            Debug.LogError("XRShipMovement: Missing input actions.");
             return;
         }
 
@@ -30,8 +30,6 @@ public class XRShipMovement : MonoBehaviour
         rotateAction.action.Enable();
         verticalUpAction.action.Enable();
         verticalDownAction.action.Enable();
-
-        Debug.Log("XRShipMovement input actions enabled.");
     }
 
     void Update()
@@ -48,19 +46,14 @@ public class XRShipMovement : MonoBehaviour
 
     private void MoveShip()
     {
-        if (moveInput.magnitude > 0)
-        {
-            Vector3 moveDirection = new Vector3(moveInput.x, 0, moveInput.y);
-            shipTransform.Translate(moveDirection * moveSpeed * Time.deltaTime, Space.Self);
-        }
+        Vector3 moveDirection = new Vector3(moveInput.x, 0, moveInput.y);
+        shipTransform.Translate(moveDirection * moveSpeed * Time.deltaTime, Space.Self);
     }
 
     private void RotateShip()
     {
-        if (Mathf.Abs(rotateInput.x) > 0.1f)
-        {
-            shipTransform.Rotate(Vector3.up * rotateInput.x * rotationSpeed * Time.deltaTime);
-        }
+        Vector3 rotation = new Vector3(-rotateInput.y * rotationSpeed, rotateInput.x * rotationSpeed, 0);
+        shipTransform.Rotate(rotation * Time.deltaTime, Space.Self);
     }
 
     private void HandleVerticalMovement()
