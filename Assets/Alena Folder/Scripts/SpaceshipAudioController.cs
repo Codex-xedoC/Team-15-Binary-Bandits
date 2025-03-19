@@ -13,27 +13,35 @@ public class SpaceshipAudioController : MonoBehaviour
     public AudioClip teleportSound;
     public AudioClip targetAcquiredSound;
 
-    public Camera xrOriginCamera; // Assign XR Origin Main Camera in the Inspector
+    [Header("References")]
+    public Camera xrOriginCamera;
+    public Rigidbody playerShipRigidbody; // To check movement for thrust sound
 
     private bool targetSoundPlayed = false;
+    private string lastDetectedPlanet = "";
+    private bool isThrusting = false;
 
     void Start()
     {
-        // Check if audio sources are assigned
         if (engineSource == null || effectSource == null)
         {
-            Debug.LogError("Audio sources are not assigned! Assign them in the Inspector.");
+            Debug.LogError("Audio sources not assigned! Assign them in the Inspector.");
             return;
         }
 
-        // Check if XR Origin Camera is assigned
         if (xrOriginCamera == null)
         {
             Debug.LogError("XR Origin Camera not assigned! Assign it in the Inspector.");
             return;
         }
 
-        // Play idle engine sound
+        if (playerShipRigidbody == null)
+        {
+            Debug.LogError("Player Ship Rigidbody not assigned! Assign it in the Inspector.");
+            return;
+        }
+
+        // Start with idle engine sound
         engineSource.clip = spaceshipEngineIdle;
         engineSource.loop = true;
         engineSource.Play();
@@ -45,18 +53,48 @@ public class SpaceshipAudioController : MonoBehaviour
         {
             DetectPlanetInView();
         }
+
+        HandleEngineSound();
     }
 
     void DetectPlanetInView()
     {
         RaycastHit hit;
-        if (Physics.Raycast(xrOriginCamera.transform.position, xrOriginCamera.transform.forward, out hit, 100f))
+        int planetLayerMask = LayerMask.GetMask("Planet"); // Ensure planets are in the "Planet" layer
+
+        if (Physics.Raycast(xrOriginCamera.transform.position, xrOriginCamera.transform.forward, out hit, 100f, planetLayerMask))
         {
-            if (hit.collider.CompareTag("Planet") && !targetSoundPlayed)
+            if (!targetSoundPlayed && hit.collider.CompareTag("Planet") && hit.collider.name != lastDetectedPlanet)
             {
                 effectSource.PlayOneShot(targetAcquiredSound);
+                lastDetectedPlanet = hit.collider.name;
                 targetSoundPlayed = true;
-                Invoke(nameof(ResetTargetSound), 2f);
+                Invoke(nameof(ResetTargetSound), 5f);
+            }
+        }
+    }
+
+    void HandleEngineSound()
+    {
+        // Check if the ship is moving
+        if (playerShipRigidbody.linearVelocity.magnitude > 0.1f)
+        {
+            if (!isThrusting)
+            {
+                engineSource.clip = spaceshipEngineThrust;
+                engineSource.loop = true;
+                engineSource.Play();
+                isThrusting = true;
+            }
+        }
+        else
+        {
+            if (isThrusting)
+            {
+                engineSource.clip = spaceshipEngineIdle;
+                engineSource.loop = true;
+                engineSource.Play();
+                isThrusting = false;
             }
         }
     }
@@ -64,17 +102,6 @@ public class SpaceshipAudioController : MonoBehaviour
     void ResetTargetSound()
     {
         targetSoundPlayed = false;
-    }
-
-    public void PlayTeleport()
-    {
-        if (effectSource != null && teleportSound != null)
-        {
-            effectSource.PlayOneShot(teleportSound);
-        }
-        else
-        {
-            Debug.LogError("Effect source or teleport sound not assigned!");
-        }
+        lastDetectedPlanet = "";
     }
 }

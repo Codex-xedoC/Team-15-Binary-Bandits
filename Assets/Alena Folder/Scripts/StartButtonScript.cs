@@ -1,29 +1,44 @@
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using System.Collections;
+using UnityEngine.XR.Interaction.Toolkit;
 
 public class StartButtonScript : MonoBehaviour
 {
-    public GameObject startPanel; // Start Menu UI
-    public GameObject environmentObjects; // Planets, UI, etc.
-    public GameObject playerShip; // Player's spaceship
-    public FadeScreen fadeScreen; // Fader Screen for smooth transition
-    public InputActionReference interactAction; // Trigger input action
+    public GameObject startPanel;
+    public GameObject environmentObjects;
+    public GameObject playerShip;
+    public GameObject questionPanel;
+    public FadeScreen fadeScreen;
+    public InputActionReference interactAction;
 
+    private XRShipMovement shipMovementScript;
     private bool gameStarted = false;
 
     void Start()
     {
-        if (startPanel == null || environmentObjects == null || fadeScreen == null)
+        if (startPanel == null || environmentObjects == null || fadeScreen == null || questionPanel == null)
         {
             Debug.LogError("StartButtonScript: Missing required components in Inspector.");
             return;
         }
 
-        // Ensure start panel is visible at the start
         startPanel.SetActive(true);
         environmentObjects.SetActive(false);
+        questionPanel.SetActive(false);
+
+        if (playerShip != null)
+        {
+            shipMovementScript = playerShip.GetComponent<XRShipMovement>();
+            if (shipMovementScript == null)
+            {
+                Debug.LogError("StartButtonScript: XRShipMovement script not found.");
+            }
+        }
+        else
+        {
+            Debug.LogError("StartButtonScript: Player Ship not assigned.");
+        }
 
         if (interactAction != null)
         {
@@ -38,7 +53,7 @@ public class StartButtonScript : MonoBehaviour
 
     public void StartGame()
     {
-        if (gameStarted) return; // Prevent multiple presses
+        if (gameStarted) return;
         gameStarted = true;
 
         Debug.Log("Start Button Pressed - Fading to black...");
@@ -50,16 +65,34 @@ public class StartButtonScript : MonoBehaviour
         fadeScreen.FadeOut();
         yield return new WaitForSeconds(fadeScreen.fadeDuration);
 
-        // Hide start panel and enable environment objects
-        startPanel.SetActive(false);
-        environmentObjects.SetActive(true);
+        // **Forcefully disable the Start Panel after fade-out**
+        if (startPanel != null)
+        {
+            startPanel.SetActive(false);
+            Canvas.ForceUpdateCanvases(); // Ensures UI updates correctly
+            Debug.Log("Start Panel hidden after fade.");
+        }
 
+        environmentObjects.SetActive(true);
         Debug.Log("Environment enabled.");
 
-        // Ensure player movement is enabled
-        playerShip.GetComponent<XRShipMovement>().enabled = true;
-        Debug.Log("Movement script enabled.");
+        if (shipMovementScript != null)
+        {
+            shipMovementScript.enabled = true;
+            Debug.Log("Movement enabled.");
+        }
 
         fadeScreen.FadeIn();
+        yield return new WaitForSeconds(fadeScreen.fadeDuration);
+
+        Debug.Log("Game started successfully.");
+    }
+
+    void OnDestroy()
+    {
+        if (interactAction != null)
+        {
+            interactAction.action.performed -= ctx => StartGame();
+        }
     }
 }

@@ -6,14 +6,21 @@ using System.Collections.Generic;
 
 public class PlanetInteraction : MonoBehaviour
 {
+    [Header("UI Elements")]
     public GameObject questionPanel;
     public Text questionText;
     public GameObject player;
-    public InputActionReference planetInteractAction;  // Separate Action for Planets (A Button)
     public Transform panelSpawnPoint;
 
+    [Header("Input Actions")]
+    public InputActionReference planetInteractAction;
+    public InputActionReference rightTriggerAction;
+
+    [Header("Answer Panels")]
     public GameObject correctPanel;
     public GameObject wrongPanel;
+
+    [Header("Audio")]
     public AudioSource planetFoundAudio;
 
     private bool isPlayerNear = false;
@@ -21,6 +28,7 @@ public class PlanetInteraction : MonoBehaviour
     private bool hasPlayedAudio = false;
     private string correctAnswer = "";
 
+    private GameObject currentPlanet = null;
     private List<string> questionsAndAnswers = new List<string>();
 
     void Start()
@@ -29,24 +37,45 @@ public class PlanetInteraction : MonoBehaviour
         if (correctPanel != null) correctPanel.SetActive(false);
         if (wrongPanel != null) wrongPanel.SetActive(false);
 
-        if (planetInteractAction == null)
+        if (planetInteractAction == null || rightTriggerAction == null)
         {
-            Debug.LogError("Planet Interact Action not assigned! Assign it in the inspector.");
+            Debug.LogError("PlanetInteraction: Missing input actions. Assign them in the Inspector.");
             return;
         }
 
         planetInteractAction.action.Enable();
-        planetInteractAction.action.performed += ctx => TryOpenQuestionPanel();  // Now listens for A Button
+        planetInteractAction.action.performed += ctx => TryOpenQuestionPanel();
+
+        rightTriggerAction.action.Enable();
+        rightTriggerAction.action.performed += ctx => TryOpenQuestionPanel();
 
         LoadQuestionsFromFile();
-        Debug.Log("PlanetInteraction script initialized on " + gameObject.name);
+    }
+
+    void Update()
+    {
+        DetectPlanetInView();
+    }
+
+    void DetectPlanetInView()
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, 15f))
+        {
+            if (hit.collider.CompareTag("Planet"))
+            {
+                currentPlanet = hit.collider.gameObject;
+                return;
+            }
+        }
+        currentPlanet = null;
     }
 
     void OnTriggerEnter(Collider other)
     {
         if (other.gameObject == player)
         {
-            Debug.Log("Player entered planet zone: " + gameObject.name);
+            Debug.Log($"Player entered planet zone: {gameObject.name}");
             isPlayerNear = true;
 
             if (!hasPlayedAudio && planetFoundAudio != null)
@@ -61,7 +90,7 @@ public class PlanetInteraction : MonoBehaviour
     {
         if (other.gameObject == player)
         {
-            Debug.Log("Player left planet zone: " + gameObject.name);
+            Debug.Log($"Player left planet zone: {gameObject.name}");
             isPlayerNear = false;
             hasPlayedAudio = false;
             CloseQuestionPanel();
@@ -70,11 +99,17 @@ public class PlanetInteraction : MonoBehaviour
 
     public void TryOpenQuestionPanel()
     {
-        if (isPlayerNear && !isQuestionActive)
+        Debug.Log($"[PlanetInteraction] Attempting to open question panel for {gameObject.name}");
+
+        if ((isPlayerNear || currentPlanet != null) && !isQuestionActive)
         {
-            Debug.Log("A Button Pressed Near: " + gameObject.name);
+            Debug.Log($"[PlanetInteraction] Question panel should now open for {gameObject.name}");
             isQuestionActive = true;
             OpenQuestionPanel();
+        }
+        else
+        {
+            Debug.Log("[PlanetInteraction] Interaction ignored: Either not near a planet or already active.");
         }
     }
 
@@ -82,25 +117,44 @@ public class PlanetInteraction : MonoBehaviour
     {
         if (questionPanel == null)
         {
-            Debug.LogError("Question Panel is MISSING! Assign it in the inspector.");
+            Debug.LogError("[ERROR] Question Panel is missing! Assign it in the Inspector.");
             return;
         }
 
-        Debug.Log("Opening question panel for " + gameObject.name);
+        Debug.Log($"[PlanetInteraction] Opening question panel for {gameObject.name}");
 
         (string question, string answer) = GetRandomQuestion();
         correctAnswer = answer;
 
-        if (panelSpawnPoint != null)
+        // Ensure panel is active
+        questionPanel.SetActive(true);
+
+        // Reset panel visibility in case it's disabled by Canvas settings
+        CanvasGroup canvasGroup = questionPanel.GetComponent<CanvasGroup>();
+        if (canvasGroup != null)
         {
-            questionPanel.transform.position = panelSpawnPoint.position;
-            questionPanel.transform.rotation = panelSpawnPoint.rotation;
+            canvasGroup.alpha = 1f;
+            canvasGroup.interactable = true;
+            canvasGroup.blocksRaycasts = true;
         }
 
-        questionPanel.SetActive(true);
+        // Position the panel in front of the player
+        Transform playerCamera = Camera.main.transform;
+        if (playerCamera != null)
+        {
+            questionPanel.transform.SetParent(null);
+            questionPanel.transform.position = playerCamera.position + playerCamera.forward * 1.5f;
+            questionPanel.transform.rotation = Quaternion.LookRotation(questionPanel.transform.position - playerCamera.position);
+        }
+        else
+        {
+            Debug.LogError("[ERROR] Player Camera not found!");
+            return;
+        }
+
         questionText.text = question;
 
-        Debug.Log("Question Panel should now be visible for " + gameObject.name);
+        Debug.Log("[PlanetInteraction] Question Panel should now be visible.");
     }
 
     void CloseQuestionPanel()
@@ -109,18 +163,17 @@ public class PlanetInteraction : MonoBehaviour
         {
             questionPanel.SetActive(false);
             isQuestionActive = false;
-            Debug.Log("Question panel closed for " + gameObject.name);
+            Debug.Log($"Question panel closed for {gameObject.name}");
         }
     }
 
-    // **Method Restored: Load Questions from File**
     void LoadQuestionsFromFile()
     {
         TextAsset questionFile = Resources.Load<TextAsset>("computer_science_questions");
 
         if (questionFile == null)
         {
-            Debug.LogError("Question file not found! Ensure it is in Assets/Resources.");
+            Debug.LogError("Question file not found. Ensure it is in Assets/Resources.");
             return;
         }
 
@@ -150,13 +203,12 @@ public class PlanetInteraction : MonoBehaviour
         }
     }
 
-    // **Method Restored: Get Random Question**
     public (string question, string answer) GetRandomQuestion()
     {
         if (questionsAndAnswers.Count == 0)
         {
-            Debug.LogError("No questions loaded!");
-            return ("No questions available!", "");
+            Debug.LogError("No questions loaded.");
+            return ("No questions available.", "");
         }
 
         int randomIndex = Random.Range(0, questionsAndAnswers.Count);
@@ -166,28 +218,24 @@ public class PlanetInteraction : MonoBehaviour
 
         if (parts.Length < 2)
         {
-            Debug.LogError("Invalid question format!");
+            Debug.LogError("Invalid question format.");
             return ("Error loading question.", "");
         }
 
-        string question = parts[0].Trim();
-        string answer = parts[1].Trim();
-
-        return (question, answer);
+        return (parts[0].Trim(), parts[1].Trim());
     }
 
-    // **Handles Answer Selection**
     public void AnswerSelected(string playerAnswer)
     {
         if (playerAnswer == correctAnswer)
         {
-            Debug.Log("Correct answer selected!");
+            Debug.Log("Correct answer selected.");
             correctPanel.SetActive(true);
             wrongPanel.SetActive(false);
         }
         else
         {
-            Debug.Log("Wrong answer selected!");
+            Debug.Log("Wrong answer selected.");
             correctPanel.SetActive(false);
             wrongPanel.SetActive(true);
         }
@@ -202,12 +250,17 @@ public class PlanetInteraction : MonoBehaviour
         wrongPanel.SetActive(false);
         CloseQuestionPanel();
     }
-
+    /*
     void OnDestroy()
     {
         if (planetInteractAction != null)
         {
             planetInteractAction.action.performed -= ctx => TryOpenQuestionPanel();
         }
-    }
+
+        if (rightTriggerAction != null)
+        {
+            rightTriggerAction.action.performed -= ctx => TryOpenQuestionPanel();
+        }
+    }*/ 
 }
