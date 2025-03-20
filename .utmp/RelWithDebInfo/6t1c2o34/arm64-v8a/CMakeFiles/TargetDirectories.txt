@@ -1,0 +1,5 @@
+/Users/paulinaroldan/Documents/GitHub/Team-15-Binary-Bandits/.utmp/RelWithDebInfo/6t1c2o34/arm64-v8a/CMakeFiles/edit_cache.dir
+/Users/paulinaroldan/Documents/GitHub/Team-15-Binary-Bandits/.utmp/RelWithDebInfo/6t1c2o34/arm64-v8a/CMakeFiles/rebuild_cache.dir
+/Users/paulinaroldan/Documents/GitHub/Team-15-Binary-Bandits/.utmp/RelWithDebInfo/6t1c2o34/arm64-v8a/GameActivity/CMakeFiles/game.dir
+/Users/paulinaroldan/Documents/GitHub/Team-15-Binary-Bandits/.utmp/RelWithDebInfo/6t1c2o34/arm64-v8a/GameActivity/CMakeFiles/edit_cache.dir
+/Users/paulinaroldan/Documents/GitHub/Team-15-Binary-Bandits/.utmp/RelWithDebInfo/6t1c2o34/arm64-v8a/GameActivity/CMakeFiles/rebuild_cache.dir
