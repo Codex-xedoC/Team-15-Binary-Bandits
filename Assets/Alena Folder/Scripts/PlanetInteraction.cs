@@ -250,7 +250,7 @@ public class PlanetInteraction : MonoBehaviour
         wrongPanel.SetActive(false);
         CloseQuestionPanel();
     }
-    
+
     void OnDestroy()
     {
         if (planetInteractAction != null)

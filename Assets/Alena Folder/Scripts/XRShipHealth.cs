@@ -18,6 +18,7 @@ namespace AlenaScripts
         public TextMeshProUGUI healthText;
         public TextMeshProUGUI scoreText;
         public GameObject GameOverUI;
+        public Transform vrHeadset; // For HUD positioning
 
         void Awake()
         {
@@ -40,6 +41,16 @@ namespace AlenaScripts
             if (GameOverUI != null)
             {
                 GameOverUI.SetActive(false);
+            }
+        }
+
+        void Update()
+        {
+            if (vrHeadset != null)
+            {
+                // Keep UI fixed in front of VR headset
+                transform.position = vrHeadset.position + vrHeadset.forward * 2f;
+                transform.rotation = Quaternion.LookRotation(transform.position - vrHeadset.position);
             }
         }
 

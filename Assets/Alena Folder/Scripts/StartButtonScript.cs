@@ -1,4 +1,3 @@
-
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
@@ -66,11 +65,10 @@ public class StartButtonScript : MonoBehaviour
         fadeScreen.FadeOut();
         yield return new WaitForSeconds(fadeScreen.fadeDuration);
 
-        // **Forcefully disable the Start Panel after fade-out**
         if (startPanel != null)
         {
             startPanel.SetActive(false);
-            Canvas.ForceUpdateCanvases(); // Ensures UI updates correctly
+            Canvas.ForceUpdateCanvases();
             Debug.Log("Start Panel hidden after fade.");
         }
 
