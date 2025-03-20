@@ -191,7 +191,7 @@ public class AaronsLevelScript : MonoBehaviour
         }
 
         int randomNumber = Random.Range(0, 3); // Upper bound is exclusive, so use 6
-        Instantiate(fishSpawns[randomNumber], fishSpawnPoint.transform.position, fishSpawnPoint.transform.rotation);
+        //Instantiate(fishSpawns[randomNumber], fishSpawnPoint.transform.position, fishSpawnPoint.transform.rotation);
 
         CorrectUI.SetActive(true);
 
