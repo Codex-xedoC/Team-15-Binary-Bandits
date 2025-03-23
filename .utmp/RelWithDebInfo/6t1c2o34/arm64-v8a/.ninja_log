@@ -1,10 +1,10 @@
 # ninja log v5
-5	1533	1742498469519261569	GameActivity/CMakeFiles/game.dir/UGAInputKeyEvent.cpp.o	1760199828eb5c99
-3	1631	1742498469617060289	GameActivity/CMakeFiles/game.dir/UGAEntry.cpp.o	1749b4ba0deed864
-5	1685	1742498469673007440	GameActivity/CMakeFiles/game.dir/UGAInputMotionEvent.cpp.o	1bd20816c1d8a17e
-2	1699	1742498469685027288	GameActivity/CMakeFiles/game.dir/UGAConfiguration.cpp.o	6ea68497c4acd09f
-6	1897	1742498469883709889	GameActivity/CMakeFiles/game.dir/UGASoftKeyboard.cpp.o	59daf1431363a043
-2	2022	1742498470010005107	GameActivity/CMakeFiles/game.dir/UGADebug.cpp.o	42443ee981dee895
-4	2325	1742498470312453249	GameActivity/CMakeFiles/game.dir/UGAInput.cpp.o	cb5fd8579d440502
-1	2520	1742498470509385163	GameActivity/CMakeFiles/game.dir/UGAApplication.cpp.o	d952611e34780a8f
-2520	2767	1742498470748914656	/Users/paulinaroldan/Documents/GitHub/Team-15-Binary-Bandits/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/6t1c2o34/obj/arm64-v8a/libgame.so	f5f05b5e93dd6cae
+4	2715	1742497555385856721	GameActivity/CMakeFiles/game.dir/UGAInputKeyEvent.cpp.o	1760199828eb5c99
+2	2802	1742497555474191246	GameActivity/CMakeFiles/game.dir/UGAEntry.cpp.o	1749b4ba0deed864
+1	2833	1742497555503719215	GameActivity/CMakeFiles/game.dir/UGAConfiguration.cpp.o	6ea68497c4acd09f
+5	2836	1742497555503485000	GameActivity/CMakeFiles/game.dir/UGAInputMotionEvent.cpp.o	1bd20816c1d8a17e
+6	2992	1742497555663313170	GameActivity/CMakeFiles/game.dir/UGASoftKeyboard.cpp.o	59daf1431363a043
+2	3074	1742497555744942827	GameActivity/CMakeFiles/game.dir/UGADebug.cpp.o	42443ee981dee895
+3	3411	1742497556081752180	GameActivity/CMakeFiles/game.dir/UGAInput.cpp.o	cb5fd8579d440502
+0	3698	1742497556367249703	GameActivity/CMakeFiles/game.dir/UGAApplication.cpp.o	d952611e34780a8f
+3698	3976	1742497556632837628	/Users/paulinaroldan/Documents/GitHub/Team-15-Binary-Bandits/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/6t1c2o34/obj/arm64-v8a/libgame.so	f5f05b5e93dd6cae
