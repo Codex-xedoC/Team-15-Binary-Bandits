@@ -1,0 +1,325 @@
+Q Number,Q Type,Question,Answers,,,,
+,,,Option 1,Option 2,Option 3,Option 4,Correct
+1,Multiple Choice,What does WCAG stand for?,Web Content Accessibility Guidelines,Website Compliance and Accessibility Guidelines,World Content Accessibility Guidelines,Web Community Access Group,Web Content Accessibility Guidelines
+2,Multiple Choice,Which of the following is a principle of WCAG?,Responsive Design,Perceivable,Accessible Standards,SEO Optimization,Perceivable
+3,Multiple Choice,What does the POUR acronym stand for in WCAG?,Portable Organized Useful Readable,Proactive Operable User-friendly Responsive,Perceivable Operable Understandable Responsive,Perceivable Operable Understandable Robust,Perceivable Operable Understandable Robust
+4,Multiple Choice,What level of conformance is the highest in WCAG?,Level A,Level AA,Level AAA,Level AAAA,Level AAA
+5,Multiple Choice,Which WCAG principle is related to making content accessible to all types of devices and assistive technologies?,Perceivable,Operable,Understandable,Robust,Robust
+6,Multiple Choice,What is the purpose of alternative text for images?,To enhance SEO,To provide context for visually impaired users,To improve image loading speed,To give a brief description for mouse over,To provide context for visually impaired users
+7,Multiple Choice,Which of the following is NOT a requirement under WCAG?,Keyboard accessibility,Transcripts for audio content,Semantic HTML,Responsive design,Responsive design
+8,Multiple Choice,What does ARIA stand for?,Accessible Rich Internet Applications,Adaptive Rich Internet Applications,Assistive Resource Information Access,Accessibility Rule Interpretation Assistance,Accessible Rich Internet Applications
+9,Multiple Choice,What is one way to make forms more accessible for users with disabilities?,Minimize form fields,Use labels and fieldset elements,Use complex form structures,Use small font sizes,Use labels and fieldset elements
+10,Multiple Choice,What is the main purpose of WCAG guidelines?,To ensure websites are SEO optimized,To provide guidelines for making web content accessible to all users,To improve website performance,To enhance user interface design,To provide guidelines for making web content accessible to all users
+11,Multiple Choice,Which of the following is considered a time-based media alternative?,Captions,Alt text,Keyboard navigation,Color contrast,Captions
+12,Multiple Choice,According to WCAG what should be provided for non-text content?,Text descriptions,Links,Images,Animations,Text descriptions
+13,Multiple Choice,What is a common way to make a website more accessible for users with limited mobility?,Enable dark mode,Increase font sizes,Allow keyboard-only navigation,Use high-resolution images,Allow keyboard-only navigation
+14,Multiple Choice,Which of these is NOT one of the four main WCAG principles?,Understandable,Perceivable,Operable,Accessible,Accessible
+15,Multiple Choice,Why is high contrast important in web design for accessibility?,It helps with SEO,It makes the website look more modern,It improves readability for users with visual impairments,It increases loading speeds,It improves readability for users with visual impairments
+16,Multiple Choice,What is the purpose of keyboard accessibility?,To provide a faster way to navigate,To allow users with physical disabilities to navigate without a mouse,To improve SEO rankings,To prevent users from using a mouse,To allow users with physical disabilities to navigate without a mouse
+17,Multiple Choice,Which level of conformance is generally required for legal compliance in many countries?,Level A,Level AA,Level AAA,Level AAAA,Level AA
+18,Multiple Choice,Which of these is a benefit of using semantic HTML for accessibility?,It makes websites load faster,It improves the structure and accessibility of content for assistive technologies,It improves font rendering,It reduces need for CSS,It improves the structure and accessibility of content for assistive technologies
+19,Multiple Choice,Which of the following can make text content more accessible?,Using small font sizes,Avoiding headings,Using clear simple language,Avoiding line breaks,Using clear simple language
+20,Multiple Choice,Which of the following is considered an 'operable' guideline under WCAG?,Provide text alternatives for images,Use high color contrast,Make all functionality available from a keyboard,Ensure content is easy to understand,Make all functionality available from a keyboard
+21,Image Question,What type of users benefit from captioning in video content?,Users with visual impairments,Users who are color-blind,Users with hearing impairments,Users with cognitive disabilities,Users with hearing impairments
+22,Multiple Choice,Which ARIA role is used to indicate a region of content that updates frequently?,Alert,Navigation,Dialog,Complementary,Alert
+23,Multiple Choice,What does the WCAG guideline 'Time-based Media' refer to?,Media that changes based on user input,Video compresion techniques,Timed quizzes,Content that requires captions or transcripts,Content that requires captions or transcripts
+24,Multiple Choice,What is the main purpose of ARIA landmarks?,To improve the visual appearance of content,To help screen readers identify important sections of a page,To make the website more SEO-friendly,To add additional navigation menus,To help screen readers identify important sections of a page
+25,Multiple Choice,Which of the following features improves accessibility for users with cognitive disabilities?,Complex navigation menus,Fast content animations,High-resolution images,Clear and simple instructions,Clear and simple instructions
+26,Multiple Choice,What does the term 'focus order' refer to in accessibility?,The order in which elements recieve focus when navigating via keyboard,The visual hierarchy of elements on a page,The order in which elements are displayed in a document,The sequence in which text appears on a screen,The order in which elements recieve focus when navigating via keyboard
+27,Multiple Choice,Which of the following is a benefit of using headings for web content?,Improves loading speeds,Helps with styling and color choices,Improves the page's SEO,Allows users to understand the structure of the content better,Allows users to understand the structure of the content better
+28,Multiple Choice,What is an example of a WCAG 'Understandable' guideline?,Make web pages appear and operate in a predictable way,Ensure links are visually clear,Ensure audio controls are easy to find,Use high contrast colors for all text,Make web pages appear and operate in a predictable way
+29,Multiple Choice,Which of these techniques is recommended to make a website accessible for screen readers?,Hide navigation elements,Use ARIA labels for interactive elements,Remove all images,Decrease the number of links,Use ARIA labels for interactive elements
+30,Multiple Choice,Which of the following is an example of non-text content that requires a text alternative?,Plain text,Headings,Hyperlinks,Images,Images
+31,Multiple Choice,What does 'tab order' refer to in terms of accessibility?,The order in which tabs are opened in a browser,The sequence in which users can navigate through interactive elements using the Tab Key,The order of browsing tabs when multitasking,The hierarchy of elements on a webpage,The sequence in which users can navigate through interactive elements using the Tab Key
+32,Multiple Choice,Which of the following is a WCAG success criterion for 'Perceivable' content?,Keyboard accessible navigation,Sufficient contrast between text and background,Responsive design,Consistent navigation across pages,Sufficient contrast between text and background
+33,Multiple Choice,What does the aria-label attribute do in HTML?,Changes the color of a label,Defines a tooltip for an element,Provides an accessible name for an element,Specifies the position of a label,Provides an accessible name for an element
+34,Multiple Choice,Which of these is considered a best practice for making videos accessible?,Using autoplay,Using high-resolution video,Removing audio,Providing captions and transcripts,Providing captions and transcripts
+35,Multiple Choice,What is the purpose of skip navigation links?,To allow users to bypass repetitive navigation menus,To skip ads on a page,To make a page load faster,To increase SEO rankings,To allow users to bypass repetitive navigation menus
+36,Multiple Choice,Which of the following is an example of a time-based media alternative for accessibility?,Text contrast,Keyboard navigation,Audio descriptions for videos,Responsive images,Audio descriptions for videos
+37,Multiple Choice,What is one of the main reasons for adding aria-live to a section of a web page?,To improve SEO,To improve the visual layout of the page,To ensure that updates to dynamic content are announced by screen readers,To make the website more responsive,To ensure that updates to dynamic content are announced by screen readers
+38,Multiple Choice,Which of the following is a key reason to ensure that all form elements are properly labeled?,To assist users with screen readers in understanding the purpose of each field,To improve the appearance of the form,To make the form more interactive,To reduce the number of fields in the form,To assist users with screen readers in understanding the purpose of each field
+39,Multiple Choice,What does the WCAG criterion 'Resize Text' require?,Users should be able to resize text up to 200% without losing content or functionality,Text must be resizable only on mobile devices,Text must automatically adjust size based on screen width,Text should be limited to a certain size for readability,Users should be able to resize text up to 200% without losing content or functionality
+40,Image Question,What is a requirement for accessible forms under WCAG?,Forms should only use placeholder text for labels,Forms should avoid using labels altogether,Forms must be hidden from users with disabilities,Forms Must be operable via a keyboard,Forms Must be operable via a keyboard
+41,Multiple Choice,What is the best practice for handling link text for accessibility?,Use 'Click here' for every link,Use descriptive link text that makes sense out of context,Make all links the same color,Use long urls as link text,Use descriptive link text that makes sense out of context
+42,Multiple Choice,Which of the following is an accessible way to provide notifications to users without visual distractions?,Use pop-up windows,Display notifications in flashing text,Use ARIA alerts for screen readers,Add audio alerts only,Use ARIA alerts for screen readers
+43,Multiple Choice,Which of the following best describes 'Robust' in the context of WCAG?,Content should always be available in multiple languages,Content should be designed to work with a wide range of technologies including assistive technologies,Web pages should have a responsive design,Pages should load quickly across all devices,Content should be designed to work with a wide range of technologies including assistive technologies
+44,Multiple Choice,What is a common technique to ensure that users with color blindness can still understand content?,Use only bright colors,Make the entire page grayscale,Avoid using color as the only means to convey information,Provide tooltips on all elements,Avoid using color as the only means to convey information
+45,Multiple Choice,Why is consistent navigation important for accessibility?,It helps search engines index the site,It reduces the need for a sitemap,It improves the site's overall performance,It ensures users with cognitive disabilities can more easily navigate the site,It ensures users with cognitive disabilities can more easily navigate the site
+46,Multiple Choice,Which of the following is a WCAG guideline for making content 'Operable'?,Ensure all interactive elements are operable through a keyboard interface,Use semantic HTML for all headings,Provide transcripts for all audio content,Ensure text is resizable,Ensure all interactive elements are operable through a keyboard interface
+47,Multiple Choice,What does the term 'focus management' refer to in web accessibility?,Managing the visual appearance of the website,Controlling the order in which interactive elements receive focus when navigating with a keyboard,Maintaining user engagement on the site,Ensuring that important content is highlighted,Controlling the order in which interactive elements receive focus when navigating with a keyboard
+48,Multiple Choice,What is a good accessibility practice for web animations? ,Animations should always play automatically,Animations should include captions,Animations should be kept to a minimum and provide controls for users to pause or stop them,Animations should be fast and subtle,Animations should be kept to a minimum and provide controls for users to pause or stop them
+49,Multiple Choice,Which of the following WCAG guidelines ensures users can navigate content at their own pace?,Timed content must provide controsl to pause stop or extend the time limit,Content should be hidden when not in use,Navigation menus should disappear after a few seconds,Users must be able to skip all text content,Timed content must provide controsl to pause stop or extend the time limit
+50,Multiple Choice,Which accessibility practice improves access for users with motor impairments?,Allowing mouse-only navigation,Requiring double-click for all actions,Using small clickable areas,Providing keyboard shortcuts,Providing keyboard shortcuts
+51,Image Question,Which of these techniques improves accessibility for people with hearing impairments?,Using auto-playing videos,Providing captions or transcripts for multimedia content,Increasing the volume of audio content,Removing all text content,Providing captions or transcripts for multimedia content
+52,Multiple Choice,Which of these practices is important for ensuring accessibility in text links?,Ensure the link text is descriptive and meaningful on its own,Use the same color for all links and buttons,Only use images as links,Place all links at the bottom of the page,Ensure the link text is descriptive and meaningful on its own
+53,Multiple Choice,What is the primary purpose of the 'role' attribute in HTML for accessibility?,To add styles to the element,To indicate the purpose of an element for assistive technologies,To change the behavior of the element,To disable the element,To indicate the purpose of an element for assistive technologies
+54,Multiple Choice,What is the main reason to provide sufficient time for users to read and interact with content?,To improve the performance of the site,To allow users with cognitive or motor impairments to process the information,To reduce the bandwidth usage,To keep users engaged for longer,To allow users with cognitive or motor impairments to process the information
+55,Multiple Choice,Which of the following best describes 'Understandable' in the context of WCAG Guidelines?,Content must be available in multiple languages,Web pages shuld use responsive design,Websites should include more interactive elements,Content should be easy to read and navigate,Content should be easy to read and navigate
+56,Multiple Choice,What is the main accessibility issue with this line of code: `<img src='picture.jpg'>`?,The image source is invalid,The file type is not supported,The image does not have a title,The alt attribute is missing,The alt attribute is missing
+57,Multiple Choice,In the following line of code which attribute improves accessibility? `<button>Click me</button>`,title,onclick,aria-label,data-id,aria-label
+58,Multiple Choice,Which ARIA attribute would be used to indicate that an element is a button when it is not a native button element?,aria-pressed,role='button',aria-label,aria-expanded,role='button'
+59,Multiple Choice,What is the main accessibility issue with the following form code? `<input type='text'>`,The input is missing a label,The input type is incorrect,The input is missing placeholder text,The input is too short,The input is missing a label
+60,Multiple Choice,What is the purpose of the `aria-hidden` attribute?,To hide content from screen readers,To hide content from all users,To disable a form element,To increase text contrast,To hide content from screen readers
+61,Multiple Choice,Which of the following code snippets provides proper accessibility for a checkbox?,<input type='checkbox'>,<input type='checkbox' aria-label='Accept Terms and Conditions'>,<input type='checkbox' id='accept'>,"<input type='checkbox' id='accept'>
+<label for='accept'>Accept Terms and Conditions</label>","<input type='checkbox' id='accept'>
+<label for='accept'>Accept Terms and Conditions</label>"
+62,Multiple Choice,Which HTML element should be used to improve the accessibility of navigation menus?,<menu>,<nav>,<ul>,<div>,<nav>
+63,Multiple Choice,What is the role of the 'lang' attribute in HTML,To define the programming language,To translate the content automatically,To declare the language of the document for screen readers,To specify language direction,To declare the language of the document for screen readers
+64,Multiple Choice,Which ARIA attribute should be used to inform users that content is being dynamically updated?,aria-live,aria-label,aria-busy,aria-hidden,aria-live
+65,Multiple Choice,What is the purpose of the 'tabindex' attribute in HTML,To change the style of an element,To control the order in which elements receive focus,To define the number of tab spaces in a text area,To make an element clickable,To control the order in which elements receive focus
+66,Multiple Choice,What is the accessibility issue in this code? `<input type='text' placeholder='Enter your name'>',There is no issue,The placeholder text is not descriptive enough,The input is missing a label,The input type is incorrect,The input is missing a label
+67,Multiple Choice,Which element should be used for creating accessible headings?,<div>,<strong>,<header>,<h1> to <h6>,<h1> to <h6>
+68,Multiple Choice,What is the main accessibility issue with this code? `<table><tr><td>Item</td><td>Price</td></tr></table>`,The table is missing a caption,The table is missing a '<thead>' and '<tbody>',The table is missing '<th>' elements for headers,The table layout is incorrect,The table is missing '<th>' elements for headers
+69,Multiple Choice,What is the purpose of using `role='alert'` in accessible code?,To notify screen readers that the content requires immediate attention,To display a visual alert to users,To mark a section as non-interactive,To notify screen readers that content is hidden,To notify screen readers that the content requires immediate attention
+70,Multiple Choice,Which of the following is an accessible way to provide information about an image in HTML?,Using the 'alt' attribute,Adding a 'title' tag,Using a tooltip,Using a caption outside of the image tag,Using the 'alt' attribute
+71,Multiple Choice,What is the main accessibility issue with the following code? `<video src='video.mp4'></video>`,The video does not include playback controls,The video format is incorrect,The video is missing captions,The video is too large,The video does not include playback controls
+72,True/False,A button can be used to manually update the content of a page,TRUE,FALSE,,,TRUE
+73,Multiple Response,"What WCAG violations are in this line of code? ""<meta http-equiv=""refresh"" content=""15;url=https://www.sporcle.com/?refresh"">""",The page should not automatically refresh,15 seconds is too short of a time interval for the meta element,There is no issue with this code,"The URL should be referenced with src=""https://www.sporcle.com/?refresh"" instead",The page should not automatically refresh 15 seconds is too short of a time interval for the meta element
+74,True/False,A time is allowed if the time limit is greater than 20 hours,TRUE,FALSE,,,TRUE
+75,Multiple Response,Which of the following could be distracting to users,Animations,Stock Tickers,Auto-updating Media,Images,Animations Stock Tickers Auto-updating Media
+76,True/False,Re-authenticating is a Level A priority success criteria,TRUE,FALSE,,,FALSE
+77,True/False,Blinking content should stop after a brief time period,TRUE,FALSE,,,TRUE
+78,Image Question,This video has proper controls available,TRUE,FALSE,,,TRUE
+79,Multiple Choice,What is the purpose of the `aria-controls` attribute?,To define which element is controlling the current element,To associate a controlling element with another element it affects like a dropdown,To visually hide content from users,To change the layout of an element,To associate a controlling element with another element it affects like a dropdown
+80,Multiple Choice,Which of the following code snippets properly labels a form input?,<input type='text' placeholder='Email Address'>,"<label for='Email'>Email:</label>
+<input id='Email' type='email'>",<input type='email' aria-label='Email Address'>,<input type='email' id='email'>,"<label for='Email'>Email:</label>
+<input id='Email' type='email'>"
+81,Multiple Choice,"
+What is an issue with using only color to indicate required fields in a form?",Color may not display properly on all devices,Color increases page load time,Color is not allowed in form fields,Users with color blindness may not be able to distinguish the required fields,Users with color blindness may not be able to distinguish the required fields
+82,Multiple Choice,What accessibility issue can arise from this code? `<a href='page.html'>Click me</a>`,The link should not open in a new tab,The link is missing the target attribute,The link text is not descriptive enough,The link url is broken,The link text is not descriptive enough
+83,Multiple Choice,Which type of disability is the most common?,Color blindness,Auditory disabilities,Motor disabilities,Cognitive Disabilities,Cognitive Disabilities
+84,Multiple Response,Which of the following are valid ways to improve accessibility for screen reader users?,Use the 'aria-label' attribute to provide descriptions,Use proper heading structure (e.g. '<h1>' to '<h6>'),Avoid using any CSS on text,Ensure all interactive elements are focusable,Use the 'aria-label' attribute to provide descriptions Use proper heading structure (e.g. '<h1>' to '<h6>') Ensure all interactive elements are focusable
+85,Multiple Response,Which of the following practices make form inputs more accessible?,Provide descriptive 'aria-label' attributes,Use a placeholder instead of a label,Associate labels with inputs using the 'for' attribute,Use appropriate input types,Provide descriptive 'aria-label' attributes Associate labels with inputs using the 'for' attribute Use appropriate input types
+86,Multiple Response,What are some issues with using only color to indicate required fields in a form?,It may not be visible to users with color blindness,It increases the loading time of the page,It is not understandable by screen readers,It violates WCAG contrast guidelines,It may not be visible to users with color blindness It is not understandable by screen readers
+87,Multiple Response,Which of the following help improve keyboard accessibility?,Ensure all interactive elements are focusable,Provide visual focus indicators,Remove the tab key from certain elements,Use 'tabindex' to control focus order,Ensure all interactive elements are focusable Provide visual focus indicators Use 'tabindex' to control focus order
+88,Multiple Response,Which of the following code snippets follow accessibility best practices for buttons?,<button type='submit'></button>,<button aria-label='Submit form'>Submit</button>,<div role='button' onclick='submit()'>Submit</div>,<a href='#' onclick='submit()'>Submit</a>,<button aria-label='Submit form'>Submit</button> <div role='button' onclick='submit()'>Submit</div>
+89,Multiple Response,What are potential accessibility issues with using this code? `<iframe src='video.html'></iframe>`,The iframe is missing a `title` attribute,The iframe should have a `role` attribute,The iframe content may not be accessible,The iframe should not be used for embedding videos,The iframe is missing a `title` attribute The iframe content may not be accessible
+90,Multiple Response,Which of the following features should be included to improve the accessibility of a video player?,Provide captions or subtitles,Ensure keyboard control for play/pause actions,Include a download button,Add an 'aria-live' region for updates,Provide captions or subtitles Ensure keyboard control for play/pause actions
+91,Multiple Response,What are the accessibility issues with the following code? `<audio controls src='song.mp3'></audio>',No alternative text is provided for the audio,There are no captions or transcripts,The 'controls' attribute is missing,The audio element needs an 'aria-label',There are no captions or transcripts
+92,Multiple Response,Which of the following help create accessible carousels or sliders?,Add keyboard support for navigation,Use 'aria-live='polite'' for screen reader updates,Include autoplay features without pause functionality,Provide clear next/previous buttons,Provide clear next/previous buttons Use 'aria-live='polite'' for screen reader updates Add keyboard support for navigation
+93,Multiple Response,Which of the following are principles of the WCAG guidelines?,Perceivable,Operable,Understandable,Reasonable,Perceivable Operable Understandable
+94,Multiple Response,Which of the following are true about WCAG compliance levels?,Level A addresses the most basic web accessibility features,Level AA addresses the most advanced web accessibility features,Level AAA is the highest and most stringent level,Level AAA must be met for legal compliance in all countries,Level A addresses the most basic web accessibility features Level AAA is the highest and most stringent level
+95,Multiple Response,Which of the following are requirements under the 'Perceivable' principle of WCAG?,Text alternatives for non-text content,Provide captions for multimedia,Content should be navigable using the keyboard,Avoid using flashing content,Text alternatives for non-text content Provide captions for multimedia
+96,Multiple Response,Which are examples of assistive technologies that help users with disabilities?,Screen Readers,Voice recognition software,Magnifiers,Code linters,Screen Readers Voice recognition software Magnifiers
+97,Multiple Response,What are key aspects of making web content 'Operable' according to WCAG?,Users must be able to navigate content via a keyboard,Ensure content can be resized by up to 200%,Provide ways to help users avoid and correct mistakes,Avoid using time limits unless essential,Users must be able to navigate content via a keyboard Avoid using time limits unless essential
+98,Multiple Response,What are important practices for ensuring accessibility in forms?,Use placeholder text instead of labels,Ensure that each form field has a label,Avoid using CAPTCHA,Provide error suggestions and corrections,Provide error suggestions and corrections Ensure that each form field has a label
+99,Multiple Response,Which of the following contribute to accessible color contrast?,Use custom fonts for better readability,Use a contrast ratio of at least 4.5:1 for regular text,Use a contrast ratio of at least 3:1 for large text,Avoid relying solely on color to convey meaning,Use a contrast ratio of at least 4.5:1 for regular text Use a contrast ratio of at least 3:1 for large text Avoid relying solely on color to convey meaning
+100,Multiple Response,What practices do NOT help make content 'Understandable' according to WCAG?,Use clear and simple language,Provide instructions and help for completing forms,Ensure pages operate predictably,Use animated images to guide users,Use animated images to guide users
+101,Multiple Response,What are key elements of accessible multimedia content?,Provide captions for video content,Ensure audio content has text transcriptions,Ensure there are visual descriptions for key actions,Provide a description for decorative images,Provide captions for video content Ensure audio content has text transcriptions Ensure there are visual descriptions for key actions
+102,Multiple Response,What are good practices for ensuring accessible links?,Ensure link text is descriptive,Provide both a 'title' and 'alt' attribute for links,Use color contrast ratio of at least 3:1 for link text,Avoid relying solely on color to indicate links,Ensure link text is descriptive Use color contrast ratio of at least 3:1 for link text Avoid relying solely on color to indicate links
+103,Multiple Response,Which of the following ensure that an image element is accessible? '<img src='image.jpg'>',Add an `alt` attribute describing the image,Use a descriptive filename instead of `alt` text,Add `role='presentation'` if the image is decorative,Wrap the image in an anchor `<a>` tag,Add an `alt` attribute describing the image Add `role='presentation'` if the image is decorative
+104,Multiple Response,Which of the following provide an accessible button element? '<button>Click Me</button>',Ensure the button has visible text describing its actions,Add 'aria-label' if the button only has an icon,Use a '<div>' element with role 'role='button'',Make the button accessible with `tabindex='0'`,Add 'aria-label' if the button only has an icon Ensure the button has visible text describing its actions
+105,Multiple Response,What makes this link more accessible? `<a href='#'>Click here</a>`,Keep the `#` to prevent navigation,Use `tabindex='-1'` to remove it from the tab order,Change the link text to something descriptive,Add `aria-label` to explain the purpose,Change the link text to something descriptive Add `aria-label` to explain the purpose
+106,Multiple Response,Which of the following improve the accessibility of a form input? `<input type='text'>`,Use `placeholder` as the label,Add a corresponding `<label>` element,Ensure `id` and `for` attributes connect the input and label,Use `title` attribute to describe the field,Add a corresponding `<label>` element Ensure `id` and `for` attributes connect the input and label
+107,Multiple Response,"Which of the following make a `<video>` element more accessible? 
+`<video src='video.mp4'></video>`",Provide captions for the video content,Add `autoplay` to automatically start the video,Add `controls` attribute for playback control,Ensure the video has a transcript available,Provide captions for the video content Add `controls` attribute for playback control Ensure the video has a transcript available
+108,Multiple Response,"Which of the following help ensure the accessibility of a `<select>` dropdown? 
+`<select><option>Option 1</option></select>`",Use `aria-label` to describe each option,Add `aria-expanded='true'` to the `<select>`,Add a `<label>` for the dropdown,Ensure the `option` elements are descriptive,Add a `<label>` for the dropdown Ensure the `option` elements are descriptive
+109,Multiple Response,"What makes this image map accessible? 
+`<map><area href='#'></map>`",Add `aria-label` to each `area` element,Use descriptive `alt` attributes for each `area`,Ensure the map is focusable with the keyboard,Use `role='link'` to each `area` element,Use descriptive `alt` attributes for each `area` Ensure the map is focusable with the keyboard
+110,Multiple Response,How can this heading element be made more accessible? `<h1 style='display:none;'>Heading</h1>`,Ensure the heading is visible to all users,Add `aria-hidden='false'` to make it readable,Use a CSS class for better visual control,Avoid hiding important headings with `display:none;`,Ensure the heading is visible to all users Avoid hiding important headings with `display:none;`
+111,Multiple Response,What should be added to ensure this iframe is accessible? `<iframe src='video.html'></iframe>`,Add a descriptive `title` attribute,Ensure the iframe content is accessible,Add `aria-hidden='true'` if the iframe is decorative,Use `tabindex='-1'` to remove it from focus,Add a descriptive `title` attribute Ensure the iframe content is accessible
+112,Multiple Response,Which improve the accessibility of this list? `<ul><li>Item</li></ul>`,Use `role='list'` to identify the list,Ensure that list items are ordered if necessary,Add `aria-label` to the list if necessary,Use proper list structure (`<ul>` or `<ol>`),Ensure that list items are ordered if necessary Use proper list structure (`<ul>` or `<ol>`)
+113,Multiple Response,Which attributes improve the accessibility of this search input? `<input type='search'>`,Add a corresponding `<label>` for the input,Use `aria-label` for additional context,Add `required` if the search is mandatory,Ensure the input has a placeholder,Add a corresponding `<label>` for the input Use `aria-label` for additional context Add `required` if the search is mandatory
+114,Multiple Response,For someone with low vision what are ways to make text more readable?,Zoom or magnify text on the screen,Use synchronized video captions,Change text and background colors for better contrast,Use a screen reader,Zoom or magnify text on the screen Change text and background colors for better contrast Use a screen reader
+115,Multiple Choice,The most important consideration for designing web content for someone with motor disabilities is the inability to use:,The hands,The legs,The eyes,The ears,The hands
+116,Multiple Choice,What are the rules or checklist of items upon which the guidelines of WCAG 2.0 are based?,Level AAA,Success Criteria,Sufficient Techniques,Advisory Techniques,Success Criteria
+117,Multiple Choice,Under most circumstances the WCAG level most commonly set as the minimum goal is ,Level A ,Level AA,Level AAA,Level AAB,Level AA
+118,Multiple Response,Designing web sites to benefit people with disabilities:,Also benefits other users of all kinds,Helps only a small minority of people,Is extremely difficult to implement and should be left to experienced professionals,Should always be done no matter the experience level,"Also benefits other users of all kinds ""Should always be done no matter the experience level"""
+119,Multiple Choice,Accessibility is best approached as:,A one-time project with a defined end date,An ongoing program that requires constant commitment,A legal hassle,An optional choice that is not important,An ongoing program that requires constant commitment
+120,Multiple Choice,Which of the following does NOT represent best practice in terms of creating a structured outline of the content with headings,"<h1>
+<h2>
+<h3>
+<h4>
+<h2>","<h1>
+<h2>
+<h2>
+<h2>
+<h3>
+<h4>","<h1>
+<h3>
+<h4>
+<h3>
+<h4>","<h1>
+<h2>","<h1>
+<h3>
+<h4>
+<h3>
+<h4>"
+121,Multiple Response,Which of the following will be recognized as valid headings by screen readers?,<h1></h1>,<h1>The desert toroise</h1>,<h7>Legal disclaimer</h7>,"<div role=""heading"" aria-level=""3"">The secrets beneath the ocean's surface</div>","<h1>The desert toroise</h1> ""<div role=""""heading"""" aria-level=""""3"""">The secrets beneath the ocean's surface</div>"""
+122,Multiple Response,Which of the following statements are TRUE,Users should be warned if a link opens in a new window,"Link text should include words like ""link"" or ""click"" so screen reader users know it is a link",Images alone should not be used as links,Links with the same text should go to the same place,Users should be warned if a link opens in a new window Links with the same text should go to the same place
+123,True/False,A user interface component should not initiate a change of context when it recieves focus,TRUE,FALSE,,,TRUE
+124,True/False,Changing the setting of any user interace component should automatically change the context,TRUE,FALSE,,,FALSE
+126,Multiple Response,Which of the following is considered changing a setting of a user interface component?,Checking a checkbox,Entering text into a text field,Changing the selected option in a list,Activating a link or button,Checking a checkbox Entering text into a text field Changing the selected option in a list
+127,True/False,Change of context are only appropriate when the user is aware that such a change will occur in response to the user's action,TRUE,FALSE,,,TRUE
+128,True/False,Users cannot initiate a change in the order of navigational mechanisms by using adaptive user agents,TRUE,FALSE,,,FALSE
+129,True/False,Identical functions should have the same labels or a different accessible name,TRUE,FALSE,,,TRUE
+130,Image Question,Which of the following are common help mechanisms seen on a web page?,Human contact details,Human contact mechanism,Self-help option,A fully automated contact mechanism,Human contact details Human contact mechanism Self-help option A fully automated contact mechanism
+131,Multiple Response,The main navigation menu should:,Be consistently located,Be consistently ordered,Be positioned horizontally,Include drop-down menus,Be consistently located Be consistently ordered
+132,Multiple Response,A skip link should:,Be placed just before the main navigation menu,Be placed right after the opening <body> tag,Be accessible to keyboard-only users,Be accessible to screen reader users,Be placed right after the opening <body> tag Be accessible to keyboard-only users Be accessible to screen reader users
+133,Multiple Response,The title for a data table should be contained in what element?,<caption>,<title>,<tabletitle>,<summary>,<caption>
+134,Multiple Response,The correct way to code a table cell that is a column header is:,"<td scope=""col"">","<td scope=""column"">","<th scope=""col"">","<th scope=""column"">","""<th scope=""""col"""">"""
+135,True/False,Screen readers will interpret color-coded text and announce changes in color,TRUE,FALSE,,,FALSE
+136,True/False,ARIA was invented to increase screen reader accessibility,TRUE,FALSE,,,TRUE
+137,True/False,Screen readers will read the alt text of an image within a heading as part of the heading text.,TRUE,FALSE,,,TRUE
+138,True/False,Links must be visually distinguishable from the surrounding non-link text,TRUE,FALSE,,,TRUE
+139,True/False,Links can be the same color as the surrounding non-link text as long as an underline appears on mouse hover and on keyboard focus,TRUE,FALSE,,,FALSE
+140,True/False,Links on the same page that go to the same destination should have the same text within the link,TRUE,FALSE,,,TRUE
+141,True/False,Screen readers can identify the current location within a navigation menu based on the visual styles,TRUE,FALSE,,,FALSE
+142,True/False,Sighted keyboard users can navigate by headings landmarks and other semantic features just like blind screen reader users.,TRUE,FALSE,,,FALSE
+143,True/False,Layout tables are not permitted by WCAG standards,TRUE,FALSE,,,FALSE
+144,True/False,"WCAG stands for ""Web Compliance and Accessibility Guidelines""",TRUE,FALSE,,,FALSE
+145,True/False,WCAG 2.1 is divided into 4 categories: Perceivable Operable Understandable Robust,TRUE,FALSE,,,TRUE
+146,True/False,WCAG 2.1 Level AAA is the minimum level of conformance for all websites,TRUE,FALSE,,,FALSE
+147,True/False,WCAG 2.1 Success Criteria can be measured in three conformance levels: A AA and AAA,TRUE,FALSE,,,TRUE
+148,True/False,For a website to meet WCAG 2.1 AA it must meet both Level A and Level AA Criteria,TRUE,FALSE,,,TRUE
+149,True/False,The WCAG guidelines are legally required by all countries,TRUE,FALSE,,,FALSE
+150,True/False,Text that cannot be resized without assistive technology fails WCAG Level AA compliance,TRUE,FALSE,,,TRUE
+151,True/False,Providing captions for live audio content is required to meet WCAG Level A,TRUE,FALSE,,,FALSE
+152,True/False,WCAG 2.1 includes guidelines for both visual and auditory disabilities,TRUE,FALSE,,,TRUE
+153,True/False,Web accessibility only applies to people with visual impairments,TRUE,FALSE,,,FALSE
+154,True/False,Keyboard navigation is an important part of making a website accessible,TRUE,FALSE,,,TRUE
+155,True/False,Accessible websites should avoid using flash content that could trigger seizures,TRUE,FALSE,,,TRUE
+156,True/False,Alternative text for images is not required if the image is decorative,TRUE,FALSE,,,TRUE
+157,True/False,ARIA (Accessible Rich Internet Applications) is a set of attributes that help make dynamic content more accessible,TRUE,FALSE,,,TRUE
+158,True/False,Websites should not have any keyboard traps which means users cannot be trapped in a section using the keyboard.,TRUE,FALSE,,,TRUE
+159,True/False,A skip navigation link is unnecessary if your website is accessible,TRUE,FALSE,,,FALSE
+160,True/False,Descriptive headings and labels can enhance web accessibility,TRUE,FALSE,,,TRUE
+161,True/False,Large font sizes can substitute for contrast in making text accessible,TRUE,FALSE,,,FALSE
+162,True/False,Ensuring that all form elements have associated labels is important for web accessibility,TRUE,FALSE,,,TRUE
+163,True/False,It is acceptable for links to be identified solely by color,TRUE,FALSE,,,FALSE
+164,True/False,PDFs can be made accessible by adding proper tags and structure,TRUE,FALSE,,,TRUE
+165,True/False,Testing your website with only one screen reader is enough to confirm accessibility,TRUE,FALSE,,,FALSE
+166,True/False,Plain language is important for improving web accessibility for people with cognitive disabilities.,TRUE,FALSE,,,TRUE
+167,True/False,A website’s color scheme has no impact on web accessibility,TRUE,FALSE,,,FALSE
+168,True/False,Transcripts are required for prerecorded audio-only content to meet WCAG Level AA,TRUE,FALSE,,,TRUE
+169,True/False,HTML5 has built-in accessibility features that help make websites more accessible,TRUE,FALSE,,,TRUE
+170,True/False,The tab order of a web page is irrelevant for accessibility.,TRUE,FALSE,,,FALSE
+171,True/False,Keyboard users should be able to activate all website functionality including interactive elements.,TRUE,FALSE,,,TRUE
+172,True/False,Access keys are recommended for improving web accessibility.,TRUE,FALSE,,,FALSE
+173,Image Question,HTML <table> elements should always include <caption> tags to describe the table’s purpose.,TRUE,FALSE,,,TRUE
+174,True/False,"An empty alt attribute (alt="""") should be used for purely decorative images.",TRUE,FALSE,,,TRUE
+175,True/False,The <label> element should always be associated with form controls like input fields,TRUE,FALSE,,,TRUE
+176,True/False,HTML5 semantic elements like <header> <footer> and <article> help improve accessibility.,TRUE,FALSE,,,TRUE
+177,True/False,The <iframe> element does not need a title attribute for accessibility.,TRUE,FALSE,,,FALSE
+178,True/False,Using <strong> and <em> tags instead of <b> and <i> improves accessibility for screen readers.,TRUE,FALSE,,,TRUE
+179,True/False,It is best practice to avoid using the tabindex attribute unless necessary.,TRUE,FALSE,,,TRUE
+180,True/False,Heading tags (<h1> <h2> etc.) should always be used in a logical order to ensure accessibility,TRUE,FALSE,,,TRUE
+181,True/False,HTML <input> elements for forms can be left without any type attributes.,TRUE,FALSE,,,FALSE
+182,True/False,"The ARIA role ""alert"" is used to display urgent messages to assistive technologies.",TRUE,FALSE,,,TRUE
+183,True/False,It is acceptable to use only ARIA roles and ignore native HTML semantics.,TRUE,FALSE,,,FALSE
+184,True/False,The lang attribute on the <html> tag is important for accessibility.,TRUE,FALSE,,,TRUE
+185,True/False,If a button only contains an icon (with no text) it should still have an accessible label.,TRUE,FALSE,,,TRUE
+186,True/False,HTML headings should be styled visually without considering their semantic importance,TRUE,FALSE,,,FALSE
+187,True/False,Using ARIA to label interactive elements is more effective than using native HTML labels.,TRUE,FALSE,,,FALSE
+188,True/False,Anchor tags (<a>) without href attributes are accessible and usable.,TRUE,FALSE,,,FALSE
+189,True/False,The <alt> attribute for images should be descriptive enough for users who cannot see the image.,TRUE,FALSE,,,TRUE
+190,True/False,The title attribute is always a suitable replacement for the aria-label attribute on elements.,TRUE,FALSE,,,FALSE
+191,True/False,WAI-ARIA roles and properties should only be used when native HTML does not suffice.,TRUE,FALSE,,,TRUE
+192,True/False,"The following code provies an accessible label for the input field:
+<label for=""email"">Email</label>
+<input type=""email"" id=""email"" />",TRUE,FALSE,,,TRUE
+193,True/False,"This code is an accessible way to add an image that doesn't need alternative text:
+<img src=""decoration.jpg"" alt="""">",TRUE,FALSE,,,TRUE
+194,True/False,"The following code will make the button accessible to screen readers:
+<button aria-label=""Submit Form"">Submit</button>",TRUE,FALSE,,,FALSE
+195,True/False,"This table code is fully accessible:
+<table>
+  <tr>
+    <th>First Name</th>
+    <th>Last Name</th>
+  </tr>
+  <tr>
+    <td>John</td>
+    <td>Doe</td>
+  </tr>
+</table>",TRUE,FALSE,,,FALSE
+196,True/False,"The following code provides accessible navigation with ARIA landmarks:
+<nav role=""navigation"">
+  <ul>
+    <li><a href=""#home"">Home</a></li>
+    <li><a href=""#about"">About</a></li>
+  </ul>
+</nav>",TRUE,FALSE,,,TRUE
+197,True/False,"This heading structure is semantically correct and accessible:
+<h1>Main Title</h1>
+<h2>Subtitle</h2>
+<h3>Section Heading</h3>",TRUE,FALSE,,,TRUE
+198,True/False,"The following form input code is accessible:
+<input type=""checkbox"" aria-checked=""true"">",TRUE,FALSE,,,FALSE
+199,True/False,"This HTML code properly uses ARIA to label an icon-only button:
+<button aria-label=""Close"">
+  <i class=""icon-close""></i>
+</button>",TRUE,FALSE,,,TRUE
+200,True/False,"This code will create an accessible alert using ARIA:
+<div role=""alert"">Your session is about to expire!</div>",TRUE,FALSE,,,FALSE
+201,True/False,To meet WCAG Level AA a website must have a contrast ratio of at least 3:1 for normal text.,TRUE,FALSE,,,FALSE
+202,True/False,Failure to provide clear focus indicators on interactive elements such as buttons violates WCAG Level A.,TRUE,FALSE,,,TRUE
+216,Multiple Response,Which of the following are reasons to allow for users to stop animations on a web page?,Users may experience nausea,Animations can slow down web traffic,They could be distracting for users,Animations are not professional,Users may experience nausea They could be distracting for users
+217,Multiple Response,Which of the following are vestibular reactions to animations,Headaches,Nausea,Dizziness,Seizures,Headaches Nausea Dizziness
+218,True/False,Red flashing elements are more dangerous than normal flashing elements,TRUE,FALSE,,,TRUE
+219,True/False,Blinking and flashing content are the same,TRUE,FALSE,,,FALSE
+220,True/False,Essential movement associated with page scrolling can cause vestibular reactions,TRUE,FALSE,,,FALSE
+221,Multiple Response,Which of the following is not accessible according to WCAG 2.3,Blinking content,Flashing content,Non-stoppable animations,Rotating content,Blinking content Flashing content Non-stoppable animations
+260,Image Question,What could be a possible accessibility issue in this image?,The language used could be complicated or confusing for readers,The page will not operate consistently,There are no possible issues,This site is not keyboard navigable,The language used could be complicated or confusing for readers
+296,Image Question,What WCAG violations exist in the following image?,Meta refresh with a time-out used,Button element has no text in element,Div element is missing an alt attribute,Img element missing alt attribute,Meta refresh with a time-out used	Img element missing alt attribute
+297,Image Question,What WCAG violations exist in the following image?,Em (emphasis) element used,P element contains unhelpful text,B (bold) element used,A (anchor) element uses image instead of text,B (bold) element used
+298,Image Question,What WCAG violations exist in the following image?,Image used as anchor is missing alt text,H2 (header 2) element should be replaced with a p (paragraph) element instead,A (anchor) element is missing an alt attribute,,Image used as anchor is missing alt attribute
+299,Image Question,What WCAG violations exist in the following image?,Contrast ratio is not sufficient,Header order is not logical,I (italic) element should be replaced with em (emphasis) element,Image used as anchor is missing alt attribute,Contrast ratio is not sufficient Header order is not logical I (italic) element should be replaced with em (emphasis) element Image used as anchor is missing alt attribute
+300,Image Question,What WCAG violations exist in the following image?,Strong element should be replaced with b (bold) element,I (italic) element should be replaced with em (emphasis) element,Input element is missing a label,Img element is missing an alt attribute,I (italic) element should be replaced with em (emphasis) element Input element is missing a label
+301,Image Question,What WCAG violations exist in the following image?,Image used as anchor has non descriptive alt text,Contrast ratio is not sufficient in some parts of page,I (italic) element should be replaced with em (emphasis) element,,Image used as anchor has non descriptive alt text Contrast ratio is not sufficient in some parts of page I (italic) element should be replaced with em (emphasis) element
+302,Multiple Choice,What year was the first WCAG version released?,1999,1998,2005,2009,1999
+303,Multiple Choice,What is WAVE?,An extension for VS Code,A screen reader,A digital music platform,A tool to check website accessibilty,A tool to check website accessibility
+304,Multiple Response,Which of these are screen readers?,NVDA,JAWS,MacOS VoiceOver,Dragon NaturallySpeaking,NVDA JAWS MacOS VoiceOver
+305,Image Question,How many people live with a disability according to the World Health Organization?,About 15%,About 30%,About 10%,Less than 5%,About 15%
+306,Image Question,This is the top of the Uber website. What landmark should be used for the outlined section?,Head,Header,Nav,Top,Header
+307,Image Question,This is the top of the Uber website. What landmark should be used for the outlined section?,Section,Area,Region,Nav,Nav
+308,Image Question,This is the top of the Uber website. Clicking the logo takes the user to the site's home page. Should a <button> or <a> element be used for this?,<button>,<a>,Neither,Both,<a>
+309,Image Question,This is a condensed view of the top of the Uber website. Clicking the hamburger menu should display more options for the user. Which element should be used for this?,<a>,<button>,<toggle>,<menu>,<button>
+310,Image Question,"This is the Uber home page. The ""See Prices"" element has the following code. Is this accessible?
+
+<a href=""https://m.uber.com/lprices"" class=""buttontopress"">See prices</a>",Yes this element is accessible,No the class indicates that this should be a button instead,No this should be a <link> element,,Yes this element is accessible
+311,Multiple Choice,"Is the following code accessible? 
+
+<button type=""button""
+id=""menubutton""
+aria-haspopup=""true""
+aria-controls=""menu2""
+aria-expanded=""false"">","No the button needs role=""button""","No the type should not be set to ""button""",Yes this element is accessible,"No the button needs role=""clickable""",Yes this element is accessible
+312,Image Question,In this image you can see yellow text on a blue background. How can it be determined if this text is accessible?,Check the contrast ratio between the two colors,Compare the average value of the two colors,If the text in the image is the same text in an alt attribute for the image element,,If the text in the image is the same text in an alt attribute for the image element
+313,Image Question,This image shows the Walgreens home page with the company's logo image in the top left corner. Is this logo image decorative?,No as it provides the company's logo to inform users of the site they're on and provides a link to go to the main page.,Yes as the user already knows what website they are on and the logo offers no new information,,,No as it provides the company's logo to inform users of the site they're on and provides a link to go to the main page.
+314,Image Question,This image shows the Walgreens home page with the search bar at the top and a magnifying glass symbol in the far right side of the search bar. What alternative text would be best for this symbol?,Magnifying glass,No alternative text is needed,Start Search,Search,Search
+315,Image Question,This is an image of a menu from the CVS website. What are potential accessibility issues in this image?,There are no accessibility issues in the image,The text size is too small,Red text on white background is not accessible to color blind users,Color alone is used to convey meaning,The text size is too small
+316,Image Question,"In the following image from History.com is the first ""Squier"" link accessible?",Yes as it is colored blue to indicate it is a link,No as there is no underline to indicate that it is a link and it is not clear if it is a link or just colored text,Yes since it is just text that has been colored blue and is not a link,No as it is not clear if it is a link or just colored text,No as there is no underline to indicate that it is a link and it is not clear if it is a link or just colored text
+317,Image Question,"In the following image from benefitscal.com the heading order is as follows:
+
+<h3>View your Benefits details</h3>
+<h4>Read electronic notices</h4>
+<h4>Track statuses and reminders</h4>
+<h5>Submit documents reports and renewals online</h5>
+
+Is this heading order logical?",Yes as the headings are in order numerically,No as the heading order indicates that these have different levels of priority. They should all be the same heading level,,,No as the heading order indicates that these have different levels of priority. They should all be the same heading level
+318,Multiple Choice,Which of the following is an important consideration for creating robust web content?,Valid HTML and CSS markup,Using bright colors for contrast,Reducing the number of images,Adding more JavaScript to improve interactivity,Valid HTML and CSS markup
+319,Multiple Choice,What does it mean for an element's name or role to be programmatically determined?,Programmers can easily edit the HTML code,It is structured so that software can extract and present it in various formats allowing different user agents including assistive technologies to make it accessible to users.,the value is manually entered by the user each session,the value is randomly generated without input from the author,It is structured so that software can extract and present it in various formats allowing different user agents including assistive technologies to make it accessible to users.
+320,Multiple Choice,Which HTML attribute is required to ensure that assistive technologies can properly identify form fields?,id,placeholder,aria-label,label,Label
+321,Multiple Choice,What is the role of WAI-ARIA in the context of a robust website?,It reduces page load times by compressing images,It helps to create animations in HTML,It enhances the functionality of assistive technologies by providing additional semantic meaning to web elements,It creates secure login forms,It enhances the functionality of assistive technologies by providing additional semantic meaning to web elements
+322,Multiple Choice,"Given the following HTML what could make it more robust for screen readers?
+
+<button>Click Here</button>",Add a 'class' attribute,Wrap the button in a 'div',"Add a more descriptive label using `aria-label=""Submit Form""`",Change the button to a `span`,"Add a more descriptive label using `aria-label=""Submit Form""`"
+323,Multiple Choice,What is the function of the role attribute in ARIA?,To define how the content should be displayed,To handle click events in JavaScript,To add styling information to an element,To provide explicit information to assistive technologies about the purpose or type of an element,To provide explicit information to assistive technologies about the purpose or type of an element
+324,Multiple Choice,Which of the following will improve accessibility in dynamic content changes (e.g. content added via JavaScript)?,Use aria-live to notify assistive technologies of content changes,Use alt attributes in all images,Set display: none on content before it's loaded,Avoid using any form of JavaScript for dynamic updates,Use aria-live to notify assistive technologies of content changes
+325,Multiple Choice,Why is it important to provide accessible names and roles for interactive components in a web application?,So assistive technologies can correctly identify and announce these elements to users,To ensure consistency across different browsers,To optimize the performance of JavaScript frameworks,To enable SEO crawlers to better understand the content,So assistive technologies can correctly identify and announce these elements to users
+326,Multiple Choice,"Given the following invalid HTML what is the issue affecting robustness?
+
+<a href=""#"" role=""button"">Submit</a>",The use of a `role` attribute with a link is incorrect,A link should never be used to act as a button,"The `role=""button""` should be replaced with a proper `button` element for better semantic meaning and compatibility with assistive technologies",No issue this is valid HTML,"The `role=""button""` should be replaced with a proper `button` element for better semantic meaning and compatibility with assistive technologies"
+327,Multiple Choice,Which of the following is NOT a disability that web accessibility aims to address?,Lack of coding knowledge,Visual impairments,Cognitive limitations,Hearing impairments,Lack of coding knowledge
+328,Multiple Choice,Which international organization is responsible for the WCAG guidelines?,Google,Apple,Microsoft,W3C (World Wide Web Consortium),W3C (World Wide Web Consortium)
+329,True/False,Dynamic content like menus sliders and form inputs are always natively accessible.,TRUE,FALSE,,,FALSE
+330,Multiple Choice,ARIA is not a replacement for good coding practices,TRUE,FALSE,,,TRUE
+331,Multiple Choice,What are assistive technologies?,Tools for enhancing website speed,Tools designed to help individuals with disabilities access digital content,Software for managing website content,Devices used for cybersecurity,Tools designed to help individuals with disabilities access digital content
+332,Multiple Choice,What function does a screen magnifier serve?,Converts text to speech,Detects color contrast issues,Enlarges the content on a screen for better visibility,Assists with form filling,Enlarges the content on a screen for better visibility
+333,Multiple Choice,What is the purpose of speech recognition software?, To provide visual enhancements,To read text aloud,To translate languages,To allow users to control their devices using voice commands,To allow users to control their devices using voice commands
+334,Multiple Choice,Which assistive technology would help a user with mobility impairments navigate a website?,Switch devices,Screen reader,Braille display,Color contrast analyzer,Switch devices
+335,Multiple Choice,Which accessibility issue does the Color Contrast Analyzer specifically check for?,Missing alt text,Improper form labeling,Contrast ratios between text and background colors,Keyboard navigation issues,Contrast ratios between text and background colors
+336,Multiple Choice,Which tool is built into Chrome DevTools for accessibility audits?,Axe,WAVE,Lighthouse,Tenon,Lighthouse
+337,Multiple Choice,Why is it essential to test websites with accessibility tools?,To increase website loading speed,To enhance the visual appeal of the site,To generate traffic to the site,To ensure compliance with accessibility standards and improve usability for all users,To ensure compliance with accessibility standards and improve usability for all users
