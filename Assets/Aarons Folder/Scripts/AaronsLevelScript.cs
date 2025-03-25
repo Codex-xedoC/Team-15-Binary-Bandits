@@ -18,7 +18,7 @@ public class AaronsLevelScript : MonoBehaviour
 
     public GameObject Fish1;
 
-    public GameObject shark;
+    public GameObject shark, sharkReal;
 
     private bool sharkQuestion = false;
 
@@ -30,6 +30,7 @@ public class AaronsLevelScript : MonoBehaviour
     [System.Serializable]
     public class Question
     {
+        public string QNumber;
         public string QuestionText;
         public string[] Choices;
         public string CorrectAnswer;
@@ -54,7 +55,7 @@ public class AaronsLevelScript : MonoBehaviour
 
         string[] lines = csvFile.text.Split('\n');
 
-        for (int i = 2; i < lines.Length; i++) // Start from index 2 to skip headers
+        for (int i = 1; i < lines.Length; i++) // Start from index 1 to skip the header
         {
             string[] fields = lines[i].Split(',');
 
@@ -62,10 +63,11 @@ public class AaronsLevelScript : MonoBehaviour
             {
                 Question q = new Question
                 {
-                    QuestionText = fields[2], // Question column
-                    Choices = new string[] { fields[3], fields[4], fields[5], fields[6] }, // Answer choices
-                    CorrectAnswer = fields[7].Trim(), // Correct answer column
-                    QuestionType = fields[1] // Question type column
+                    QNumber = fields[0].Trim(), // Assign the question number from column 1
+                    QuestionType = fields[1].Trim(), // Question type column
+                    QuestionText = fields[2].Trim(), // Question column
+                    Choices = new string[] { fields[3].Trim(), fields[4].Trim(), fields[5].Trim(), fields[6].Trim() }, // Answer choices
+                    CorrectAnswer = fields[7].Trim() // Correct answer column
                 };
 
                 questions.Add(q);
@@ -105,7 +107,7 @@ public class AaronsLevelScript : MonoBehaviour
 
 
         int randomNumber = Random.Range(0, 3); // Upper bound is exclusive, so use 6
-        //Instantiate(fishSpawns[randomNumber], fishSpawnPoint.transform.position, fishSpawnPoint.transform.rotation);
+        Instantiate(fishSpawns[randomNumber], fishSpawnPoint.transform.position, fishSpawnPoint.transform.rotation);
 
         Correct.SetActive(true);
 
@@ -116,7 +118,7 @@ public class AaronsLevelScript : MonoBehaviour
 
         Correct.SetActive(false);
 
-        //RestartGame();
+        RestartGame();
     }
 
     private IEnumerator WrongAnswerTimer()
@@ -124,12 +126,23 @@ public class AaronsLevelScript : MonoBehaviour
         MainMenuHandler.Instance.questionWrong();
         Wrong.SetActive(true);
 
+        if (sharkQuestion)
+        {
+            // Play animation
+            sharkReal.SetActive(true);
+        }
+
         // Wait for the specified duration
         yield return new WaitForSeconds(5f);
 
         Wrong.SetActive(false);
+        sharkReal.SetActive(false);
+        RestartGame();
+    }
 
-        //RestartGame();
+    public void RestartGame()
+    {
+        startGamePressed();
     }
 
     public void SubmitAnswer()
@@ -137,6 +150,7 @@ public class AaronsLevelScript : MonoBehaviour
         if (currentQuestion.QuestionType == "Multiple Choice")
         {
             Text answerSubmitted = MultipleChoice.transform.Find("Dropdown").transform.Find("Label").GetComponent<Text>();
+            MultipleChoice.SetActive(false);
             if (answerSubmitted.text == currentQuestion.CorrectAnswer)
             {
                 // Correct
@@ -151,6 +165,7 @@ public class AaronsLevelScript : MonoBehaviour
         else if (currentQuestion.QuestionType == "Image Question")
         {
             Text answerSubmitted = MultipleChoice.transform.Find("Dropdown").transform.Find("Label").GetComponent<Text>();
+            ImageQuestion.SetActive(false);
             if (answerSubmitted.text == currentQuestion.CorrectAnswer)
             {
                 // Correct
@@ -164,8 +179,9 @@ public class AaronsLevelScript : MonoBehaviour
         }
         else if (currentQuestion.QuestionType == "True/False")
         {
-            Text answerSubmitted = MultipleChoice.transform.Find("Dropdown").transform.Find("Label").GetComponent<Text>();
-            if (answerSubmitted.text == currentQuestion.CorrectAnswer)
+            TrueFalse.SetActive(false);
+            Text answerSubmitted = TrueFalse.transform.Find("Dropdown").transform.Find("Label").GetComponent<Text>();
+            if (answerSubmitted.text.ToLower() == currentQuestion.CorrectAnswer.ToLower())
             {
                 // Correct
                 StartCoroutine(CorrectAnswerTimer());
@@ -180,9 +196,19 @@ public class AaronsLevelScript : MonoBehaviour
 
     public void startGamePressed()
     {
+        sharkQuestion = false;
+        shark.SetActive(false);
         StartButton.SetActive(false);
 
         currentQuestion = GetRandomQuestion();
+
+        int randomNumber1 = Random.Range(1, 4); // Upper bound is exclusive, so use 6
+        Debug.Log(randomNumber1);
+        if (randomNumber1 == 3)
+        {
+            sharkQuestion = true;
+            shark.SetActive(true);
+        }
 
         if (currentQuestion.QuestionType == "Multiple Choice")
         {
@@ -195,7 +221,7 @@ public class AaronsLevelScript : MonoBehaviour
         }
         else if (currentQuestion.QuestionType == "Image Question")
         {
-            string imageName = "Q" + currentQuestion.QuestionText.Split(' ')[0]; // Assumes question number is the first part of the QuestionText (e.g., "Q297")
+            string imageName = "Q" + currentQuestion.QNumber; // Assuming QNumber is an integer or string storing the correct question number
             Sprite questionImage = Resources.Load<Sprite>(imageName); // Load the image from Resources
 
             if (questionImage != null)
@@ -226,6 +252,6 @@ public class AaronsLevelScript : MonoBehaviour
             Debug.Log("CRASH!!!");
         }
 
-        //DisplayQuestion(currentQuestion);
+        DisplayQuestion(currentQuestion);
     }
 }
