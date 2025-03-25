@@ -3,28 +3,29 @@ using System.IO;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEngine.UI;
 
 public class AaronsLevelScript : MonoBehaviour
 {
-    public GameObject StartButton;
+    public GameObject StartButton, Correct, Wrong;
 
     public GameObject fishSpawnPoint;
     public GameObject[] fishSpawns;
 
 
-    public GameObject MultipleChoice, MultipleResponse, ImageQuestion, TrueFalse;
+    public GameObject MultipleChoice, ImageQuestion, TrueFalse;
 
 
-    public GameObject Fish1, Fish2, Fish3;
+    public GameObject Fish1;
 
     public GameObject shark;
 
-    bool sharkQuestion = false;
-
-    private string text;
+    private bool sharkQuestion = false;
 
     private List<Question> questions = new List<Question>();
     private Question currentQuestion;
+
+    public Image imageDisplay;
 
     [System.Serializable]
     public class Question
@@ -96,64 +97,24 @@ public class AaronsLevelScript : MonoBehaviour
         return questions[Random.Range(0, questions.Count)];
     }
 
-    public void answerChoice1Pressed()
-    {
-
-    }
-
-    public void answerChoice2Pressed()
-    {
-
-    }
-
-    public void answerChoice3Pressed()
-    {
-
-    }
-
-    private IEnumerator CorrectAnswerTimer(string fishNum)
+    private IEnumerator CorrectAnswerTimer()
     {
         MainMenuHandler.Instance.questionCorrect();
-        switch (fishNum)
-        {
-            case "1":
-                Fish1.SetActive(true);
-            break;
-            case "2":
-                Fish2.SetActive(true);
-                break;
-            case "3":
-                Fish3.SetActive(true);
-                break;
-            default:
-                break;
-        }
+
+        Fish1.SetActive(true);
+
 
         int randomNumber = Random.Range(0, 3); // Upper bound is exclusive, so use 6
         //Instantiate(fishSpawns[randomNumber], fishSpawnPoint.transform.position, fishSpawnPoint.transform.rotation);
 
-        //CorrectUI.SetActive(true);
-
+        Correct.SetActive(true);
 
         // Wait for the specified duration
         yield return new WaitForSeconds(5f);
 
-        switch (fishNum)
-        {
-            case "1":
-                Fish1.SetActive(false);
-                break;
-            case "2":
-                Fish2.SetActive(false);
-                break;
-            case "3":
-                Fish3.SetActive(false);
-                break;
-            default:
-                break;
-        }
+        Fish1.SetActive(false);
 
-        //CorrectUI.SetActive(false);
+        Correct.SetActive(false);
 
         //RestartGame();
     }
@@ -161,14 +122,60 @@ public class AaronsLevelScript : MonoBehaviour
     private IEnumerator WrongAnswerTimer()
     {
         MainMenuHandler.Instance.questionWrong();
-        //WrongUI.SetActive(true);
+        Wrong.SetActive(true);
 
         // Wait for the specified duration
         yield return new WaitForSeconds(5f);
 
-        //WrongUI.SetActive(false);
+        Wrong.SetActive(false);
 
         //RestartGame();
+    }
+
+    public void SubmitAnswer()
+    {
+        if (currentQuestion.QuestionType == "Multiple Choice")
+        {
+            Text answerSubmitted = MultipleChoice.transform.Find("Dropdown").transform.Find("Label").GetComponent<Text>();
+            if (answerSubmitted.text == currentQuestion.CorrectAnswer)
+            {
+                // Correct
+                StartCoroutine(CorrectAnswerTimer());
+            }
+            else
+            {
+                // Wrong
+                StartCoroutine(WrongAnswerTimer());
+            }
+        }
+        else if (currentQuestion.QuestionType == "Image Question")
+        {
+            Text answerSubmitted = MultipleChoice.transform.Find("Dropdown").transform.Find("Label").GetComponent<Text>();
+            if (answerSubmitted.text == currentQuestion.CorrectAnswer)
+            {
+                // Correct
+                StartCoroutine(CorrectAnswerTimer());
+            }
+            else
+            {
+                // Wrong
+                StartCoroutine(WrongAnswerTimer());
+            }
+        }
+        else if (currentQuestion.QuestionType == "True/False")
+        {
+            Text answerSubmitted = MultipleChoice.transform.Find("Dropdown").transform.Find("Label").GetComponent<Text>();
+            if (answerSubmitted.text == currentQuestion.CorrectAnswer)
+            {
+                // Correct
+                StartCoroutine(CorrectAnswerTimer());
+            }
+            else
+            {
+                // Wrong
+                StartCoroutine(WrongAnswerTimer());
+            }
+        }
     }
 
     public void startGamePressed()
@@ -180,24 +187,45 @@ public class AaronsLevelScript : MonoBehaviour
         if (currentQuestion.QuestionType == "Multiple Choice")
         {
             MultipleChoice.SetActive(true);
+            Text headerText = MultipleChoice.transform.Find("Header Text").GetComponent<Text>();
+            headerText.text = "Question: " + currentQuestion.QuestionText;
+            Dropdown dropdown = MultipleChoice.transform.Find("Dropdown").GetComponent<Dropdown>();
+            dropdown.ClearOptions(); // Clear existing options
+            dropdown.AddOptions(new List<string> { currentQuestion.Choices[0], currentQuestion.Choices[1], currentQuestion.Choices[2], currentQuestion.Choices[3] });
         }
         else if (currentQuestion.QuestionType == "Image Question")
         {
+            string imageName = "Q" + currentQuestion.QuestionText.Split(' ')[0]; // Assumes question number is the first part of the QuestionText (e.g., "Q297")
+            Sprite questionImage = Resources.Load<Sprite>(imageName); // Load the image from Resources
+
+            if (questionImage != null)
+            {
+                imageDisplay.sprite = questionImage; // Set the image on the UI Image component
+                imageDisplay.gameObject.SetActive(true); // Ensure the image is visible
+            }
+            else
+            {
+                Debug.LogWarning($"Image {imageName} not found in Resources.");
+                imageDisplay.gameObject.SetActive(false); // Hide the image object if not found
+            }
             ImageQuestion.SetActive(true);
-        }
-        else if (currentQuestion.QuestionType == "Multiple Response")
-        {
-            MultipleResponse.SetActive(true);
+            Text headerText = ImageQuestion.transform.Find("Header Text").GetComponent<Text>();
+            headerText.text = "Question: " + currentQuestion.QuestionText;
+            Dropdown dropdown = ImageQuestion.transform.Find("Dropdown").GetComponent<Dropdown>();
+            dropdown.ClearOptions(); // Clear existing options
+            dropdown.AddOptions(new List<string> { currentQuestion.Choices[0], currentQuestion.Choices[1], currentQuestion.Choices[2], currentQuestion.Choices[3] });
         }
         else if (currentQuestion.QuestionType == "True/False")
         {
             TrueFalse.SetActive(true);
+            Text headerText = TrueFalse.transform.Find("Header Text").GetComponent<Text>();
+            headerText.text = "Question: " + currentQuestion.QuestionText;
         }
         else
         {
             Debug.Log("CRASH!!!");
         }
 
-        DisplayQuestion(currentQuestion);
+        //DisplayQuestion(currentQuestion);
     }
 }
