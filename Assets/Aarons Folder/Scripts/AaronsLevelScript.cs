@@ -25,6 +25,8 @@ public class AaronsLevelScript : MonoBehaviour
     private List<Question> questions = new List<Question>();
     private Question currentQuestion;
 
+    private List<GameObject> spawnedFish = new List<GameObject>();
+
     public Image imageDisplay;
 
     [System.Serializable]
@@ -107,7 +109,9 @@ public class AaronsLevelScript : MonoBehaviour
 
 
         int randomNumber = Random.Range(0, 3); // Upper bound is exclusive, so use 6
-        Instantiate(fishSpawns[randomNumber], fishSpawnPoint.transform.position, fishSpawnPoint.transform.rotation);
+        GameObject newFish = Instantiate(fishSpawns[randomNumber], fishSpawnPoint.transform.position, fishSpawnPoint.transform.rotation);
+
+        spawnedFish.Add(newFish);
 
         Correct.SetActive(true);
 
@@ -121,6 +125,18 @@ public class AaronsLevelScript : MonoBehaviour
         RestartGame();
     }
 
+    private void DestroyAllFish()
+    {
+        foreach (GameObject fish in spawnedFish)
+        {
+            if (fish != null) // Ensure the fish hasn't already been destroyed
+            {
+                Destroy(fish);
+            }
+        }
+        spawnedFish.Clear(); // Clear the list after destroying all fish
+    }
+
     private IEnumerator WrongAnswerTimer()
     {
         MainMenuHandler.Instance.questionWrong();
@@ -129,7 +145,9 @@ public class AaronsLevelScript : MonoBehaviour
         if (sharkQuestion)
         {
             // Play animation
+            shark.SetActive(false);
             sharkReal.SetActive(true);
+            DestroyAllFish();
         }
 
         // Wait for the specified duration
