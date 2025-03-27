@@ -3,167 +3,92 @@ using System.IO;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEngine.UI;
 
 public class PaulinaControl : MonoBehaviour
 {
     public GameObject UIEmpty;
-    public TextMeshProUGUI QuestionBoxText;
     public GameObject StartUpUI;
-
-    public GameObject Button1, Button2, Button3;
 
     public GameObject CorrectUI, WrongUI, ErrorUI;
     TextMeshProUGUI numCorrectT;
 
-    private string text;
+    public GameObject MultipleChoice, ImageQuestion, TrueFalse;
+    private List<Question> questions = new List<Question>();
+    private Question currentQuestion;
 
-    private List<string> questionsAndAnswers = new List<string>();
+    private List<GameObject> spawnedFish = new List<GameObject>();
+    public Image imageDisplay;
 
-    private int index = 0;
+    [System.Serializable]
+    public class Question
+    {
+        public string QNumber;
+        public string QuestionText;
+        public string[] Choices;
+        public string CorrectAnswer;
+        public string QuestionType;
+    }
 
 
     void Start()
     {
-        LoadQuestionsFromFile();
+        //LoadQuestionsFromFile();
+
+        LoadQuestions();
+        //Question randomQuestion = GetRandomQuestion();
+        //DisplayQuestion(randomQuestion);
     }
 
-    // Loads all questions and answers from the .txt file into a list
-    private void LoadQuestionsFromFile()
+    void LoadQuestions()
     {
-        TextAsset questionFile = Resources.Load<TextAsset>("computer_science_questions");
-
-        if (questionFile == null)
+        TextAsset csvFile = Resources.Load<TextAsset>("QuestionBank"); // CSV must be in "Resources" folder
+        if (csvFile == null)
         {
-            Debug.LogError("Question file not found!");
+            Debug.LogError("CSV file not found in Resources folder!");
             return;
         }
 
-        string[] lines = questionFile.text.Split(new[] { '\n', '\r' }, System.StringSplitOptions.RemoveEmptyEntries);
-        string questionEntry = "";
+        string[] lines = csvFile.text.Split('\n');
 
-        foreach (string line in lines)
+        for (int i = 1; i < lines.Length; i++) // Start from index 1 to skip the header
         {
-            if (line.StartsWith("Question"))
-            {
-                if (!string.IsNullOrEmpty(questionEntry))
-                {
-                    questionsAndAnswers.Add(questionEntry.Trim());
-                }
+            string[] fields = lines[i].Split(',');
 
-                // Remove "Question X:" prefix
-                int colonIndex = line.IndexOf(":");
-                if (colonIndex != -1 && colonIndex + 1 < line.Length)
-                {
-                    questionEntry = line.Substring(colonIndex + 1).Trim(); // Start a new question without the prefix
-                }
-                else
-                {
-                    questionEntry = line;
-                }
-            }
-            else
+            if (fields.Length >= 8) // Ensure there are enough fields
             {
-                questionEntry += "\n" + line; // Append to the current question block
+                Question q = new Question
+                {
+                    QNumber = fields[0].Trim(), // Assign the question number from column 1
+                    QuestionType = fields[1].Trim(), // Question type column
+                    QuestionText = fields[2].Trim(), // Question column
+                    Choices = new string[] { fields[3].Trim(), fields[4].Trim(), fields[5].Trim(), fields[6].Trim() }, // Answer choices
+                    CorrectAnswer = fields[7].Trim() // Correct answer column
+                };
+
+                questions.Add(q);
             }
         }
-
-        // Add the last question entry
-        if (!string.IsNullOrEmpty(questionEntry))
-        {
-            questionsAndAnswers.Add(questionEntry.Trim());
-        }
     }
 
-    // Gets a random question and its answer
-    public (string question, string answer) GetRandomQuestion()
-    {
-        if (questionsAndAnswers.Count == 0)
-        {
-            Debug.LogError("No questions loaded!");
-            return ("", "");
-        }
-
-        int randomIndex = Random.Range(0, questionsAndAnswers.Count);
-        string randomQuestionEntry = questionsAndAnswers[randomIndex];
-
-        // Split the entry into question text and answer
-        string[] parts = randomQuestionEntry.Split(new[] { "Answer:" }, System.StringSplitOptions.None);
-
-        if (parts.Length < 2)
-        {
-            Debug.LogError("Invalid question format!");
-            return ("", "");
-        }
-
-        string question = parts[0].Trim(); // Question and options
-        string answer = parts[1].Trim(); // Correct answer
-
-        return (question, answer);
-    }
-
-    public void answerChoice1Pressed()
-    {
-        inactiveChoices();
-
-        if (text == "A")
-        {
-            StartCoroutine(CorrectAnswerTimer());
-        }
-        else
-        {
-            StartCoroutine(WrongAnswerTimer());
-        }
-    }
-
-    public void answerChoice2Pressed()
-    {
-        inactiveChoices();
-
-        if (text == "B")
-        {
-            StartCoroutine(CorrectAnswerTimer());
-        }
-        else
-        {
-            StartCoroutine(WrongAnswerTimer());
-        }
-    }
-
-    public void answerChoice3Pressed()
-    {
-        inactiveChoices();
-
-        if (text == "C")
-        {
-            StartCoroutine(CorrectAnswerTimer());
-        }
-        else
-        {
-            StartCoroutine(WrongAnswerTimer());
-        }
-    }
 
     public TextMeshProUGUI numCorrectText; // Assign this in Unity Inspector
     private int numCorrect = 0; // Counter for correct answers
 
     
-
     private IEnumerator CorrectAnswerTimer()
     {
-       MainMenuHandler.Instance.questionCorrect();
+        MainMenuHandler.Instance.questionCorrect();
 
         CorrectUI.SetActive(true);
-
+        numCorrect++; // Increment the correct answers count
+        numCorrectText.text = numCorrect.ToString(); // Update the UI
 
         // Wait for the specified duration
         yield return new WaitForSeconds(5f);
 
-        numCorrect++; // Increment the correct answers count
-        numCorrectText.text = numCorrect.ToString(); // Update the UI
-
         CorrectUI.SetActive(false);
         UIEmpty.SetActive(false);
-        activeChoices();
     }
 
     private IEnumerator WrongAnswerTimer()
@@ -175,8 +100,6 @@ public class PaulinaControl : MonoBehaviour
         yield return new WaitForSeconds(5f);
 
         WrongUI.SetActive(false);
-
-        activeChoices();
     }
 
     private IEnumerator ErrorTimer()
@@ -189,43 +112,148 @@ public class PaulinaControl : MonoBehaviour
         ErrorUI.SetActive(false);
     }
 
-    private void RestartGame()
-    {
-        activeChoices();
-
-        (string question, string answer) = GetRandomQuestion();
-        text = answer;
-        QuestionBoxText.text = question;
-
-    }
 
     public void startGamePressed()
     {
         StartUpUI.SetActive(false);
     }
 
-
-    public void activeChoices() 
+    
+    Question GetRandomQuestion()
     {
-        Button1.SetActive(true);
-        Button2.SetActive(true);
-        Button3.SetActive(true);
+        if (questions.Count == 0)
+        {
+            Debug.LogError("No questions loaded!");
+            return null;
+        }
+        return questions[Random.Range(0, questions.Count)];
     }
 
-    public void inactiveChoices()
+    void DisplayQuestion(Question q)
     {
-        Button1.SetActive(false);
-        Button2.SetActive(false);
-        Button3.SetActive(false);
+        if (q != null)
+        {
+            Debug.Log($"Question: {q.QuestionText}");
+            Debug.Log($"Question Type: {q.QuestionType}"); // Display question type
+            for (int i = 0; i < q.Choices.Length; i++)
+            {
+                Debug.Log($"{i + 1}. {q.Choices[i]}");
+            }
+            Debug.Log($"Correct Answer: {q.CorrectAnswer}");
+        }
     }
-
+    
     public void teleportQuest()
     {
+        MultipleChoice.SetActive(false);
+        ImageQuestion.SetActive(false);
+        TrueFalse.SetActive(false);
         UIEmpty.SetActive(true);
 
-        (string question, string answer) = GetRandomQuestion();
-        text = answer;
-        QuestionBoxText.text = question;
+        currentQuestion = GetRandomQuestion();
+
+        if (currentQuestion.QuestionType == "Multiple Choice")
+        {
+            ImageQuestion.SetActive(false);
+            TrueFalse.SetActive(false);
+            MultipleChoice.SetActive(true);
+
+            Text headerText = MultipleChoice.transform.Find("Header Text").GetComponent<Text>();
+            headerText.text = "Question: " + currentQuestion.QuestionText;
+            Dropdown dropdown = MultipleChoice.transform.Find("Dropdown").GetComponent<Dropdown>();
+            dropdown.ClearOptions(); // Clear existing options
+            dropdown.AddOptions(new List<string> { currentQuestion.Choices[0], currentQuestion.Choices[1], currentQuestion.Choices[2], currentQuestion.Choices[3] });
+        }
+        else if (currentQuestion.QuestionType == "Image Question")
+        {
+            string imageName = "Q" + currentQuestion.QNumber; // Assuming QNumber is an integer or string storing the correct question number
+            Sprite questionImage = Resources.Load<Sprite>(imageName); // Load the image from Resources
+
+            if (questionImage != null)
+            {
+                imageDisplay.sprite = questionImage; // Set the image on the UI Image component
+                imageDisplay.gameObject.SetActive(true); // Ensure the image is visible
+            }
+            else
+            {
+                Debug.LogWarning($"Image {imageName} not found in Resources.");
+                imageDisplay.gameObject.SetActive(false); // Hide the image object if not found
+            }
+
+            MultipleChoice.SetActive(false);
+            TrueFalse.SetActive(false);
+            ImageQuestion.SetActive(true);
+
+            Text headerText = ImageQuestion.transform.Find("Header Text").GetComponent<Text>();
+            headerText.text = "Question: " + currentQuestion.QuestionText;
+            Dropdown dropdown = ImageQuestion.transform.Find("Dropdown").GetComponent<Dropdown>();
+            dropdown.ClearOptions(); // Clear existing options
+            dropdown.AddOptions(new List<string> { currentQuestion.Choices[0], currentQuestion.Choices[1], currentQuestion.Choices[2], currentQuestion.Choices[3] });
+        }
+        else if (currentQuestion.QuestionType == "True/False")
+        {
+            MultipleChoice.SetActive(false);
+            ImageQuestion.SetActive(false);
+            TrueFalse.SetActive(true);
+
+            Text headerText = TrueFalse.transform.Find("Header Text").GetComponent<Text>();
+            headerText.text = "Question: " + currentQuestion.QuestionText;
+        }
+        else
+        {
+            Debug.Log("CRASH!!!");
+        }
+
+        DisplayQuestion(currentQuestion);
+    }
+
+     public void SubmitAnswer()
+    {
+        if (currentQuestion.QuestionType == "Multiple Choice")
+        {
+            Text answerSubmitted = MultipleChoice.transform.Find("Dropdown").transform.Find("Label").GetComponent<Text>();
+            MultipleChoice.SetActive(false);
+            if (answerSubmitted.text == currentQuestion.CorrectAnswer)
+            {
+                // Correct
+                StartCoroutine(CorrectAnswerTimer());
+            }
+            else
+            {
+                // Wrong
+                StartCoroutine(WrongAnswerTimer());
+            }
+        }
+        else if (currentQuestion.QuestionType == "Image Question")
+        {
+            Text answerSubmitted = MultipleChoice.transform.Find("Dropdown").transform.Find("Label").GetComponent<Text>();
+            ImageQuestion.SetActive(false);
+            if (answerSubmitted.text == currentQuestion.CorrectAnswer)
+            {
+                // Correct
+                StartCoroutine(CorrectAnswerTimer());
+            }
+            else
+            {
+                // Wrong
+                StartCoroutine(WrongAnswerTimer());
+            }
+        }
+        else if (currentQuestion.QuestionType == "True/False")
+        {
+            TrueFalse.SetActive(false);
+            Text answerSubmitted = TrueFalse.transform.Find("Dropdown").transform.Find("Label").GetComponent<Text>();
+            if (answerSubmitted.text.ToLower() == currentQuestion.CorrectAnswer.ToLower())
+            {
+                // Correct
+                StartCoroutine(CorrectAnswerTimer());
+            }
+            else
+            {
+                // Wrong
+                StartCoroutine(WrongAnswerTimer());
+            }
+        }
     }
 
 
