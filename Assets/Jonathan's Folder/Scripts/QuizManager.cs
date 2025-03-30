@@ -9,7 +9,7 @@ using UnityEngine.UI;
 
 public class QuizManager : MonoBehaviour
 {
-    public List<Questions> QnA;
+    //public List<Questions> QnA;
     public List<Vector3> coords;
     public GameObject[] options;
     public GameObject[] optionss;
@@ -24,27 +24,29 @@ public class QuizManager : MonoBehaviour
     public int panelNum = 0;
     public Text Time;
     public int wscore = 0;
-    int totalQuestions = 0;
+    //int totalQuestions = 0;
     public GameObject XRRig;
-    public GameObject MultipleChoice, ImageQuestion, TrueFalse;
-    private List<Questions> questions = new List<Questions>();
+    public List<Questions> questionsList;
     private Questions currQuestion;
     public Image imageDisplay;
-   
+    public int numQuestions;
+    public Questions q;
+  
+  
     private void Start()
     {
         imageDisplay.gameObject.SetActive(false);
         LoadQuestions();
-        totalQuestions = questions.Count;
+        //totalQuestions = questionsList.Count;
         GoPanel.SetActive(false);
-        generateQuestion();
+        GenerateQuestion();
     }
     
-   public void goBack()
+   public void GoBack()
     {
         XRRig.transform.position = new Vector3(0,0.97f,1);
     }
-    void GameOver()
+    public void GameOver()
     {
         Time = timerText;
         panelNum = 0;
@@ -54,14 +56,17 @@ public class QuizManager : MonoBehaviour
         GoPanel.transform.GetChild(0).GetComponent<Text>().text = Time.text;
         UnityEngine.SceneManagement.SceneManager.LoadScene("Maze1");
     }
-    public void correct()
+
+  
+    public void Correct()
     {
         //MainMenuHandler.Instance.questionCorrect();
         if (panelNum <= 5) //5
         {
+            //questionsList.Remove(currQuestion);
             ParentPanel.transform.position = coords[panelNum];
             panelNum++;
-            generateQuestion();
+            GenerateQuestion();
 
         }
         else
@@ -71,38 +76,41 @@ public class QuizManager : MonoBehaviour
         
     }
 
-    public void retry()
+    public void Retry()
     {
-        goBack();
+        GoBack();
         timerText.text = "{0:00}";
         UnityEngine.SceneManagement.SceneManager.LoadScene("Maze1");
     }
 
-    public void quit()
+    public void Quit()
     {
         Application.Quit();
     }
-    public void wrong()
+    public void Wrong()
     {
+        //MainMenuHandler.Instance.questionWrong();
         wscore += 1;
-        generateQuestion();
+        //questionsList.Remove(currQuestion);
+        GenerateQuestion();
     }
 
-    void setAnswers()
+    public void SetAnswers()
     {
         
             for (int i = 0; i < options.Length; i++)
             {
-                if (currQuestion.Choices[i].IsNotNullOrEmpty())
+                if (!currQuestion.Choices[i].IsNullOrEmpty())
                 {
                     optionss[i].SetActive(true);
                     options[i].GetComponent<AnswerScript>().isCorrect = false;
                     // options[i].transform.GetChild(0).GetChild(0).GetComponent<Text>().text = QnA[currentQuestion].Answers[i];
                     options[i].transform.GetChild(0).GetChild(0).GetComponent<Text>().text
-                         = currQuestion.Choices[i];
-
-                    if (currQuestion.CorrectAnswer.Trim().Equals(currQuestion.Choices[i].Trim()))
+                         = currQuestion.Choices[i].ToString();
+                Debug.Log("setAnswers() || Correct Answer: " + currQuestion.CorrectAnswer + "\ncurrQuestion.Choices[i]: " + currQuestion.Choices[i]);
+                    if (currQuestion.CorrectAnswer.ToLower() == currQuestion.Choices[i].ToLower())
                     {
+                    Debug.Log("Choices Index: " + i);
                         options[i].GetComponent<AnswerScript>().isCorrect = true;
 
                     }
@@ -114,16 +122,18 @@ public class QuizManager : MonoBehaviour
             }
         
     }
-    void generateQuestion()
+    public void GenerateQuestion()
     {
-        if (questions.Count > 0)
-        {
-            currentQuestion = Random.Range(0, questions.Count);
-            currQuestion = questions[currentQuestion];
+        //if (questions.Count > 0)
+        
+            currentQuestion = Random.Range(0, numQuestions);
+            Debug.Log("GeneratingQuestions || CurrentQuestions: " + currentQuestion + "\nQuestionsList.Count: " + questionsList.Count);
+            currQuestion = questionsList[currentQuestion];
             QuestionTxt.text = currQuestion.QuestionText;
-            setAnswers();
+            SetAnswers();
             if(currQuestion.QuestionType == "Image Question")
             {
+                imageDisplay.gameObject.SetActive(true);
                 string imageName = "Q" + currQuestion.QNumber;
                 Sprite questionImage = Resources.Load<Sprite>(imageName);
                 if (questionImage != null)
@@ -137,19 +147,21 @@ public class QuizManager : MonoBehaviour
                     imageDisplay.gameObject.SetActive(false); // Hide the image object if not found
                 }
             }
+
            
-        }
+        /*
         else
         {
             GameOver();
             Debug.Log("Out of Questions");
         }
+            */
     }
     //Other Peoples
 
   
 
-    void LoadQuestions()
+    public void LoadQuestions()
     {
         TextAsset csvFile = Resources.Load<TextAsset>("QuestionBank"); // CSV must be in "Resources" folder
         if (csvFile == null)
@@ -160,14 +172,15 @@ public class QuizManager : MonoBehaviour
 
         string[] lines = csvFile.text.Split('\n');
 
-        for (int i = 1; i < lines.Length; i++) // Start from index 1 to skip the header
+        for (int i = 2; i < lines.Length; i++) // Start from index 1 to skip the header
         {
             string[] fields = lines[i].Split(',');
 
             if (fields.Length >= 8) // Ensure there are enough fields
             {
-                Questions q = new Questions
+                q = new Questions
                 {
+                    index = i - 2,
                     QNumber = fields[0].Trim(), // Assign the question number from column 1
                     QuestionType = fields[1].Trim(), // Question type column
                     QuestionText = fields[2].Trim(), // Question column
@@ -175,9 +188,10 @@ public class QuizManager : MonoBehaviour
                     CorrectAnswer = fields[7].Trim() // Correct answer column
                 };
 
-                questions.Add(q);
+                questionsList.Add(q);
             }
         }
+        numQuestions = questionsList.Count;
     }
     /*
      * 
