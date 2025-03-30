@@ -26,8 +26,10 @@ public class Leaderboard : MonoBehaviour
         }));
     }
 
-    public void SetLeaderboardEntry(string username, int score)
+    public void SetLeaderboardEntry(int score)
     {
+        string username = SystemInfo.deviceName;
+
         if (username == null)
             username = "temp";
         LeaderboardCreator.UploadNewEntry(publicLeaderboardKey, username, score, ((msg) =>

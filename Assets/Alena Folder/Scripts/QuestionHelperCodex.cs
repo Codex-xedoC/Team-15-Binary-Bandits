@@ -1,138 +1,190 @@
 using UnityEngine;
-using System.Collections;
+using UnityEngine.UI;
 using System.Collections.Generic;
-using TMPro;
 
 public class QuestionHelperCodex : MonoBehaviour
 {
-    [Header("UI Elements")]
-    public TextMeshProUGUI questionText;
-    public GameObject CorrectUI, DamageTextUI;
+    [Header("UI Panels")]
+    public GameObject MultipleChoice;
+    public GameObject TrueFalse;
+    public GameObject ImageQuestion;
+    public GameObject CorrectPanel;
+    public GameObject WrongPanel;
 
-    [Header("Answer Buttons")]
-    public GameObject ButtonA, ButtonB, ButtonC;
+    [Header("Dropdowns")]
+    public Dropdown MultipleChoiceDropdown;
+    public Dropdown TrueFalseDropdown;
+    public Dropdown ImageQuestionDropdown;
 
-    private string correctAnswer;
-    private List<string> questionsAndAnswers = new List<string>();
+    [Header("Question Texts")]
+    public Text MultipleChoiceQuestionText;
+    public Text TrueFalseQuestionText;
+    public Text ImageQuestionText;
+
+    [Header("Image Display")]
+    public Image ImageDisplay;
+
+    [Header("Spawn Point")]
+    public Transform panelSpawnPoint;
+
+    private List<Question> questions = new List<Question>();
+    private Question currentQuestion;
+
+    [System.Serializable]
+    public class Question
+    {
+        public string QNumber;
+        public string QuestionType;
+        public string QuestionText;
+        public string[] Choices;
+        public string CorrectAnswer;
+    }
 
     void Start()
     {
-        LoadQuestionsFromFile();
+        LoadQuestions();
     }
 
-    private void LoadQuestionsFromFile()
+    private void LoadQuestions()
     {
-        // Ensure file loads correctly from Resources
-        TextAsset questionFile = Resources.Load<TextAsset>("computer_science_questions"); // No ".txt"
-
-        if (questionFile == null)
+        TextAsset csvFile = Resources.Load<TextAsset>("QuestionBank");
+        if (csvFile == null)
         {
-            Debug.LogError("Question file not found. Expected path: Assets/Resources/computer_science_questions.txt");
+            Debug.LogError("CSV file not found in Resources folder!");
             return;
         }
 
-        Debug.Log("Question file successfully loaded.");
+        string[] lines = csvFile.text.Split('\n');
 
-        string[] lines = questionFile.text.Split(new[] { '\n', '\r' }, System.StringSplitOptions.RemoveEmptyEntries);
-        string questionEntry = "";
-
-        foreach (string line in lines)
+        for (int i = 1; i < lines.Length; i++)
         {
-            if (line.StartsWith("#"))
+            string[] fields = lines[i].Split(',');
+
+            if (fields.Length >= 8)
             {
-                if (!string.IsNullOrEmpty(questionEntry))
+                Question q = new Question
                 {
-                    questionsAndAnswers.Add(questionEntry.Trim());
-                }
+                    QNumber = fields[0].Trim(),
+                    QuestionType = fields[1].Trim(),
+                    QuestionText = fields[2].Trim(),
+                    Choices = new string[] { fields[3].Trim(), fields[4].Trim(), fields[5].Trim(), fields[6].Trim() },
+                    CorrectAnswer = fields[7].Trim()
+                };
 
-                questionEntry = line.Substring(line.IndexOf(" ") + 1).Trim(); // Remove "#. " prefix
-            }
-            else
-            {
-                questionEntry += "\n" + line;
+                questions.Add(q);
             }
         }
 
-        if (!string.IsNullOrEmpty(questionEntry))
-        {
-            questionsAndAnswers.Add(questionEntry.Trim());
-        }
-
-        Debug.Log($"Loaded {questionsAndAnswers.Count} questions.");
+        Debug.Log($"Loaded {questions.Count} questions.");
     }
 
     public void DisplayNewQuestion()
     {
-        if (questionsAndAnswers.Count == 0)
+        if (questions.Count == 0)
         {
             Debug.LogError("No questions loaded.");
             return;
         }
 
-        int randomIndex = Random.Range(0, questionsAndAnswers.Count);
-        string randomQuestionEntry = questionsAndAnswers[randomIndex];
+        currentQuestion = questions[Random.Range(0, questions.Count)];
 
-        string[] parts = randomQuestionEntry.Split(new[] { "Answer:" }, System.StringSplitOptions.None);
+        HideAllPanels();
 
-        if (parts.Length < 2)
+        switch (currentQuestion.QuestionType)
         {
-            Debug.LogError("Invalid question format. Expected format: 'Question... Answer: A'");
-            return;
+            case "Multiple Choice":
+                MultipleChoice.SetActive(true);
+                MultipleChoiceQuestionText.text = "Question: " + currentQuestion.QuestionText;
+                MultipleChoiceDropdown.ClearOptions();
+                MultipleChoiceDropdown.AddOptions(new List<string>(currentQuestion.Choices));
+                PositionPanel(MultipleChoice);
+                break;
+
+            case "True/False":
+                TrueFalse.SetActive(true);
+                TrueFalseQuestionText.text = "Question: " + currentQuestion.QuestionText;
+                TrueFalseDropdown.ClearOptions();
+                TrueFalseDropdown.AddOptions(new List<string> { "True", "False" });
+                PositionPanel(TrueFalse);
+                break;
+
+            case "Image Question":
+                ImageQuestion.SetActive(true);
+                ImageQuestionText.text = "Question: " + currentQuestion.QuestionText;
+
+                Sprite loadedImage = Resources.Load<Sprite>("Q" + currentQuestion.QNumber);
+                if (loadedImage != null)
+                {
+                    ImageDisplay.sprite = loadedImage;
+                    ImageDisplay.gameObject.SetActive(true);
+                }
+                else
+                {
+                    ImageDisplay.gameObject.SetActive(false);
+                }
+
+                ImageQuestionDropdown.ClearOptions();
+                ImageQuestionDropdown.AddOptions(new List<string>(currentQuestion.Choices));
+                PositionPanel(ImageQuestion);
+                break;
+
+            default:
+                Debug.LogWarning("Unsupported question type: " + currentQuestion.QuestionType);
+                break;
         }
-
-        questionText.text = parts[0].Trim();
-        correctAnswer = parts[1].Trim();
-
-        Debug.Log($"New Question: {questionText.text} (Correct Answer: {correctAnswer})");
     }
 
-    public string GetCorrectAnswer()
+    private void PositionPanel(GameObject panel)
     {
-        return correctAnswer;
-    }
-
-    public void SelectA() => CheckAnswer("A");
-    public void SelectB() => CheckAnswer("B");
-    public void SelectC() => CheckAnswer("C");
-
-    private void CheckAnswer(string selectedAnswer)
-    {
-        ButtonA.SetActive(false);
-        ButtonB.SetActive(false);
-        ButtonC.SetActive(false);
-
-        if (selectedAnswer == correctAnswer)
+        if (panelSpawnPoint != null)
         {
-            StartCoroutine(CorrectAnswerFeedback());
+            panel.transform.SetParent(null);
+            panel.transform.position = panelSpawnPoint.position;
+            panel.transform.rotation = Quaternion.LookRotation(panel.transform.position - Camera.main.transform.position);
         }
         else
         {
-            StartCoroutine(WrongAnswerFeedback());
+            Debug.LogWarning("Panel spawn point not assigned.");
         }
     }
 
-    private IEnumerator CorrectAnswerFeedback()
+    private void HideAllPanels()
     {
-        CorrectUI.SetActive(true);
-        yield return new WaitForSeconds(3f);
-        CorrectUI.SetActive(false);
-        RestartQuestion();
+        MultipleChoice.SetActive(false);
+        TrueFalse.SetActive(false);
+        ImageQuestion.SetActive(false);
+        CorrectPanel.SetActive(false);
+        WrongPanel.SetActive(false);
     }
 
-    private IEnumerator WrongAnswerFeedback()
+    public void SubmitAnswer()
     {
-        DamageTextUI.SetActive(true);
-        XRShipHealth.Instance.TakeDamage(10);
-        yield return new WaitForSeconds(3f);
-        DamageTextUI.SetActive(false);
-        RestartQuestion();
-    }
+        string selected = "";
 
-    private void RestartQuestion()
-    {
-        ButtonA.SetActive(true);
-        ButtonB.SetActive(true);
-        ButtonC.SetActive(true);
-        DisplayNewQuestion();
+        if (currentQuestion.QuestionType == "Multiple Choice")
+        {
+            selected = MultipleChoiceDropdown.options[MultipleChoiceDropdown.value].text;
+        }
+        else if (currentQuestion.QuestionType == "True/False")
+        {
+            selected = TrueFalseDropdown.options[TrueFalseDropdown.value].text;
+        }
+        else if (currentQuestion.QuestionType == "Image Question")
+        {
+            selected = ImageQuestionDropdown.options[ImageQuestionDropdown.value].text;
+        }
+
+        if (selected == currentQuestion.CorrectAnswer)
+        {
+            CorrectPanel.SetActive(true);
+            WrongPanel.SetActive(false);
+        }
+        else
+        {
+            WrongPanel.SetActive(true);
+            CorrectPanel.SetActive(false);
+        }
+
+        Invoke(nameof(HideAllPanels), 3f);
     }
 }
