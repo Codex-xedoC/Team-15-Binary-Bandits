@@ -48,6 +48,11 @@ public class SceneManager : MonoBehaviour
         //UnityEngine.SceneManagement.SceneManager.LoadScene("City Game");
     }
 
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
+
     public void JulianLevelPressed()
     {
         GoToScene("MountainClimb");
