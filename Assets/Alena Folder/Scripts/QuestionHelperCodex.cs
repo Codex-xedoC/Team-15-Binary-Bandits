@@ -24,9 +24,6 @@ public class QuestionHelperCodex : MonoBehaviour
     [Header("Image Display")]
     public Image ImageDisplay;
 
-    [Header("Spawn Point")]
-    public Transform panelSpawnPoint;
-
     private List<Question> questions = new List<Question>();
     private Question currentQuestion;
 
@@ -50,7 +47,7 @@ public class QuestionHelperCodex : MonoBehaviour
         TextAsset csvFile = Resources.Load<TextAsset>("QuestionBank");
         if (csvFile == null)
         {
-            Debug.LogError("CSV file not found in Resources folder!");
+            Debug.LogError("CSV file not found in Resources folder.");
             return;
         }
 
@@ -67,7 +64,13 @@ public class QuestionHelperCodex : MonoBehaviour
                     QNumber = fields[0].Trim(),
                     QuestionType = fields[1].Trim(),
                     QuestionText = fields[2].Trim(),
-                    Choices = new string[] { fields[3].Trim(), fields[4].Trim(), fields[5].Trim(), fields[6].Trim() },
+                    Choices = new string[]
+                    {
+                        fields[3].Trim(),
+                        fields[4].Trim(),
+                        fields[5].Trim(),
+                        fields[6].Trim()
+                    },
                     CorrectAnswer = fields[7].Trim()
                 };
 
@@ -97,7 +100,6 @@ public class QuestionHelperCodex : MonoBehaviour
                 MultipleChoiceQuestionText.text = "Question: " + currentQuestion.QuestionText;
                 MultipleChoiceDropdown.ClearOptions();
                 MultipleChoiceDropdown.AddOptions(new List<string>(currentQuestion.Choices));
-                PositionPanel(MultipleChoice);
                 break;
 
             case "True/False":
@@ -105,7 +107,6 @@ public class QuestionHelperCodex : MonoBehaviour
                 TrueFalseQuestionText.text = "Question: " + currentQuestion.QuestionText;
                 TrueFalseDropdown.ClearOptions();
                 TrueFalseDropdown.AddOptions(new List<string> { "True", "False" });
-                PositionPanel(TrueFalse);
                 break;
 
             case "Image Question":
@@ -121,31 +122,19 @@ public class QuestionHelperCodex : MonoBehaviour
                 else
                 {
                     ImageDisplay.gameObject.SetActive(false);
+                    Debug.LogWarning($"Image Q{currentQuestion.QNumber} not found in Resources.");
                 }
 
                 ImageQuestionDropdown.ClearOptions();
                 ImageQuestionDropdown.AddOptions(new List<string>(currentQuestion.Choices));
-                PositionPanel(ImageQuestion);
                 break;
 
             default:
                 Debug.LogWarning("Unsupported question type: " + currentQuestion.QuestionType);
                 break;
         }
-    }
 
-    private void PositionPanel(GameObject panel)
-    {
-        if (panelSpawnPoint != null)
-        {
-            panel.transform.SetParent(null);
-            panel.transform.position = panelSpawnPoint.position;
-            panel.transform.rotation = Quaternion.LookRotation(panel.transform.position - Camera.main.transform.position);
-        }
-        else
-        {
-            Debug.LogWarning("Panel spawn point not assigned.");
-        }
+        Debug.Log("[QuestionHelperCodex] Displayed new question.");
     }
 
     private void HideAllPanels()

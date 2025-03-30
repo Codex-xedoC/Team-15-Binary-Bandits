@@ -10032,7 +10032,6 @@ MonoBehaviour:
   TrueFalseQuestionText: {fileID: 380195876}
   ImageQuestionText: {fileID: 1065630455}
   ImageDisplay: {fileID: 1174067076}
-  panelSpawnPoint: {fileID: 297947484}
 --- !u!4 &475502967
 Transform:
   m_ObjectHideFlags: 0
@@ -21463,10 +21462,10 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 1931e41fd8e3b5f42a814ee01c74f5cc, type: 3}
-  m_Resource: {fileID: 8300000, guid: 1931e41fd8e3b5f42a814ee01c74f5cc, type: 3}
+  m_audioClip: {fileID: 8300000, guid: b6056674947946249bdad8fe2d3d44e8, type: 3}
+  m_Resource: {fileID: 8300000, guid: b6056674947946249bdad8fe2d3d44e8, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.5
+  m_Volume: 0.05
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -21564,8 +21563,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   engineSource: {fileID: 1145677071}
   effectSource: {fileID: 1145677070}
-  spaceshipEngineIdle: {fileID: 8300000, guid: 139982ee37a243d40aab3b2b96b2c253, type: 3}
-  spaceshipEngineThrust: {fileID: 8300000, guid: ab382e36f13a1dc448d212c2bf6c91d4, type: 3}
+  spaceshipEngineIdle: {fileID: 8300000, guid: b6056674947946249bdad8fe2d3d44e8, type: 3}
+  spaceshipEngineThrust: {fileID: 8300000, guid: b6056674947946249bdad8fe2d3d44e8, type: 3}
   buttonPress: {fileID: 8300000, guid: 5e0e5f5b2e1d5874aad33b1fc93772b5, type: 3}
   teleportSound: {fileID: 8300000, guid: 9fc03a91b5216b74394a6166059d68f2, type: 3}
   targetAcquiredSound: {fileID: 8300000, guid: bb7ec78307977b54b99abcf4e1f744d8, type: 3}
@@ -24820,9 +24819,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Be careful \u2014 colliding with asteroids or planets reduces your health!\nWrong
-    answers may also trigger damage.\nYou only get 5 hearts, so fly smart and choose
-    wisely!"
+  m_text: "Be careful \u2014 colliding with asteroids reduces your health!\nYou only
+    get 100 health points, so fly smart and choose wisely!"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f675742eaf9c20a4f909d78ee7a14fed, type: 2}
   m_sharedMaterial: {fileID: 4687939059374929122, guid: f675742eaf9c20a4f909d78ee7a14fed, type: 2}
