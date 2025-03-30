@@ -1,17 +1,21 @@
 
+using NUnit.Framework.Internal;
+using System.Diagnostics;
+
 [System.Serializable]
-public class QuestionAnswerBank 
+public class Questions
 {
-    public string Question;
-    public string[] Answers;
-
-    public QuestionAnswerBank(string[] answers)
+    public string QNumber;
+    public string QuestionText;
+    public string[] Choices;
+    /*
+    public Question(string[] answers)
     {
-        Answers = answers;
+        Choices = answers;
     }
+    */
+    public string CorrectAnswer;
+    public string QuestionType;
 
-    public int CorrectAnswer;
-
-   
 
 }
