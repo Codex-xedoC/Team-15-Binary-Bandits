@@ -1,70 +1,56 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class XRShipMovement : MonoBehaviour
 {
-    public Transform shipTransform;
-    public InputActionReference moveAction;
-    public InputActionReference rotateAction;
-    public InputActionReference verticalUpAction;
-    public InputActionReference verticalDownAction;
-
+    [Header("Ship Settings")]
     public float moveSpeed = 20f;
     public float rotationSpeed = 30f;
     public float verticalSpeed = 10f;
 
-    private Vector2 moveInput;
-    private Vector2 rotateInput;
-    private float verticalUpInput;
-    private float verticalDownInput;
+    private ShipControls controls;
 
-    void Start()
+    void Awake()
     {
-        if (moveAction == null || rotateAction == null || verticalUpAction == null || verticalDownAction == null)
-        {
-            Debug.LogError("XRShipMovement: Missing input actions.");
-            return;
-        }
+        controls = new ShipControls();
+    }
 
-        moveAction.action.Enable();
-        rotateAction.action.Enable();
-        verticalUpAction.action.Enable();
-        verticalDownAction.action.Enable();
+    void OnEnable()
+    {
+        controls.Enable();
+    }
+
+    void OnDisable()
+    {
+        controls.Disable();
     }
 
     void Update()
     {
-        moveInput = moveAction.action.ReadValue<Vector2>();
-        rotateInput = rotateAction.action.ReadValue<Vector2>();
-        verticalUpInput = verticalUpAction.action.ReadValue<float>();
-        verticalDownInput = verticalDownAction.action.ReadValue<float>();
+        Vector2 moveInput = controls.Ship.Move.ReadValue<Vector2>();
+        Vector2 turnInput = controls.Ship.Turn.ReadValue<Vector2>();
+        float upInput = controls.Ship.Up.ReadValue<float>();
+        float downInput = controls.Ship.Down.ReadValue<float>();
 
-        MoveShip();
-        RotateShip();
-        HandleVerticalMovement();
+        HandleMovement(moveInput, turnInput, upInput, downInput);
     }
 
-    private void MoveShip()
+    void HandleMovement(Vector2 moveInput, Vector2 turnInput, float upInput, float downInput)
     {
         Vector3 moveDirection = new Vector3(moveInput.x, 0, moveInput.y);
-        shipTransform.Translate(moveDirection * moveSpeed * Time.deltaTime, Space.Self);
-    }
+        transform.Translate(moveDirection * moveSpeed * Time.deltaTime, Space.Self);
 
-    private void RotateShip()
-    {
-        Vector3 rotation = new Vector3(-rotateInput.y * rotationSpeed, rotateInput.x * rotationSpeed, 0);
-        shipTransform.Rotate(rotation * Time.deltaTime, Space.Self);
-    }
+        float pitch = -turnInput.y * rotationSpeed * Time.deltaTime;
+        float yaw = turnInput.x * rotationSpeed * Time.deltaTime;
+        transform.Rotate(pitch, yaw, 0f, Space.Self);
 
-    private void HandleVerticalMovement()
-    {
-        if (verticalUpInput > 0.1f)
+        if (upInput > 0.1f)
         {
-            shipTransform.Translate(Vector3.up * verticalSpeed * Time.deltaTime, Space.World);
+            transform.Translate(Vector3.up * verticalSpeed * Time.deltaTime, Space.World);
         }
-        if (verticalDownInput > 0.1f)
+
+        if (downInput > 0.1f)
         {
-            shipTransform.Translate(Vector3.down * verticalSpeed * Time.deltaTime, Space.World);
+            transform.Translate(Vector3.down * verticalSpeed * Time.deltaTime, Space.World);
         }
     }
 }

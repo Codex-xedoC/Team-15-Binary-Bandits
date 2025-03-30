@@ -1,31 +1,27 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
-using System.Collections;
 using UnityEngine.XR.Interaction.Toolkit;
+using System.Collections;
+using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
-public class StartButtonScript : MonoBehaviour
+public class StartButtonScript : XRBaseInteractable
 {
     public GameObject startPanel;
     public GameObject environmentObjects;
     public GameObject playerShip;
     public GameObject questionPanel;
     public FadeScreen fadeScreen;
-    public InputActionReference interactAction;
 
     private XRShipMovement shipMovementScript;
     private bool gameStarted = false;
 
-    void Start()
+    protected override void Awake()
     {
+        base.Awake();
+
         if (startPanel == null || environmentObjects == null || fadeScreen == null || questionPanel == null)
         {
             Debug.LogError("StartButtonScript: Missing required components in Inspector.");
-            return;
         }
-
-        startPanel.SetActive(true);
-        environmentObjects.SetActive(false);
-        questionPanel.SetActive(false);
 
         if (playerShip != null)
         {
@@ -39,15 +35,35 @@ public class StartButtonScript : MonoBehaviour
         {
             Debug.LogError("StartButtonScript: Player Ship not assigned.");
         }
+    }
 
-        if (interactAction != null)
+    void Start()
+    {
+        if (startPanel != null)
         {
-            interactAction.action.Enable();
-            interactAction.action.performed += ctx => StartGame();
+            startPanel.SetActive(true); // Show Start UI when scene loads
         }
-        else
+
+        if (environmentObjects != null)
         {
-            Debug.LogError("StartButtonScript: Interact Action not assigned.");
+            environmentObjects.SetActive(false); // Keep planets hidden until Start clicked
+        }
+
+        if (questionPanel != null)
+        {
+            questionPanel.SetActive(false); // Question UI stays hidden
+        }
+
+        // DO NOT disable ship movement — movement starts immediately
+    }
+
+    protected override void OnSelectEntered(SelectEnterEventArgs args)
+    {
+        base.OnSelectEntered(args);
+
+        if (!gameStarted)
+        {
+            StartGame();
         }
     }
 
@@ -56,42 +72,36 @@ public class StartButtonScript : MonoBehaviour
         if (gameStarted) return;
         gameStarted = true;
 
-        Debug.Log("Start Button Pressed - Fading to black...");
+        Debug.Log("Start button pressed. Beginning fade...");
         StartCoroutine(FadeThenLoad());
     }
 
     IEnumerator FadeThenLoad()
     {
+        // Fade to black
         fadeScreen.FadeOut();
         yield return new WaitForSeconds(fadeScreen.fadeDuration);
 
+        // Hide startup UI
         if (startPanel != null)
         {
             startPanel.SetActive(false);
             Canvas.ForceUpdateCanvases();
-            Debug.Log("Start Panel hidden after fade.");
+            Debug.Log("Start panel hidden.");
         }
 
-        environmentObjects.SetActive(true);
-        Debug.Log("Environment enabled.");
-
-        if (shipMovementScript != null)
+        // Enable gameplay environment (planets, questions)
+        if (environmentObjects != null)
         {
-            shipMovementScript.enabled = true;
-            Debug.Log("Movement enabled.");
+            environmentObjects.SetActive(true);
+            Debug.Log("Environment objects enabled.");
         }
+
+        // Ship movement is already enabled before this — do not re-enable here
 
         fadeScreen.FadeIn();
         yield return new WaitForSeconds(fadeScreen.fadeDuration);
 
         Debug.Log("Game started successfully.");
-    }
-
-    void OnDestroy()
-    {
-        if (interactAction != null)
-        {
-            interactAction.action.performed -= ctx => StartGame();
-        }
     }
 }

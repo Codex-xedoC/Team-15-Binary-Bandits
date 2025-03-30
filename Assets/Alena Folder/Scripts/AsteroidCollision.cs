@@ -1,3 +1,4 @@
+using AlenaScripts;
 using UnityEngine;
 
 public class AsteroidCollision : MonoBehaviour
@@ -9,13 +10,13 @@ public class AsteroidCollision : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            // Replace XRShipHealth with your correct health script
             XRShipHealth.Instance.TakeDamage(5); // -5 health
 
-            // Show damage text at spawn point
             if (damageTextPrefab != null && damageTextSpawnPoint != null)
             {
                 GameObject dmgText = Instantiate(damageTextPrefab, damageTextSpawnPoint.position, Quaternion.identity);
-                Destroy(dmgText, 2f); // Destroy after 2 seconds
+                Destroy(dmgText, 2f);
             }
         }
     }
