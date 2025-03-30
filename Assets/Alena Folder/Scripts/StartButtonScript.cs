@@ -7,8 +7,9 @@ public class StartButtonScript : XRBaseInteractable
 {
     public GameObject startPanel;
     public GameObject environmentObjects;
+    public GameObject uiRoot;             
     public GameObject playerShip;
-    public GameObject questionPanel;
+    public GameObject questionPanel;      
     public FadeScreen fadeScreen;
 
     private XRShipMovement shipMovementScript;
@@ -18,7 +19,7 @@ public class StartButtonScript : XRBaseInteractable
     {
         base.Awake();
 
-        if (startPanel == null || environmentObjects == null || fadeScreen == null || questionPanel == null)
+        if (startPanel == null || environmentObjects == null || uiRoot == null || fadeScreen == null || questionPanel == null)
         {
             Debug.LogError("StartButtonScript: Missing required components in Inspector.");
         }
@@ -46,15 +47,20 @@ public class StartButtonScript : XRBaseInteractable
 
         if (environmentObjects != null)
         {
-            environmentObjects.SetActive(false); // Keep planets hidden until Start clicked
+            environmentObjects.SetActive(false); // Disable planets/asteroids
+        }
+
+        if (uiRoot != null)
+        {
+            uiRoot.SetActive(false); // Disable UI canvas with question panels
         }
 
         if (questionPanel != null)
         {
-            questionPanel.SetActive(false); // Question UI stays hidden
+            questionPanel.SetActive(false); // Make sure no questions show on load
         }
 
-        // DO NOT disable ship movement — movement starts immediately
+        // Ship movement is already active — don't disable it
     }
 
     protected override void OnSelectEntered(SelectEnterEventArgs args)
@@ -82,7 +88,7 @@ public class StartButtonScript : XRBaseInteractable
         fadeScreen.FadeOut();
         yield return new WaitForSeconds(fadeScreen.fadeDuration);
 
-        // Hide startup UI
+        // Hide start panel
         if (startPanel != null)
         {
             startPanel.SetActive(false);
@@ -90,14 +96,19 @@ public class StartButtonScript : XRBaseInteractable
             Debug.Log("Start panel hidden.");
         }
 
-        // Enable gameplay environment (planets, questions)
+        // Enable planets/asteroids
         if (environmentObjects != null)
         {
             environmentObjects.SetActive(true);
             Debug.Log("Environment objects enabled.");
         }
 
-        // Ship movement is already enabled before this — do not re-enable here
+        // Enable question UI
+        if (uiRoot != null)
+        {
+            uiRoot.SetActive(true);
+            Debug.Log("UI root enabled.");
+        }
 
         fadeScreen.FadeIn();
         yield return new WaitForSeconds(fadeScreen.fadeDuration);

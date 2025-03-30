@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class PlanetInteraction : MonoBehaviour
 {
@@ -11,14 +12,17 @@ public class PlanetInteraction : MonoBehaviour
     [Header("Question System")]
     public QuestionHelperCodex questionHelperCodex;
 
-    private bool isPlayerNear = false;
     private bool hasPlayedAudio = false;
+    private bool canTriggerQuestion = true;
+
+    [Header("Question Trigger Settings")]
+    public float exitDistanceThreshold = 20f;
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject == player)
+        if (other.gameObject == player && canTriggerQuestion)
         {
-            isPlayerNear = true;
+            Debug.Log($"[PlanetInteraction] Player entered planet zone: {gameObject.name}");
 
             if (!hasPlayedAudio && planetFoundAudio != null)
             {
@@ -26,10 +30,11 @@ public class PlanetInteraction : MonoBehaviour
                 hasPlayedAudio = true;
             }
 
-            Debug.Log("[PlanetInteraction] Player entered planet zone, displaying random question.");
             if (questionHelperCodex != null)
             {
                 questionHelperCodex.DisplayNewQuestion();
+                canTriggerQuestion = false;
+                Debug.Log("[PlanetInteraction] Triggered question display.");
             }
             else
             {
@@ -42,8 +47,23 @@ public class PlanetInteraction : MonoBehaviour
     {
         if (other.gameObject == player)
         {
-            isPlayerNear = false;
+            Debug.Log($"[PlanetInteraction] Player exited planet zone: {gameObject.name}");
             hasPlayedAudio = false;
+            StartCoroutine(CheckDistanceToRearm());
         }
+    }
+
+    private IEnumerator CheckDistanceToRearm()
+    {
+        Transform planet = this.transform;
+        Transform playerTransform = player.transform;
+
+        while (Vector3.Distance(playerTransform.position, planet.position) < exitDistanceThreshold)
+        {
+            yield return null;
+        }
+
+        Debug.Log("[PlanetInteraction] Player is far enough from planet. Question can now re-trigger.");
+        canTriggerQuestion = true;
     }
 }

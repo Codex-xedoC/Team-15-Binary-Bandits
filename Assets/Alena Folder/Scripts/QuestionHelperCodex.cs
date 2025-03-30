@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
 using System.Collections.Generic;
 
 public class QuestionHelperCodex : MonoBehaviour
@@ -24,8 +25,12 @@ public class QuestionHelperCodex : MonoBehaviour
     [Header("Image Display")]
     public Image ImageDisplay;
 
+    [Header("Navigation UI")]
+    public GameObject BackPanel;
+
     private List<Question> questions = new List<Question>();
     private Question currentQuestion;
+    private GameObject lastActivePanel;
 
     [System.Serializable]
     public class Question
@@ -90,7 +95,6 @@ public class QuestionHelperCodex : MonoBehaviour
         }
 
         currentQuestion = questions[Random.Range(0, questions.Count)];
-
         HideAllPanels();
 
         switch (currentQuestion.QuestionType)
@@ -100,6 +104,8 @@ public class QuestionHelperCodex : MonoBehaviour
                 MultipleChoiceQuestionText.text = "Question: " + currentQuestion.QuestionText;
                 MultipleChoiceDropdown.ClearOptions();
                 MultipleChoiceDropdown.AddOptions(new List<string>(currentQuestion.Choices));
+                PositionPanel(MultipleChoice);
+                lastActivePanel = MultipleChoice;
                 break;
 
             case "True/False":
@@ -107,6 +113,8 @@ public class QuestionHelperCodex : MonoBehaviour
                 TrueFalseQuestionText.text = "Question: " + currentQuestion.QuestionText;
                 TrueFalseDropdown.ClearOptions();
                 TrueFalseDropdown.AddOptions(new List<string> { "True", "False" });
+                PositionPanel(TrueFalse);
+                lastActivePanel = TrueFalse;
                 break;
 
             case "Image Question":
@@ -122,11 +130,12 @@ public class QuestionHelperCodex : MonoBehaviour
                 else
                 {
                     ImageDisplay.gameObject.SetActive(false);
-                    Debug.LogWarning($"Image Q{currentQuestion.QNumber} not found in Resources.");
                 }
 
                 ImageQuestionDropdown.ClearOptions();
                 ImageQuestionDropdown.AddOptions(new List<string>(currentQuestion.Choices));
+                PositionPanel(ImageQuestion);
+                lastActivePanel = ImageQuestion;
                 break;
 
             default:
@@ -137,6 +146,36 @@ public class QuestionHelperCodex : MonoBehaviour
         Debug.Log("[QuestionHelperCodex] Displayed new question.");
     }
 
+    private void PositionPanel(GameObject panel)
+    {
+        Transform cam = Camera.main.transform;
+        Vector3 spawnPos = cam.position + cam.forward * 3f;
+
+        panel.transform.SetParent(null);
+        panel.transform.position = spawnPos;
+        panel.transform.rotation = Quaternion.LookRotation(cam.forward, cam.up);
+
+        if (BackPanel != null)
+        {
+            BackPanel.transform.SetParent(null);
+            BackPanel.transform.localScale = Vector3.one;
+            BackPanel.transform.rotation = panel.transform.rotation;
+
+            Vector3 offset = panel.transform.right * -3f;
+            BackPanel.transform.position = panel.transform.position + offset;
+
+            BackPanel.SetActive(true);
+        }
+
+        CanvasGroup group = panel.GetComponent<CanvasGroup>();
+        if (group != null)
+        {
+            group.alpha = 1f;
+            group.interactable = true;
+            group.blocksRaycasts = true;
+        }
+    }
+
     private void HideAllPanels()
     {
         MultipleChoice.SetActive(false);
@@ -144,6 +183,11 @@ public class QuestionHelperCodex : MonoBehaviour
         ImageQuestion.SetActive(false);
         CorrectPanel.SetActive(false);
         WrongPanel.SetActive(false);
+
+        if (BackPanel != null)
+        {
+            BackPanel.SetActive(false);
+        }
     }
 
     public void SubmitAnswer()
@@ -153,27 +197,44 @@ public class QuestionHelperCodex : MonoBehaviour
         if (currentQuestion.QuestionType == "Multiple Choice")
         {
             selected = MultipleChoiceDropdown.options[MultipleChoiceDropdown.value].text;
+            MultipleChoice.SetActive(false);
         }
         else if (currentQuestion.QuestionType == "True/False")
         {
             selected = TrueFalseDropdown.options[TrueFalseDropdown.value].text;
+            TrueFalse.SetActive(false);
         }
         else if (currentQuestion.QuestionType == "Image Question")
         {
             selected = ImageQuestionDropdown.options[ImageQuestionDropdown.value].text;
+            ImageQuestion.SetActive(false);
         }
 
-        if (selected == currentQuestion.CorrectAnswer)
+        bool isCorrect = selected == currentQuestion.CorrectAnswer;
+        StartCoroutine(ShowResultPanel(isCorrect));
+    }
+
+    private IEnumerator ShowResultPanel(bool isCorrect)
+    {
+        yield return new WaitForSeconds(0.2f);
+
+        GameObject resultPanel = isCorrect ? CorrectPanel : WrongPanel;
+        resultPanel.SetActive(true);
+
+        if (lastActivePanel != null)
         {
-            CorrectPanel.SetActive(true);
-            WrongPanel.SetActive(false);
-        }
-        else
-        {
-            WrongPanel.SetActive(true);
-            CorrectPanel.SetActive(false);
+            resultPanel.transform.position = lastActivePanel.transform.position;
+            resultPanel.transform.rotation = lastActivePanel.transform.rotation;
         }
 
-        Invoke(nameof(HideAllPanels), 3f);
+        resultPanel.transform.localScale = Vector3.one * 1.5f;
+
+        if (isCorrect)
+        {
+            XRShipHealth.Instance.AddScore(10);
+        }
+
+        yield return new WaitForSeconds(3f);
+        resultPanel.SetActive(false);
     }
 }
