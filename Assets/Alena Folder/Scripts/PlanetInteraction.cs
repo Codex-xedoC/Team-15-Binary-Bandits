@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class PlanetInteraction : MonoBehaviour
 {
@@ -11,25 +12,50 @@ public class PlanetInteraction : MonoBehaviour
     [Header("Question System")]
     public QuestionHelperCodex questionHelperCodex;
 
-    private bool isPlayerNear = false;
+    [Header("View Detection Settings")]
+    public float viewThreshold = 0.97f; // Adjust this value if needed
+
     private bool hasPlayedAudio = false;
+    private bool canTriggerQuestion = true;
+
+    [Header("Question Trigger Settings")]
+    public float exitDistanceThreshold = 20f;
+
+    private void Update()
+    {
+        if (!hasPlayedAudio && player != null)
+        {
+            Vector3 toPlanet = (transform.position - player.transform.position).normalized;
+            Vector3 playerForward = player.transform.forward;
+
+            float dot = Vector3.Dot(playerForward, toPlanet);
+
+            if (dot > viewThreshold)
+            {
+                if (planetFoundAudio != null)
+                {
+                    planetFoundAudio.Play();
+                    Debug.Log("[PlanetInteraction] Target acquired sound played (planet in view).");
+                }
+                else
+                {
+                    Debug.LogError("[PlanetInteraction] planetFoundAudio not assigned.");
+                }
+
+                hasPlayedAudio = true;
+            }
+        }
+    }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject == player)
+        if (other.gameObject == player && canTriggerQuestion)
         {
-            isPlayerNear = true;
-
-            if (!hasPlayedAudio && planetFoundAudio != null)
-            {
-                planetFoundAudio.Play();
-                hasPlayedAudio = true;
-            }
-
-            Debug.Log("[PlanetInteraction] Player entered planet zone, displaying random question.");
             if (questionHelperCodex != null)
             {
                 questionHelperCodex.DisplayNewQuestion();
+                canTriggerQuestion = false;
+                Debug.Log("[PlanetInteraction] Triggered question display.");
             }
             else
             {
@@ -42,8 +68,23 @@ public class PlanetInteraction : MonoBehaviour
     {
         if (other.gameObject == player)
         {
-            isPlayerNear = false;
+            Debug.Log($"[PlanetInteraction] Player exited planet zone: {gameObject.name}");
             hasPlayedAudio = false;
+            StartCoroutine(CheckDistanceToRearm());
         }
+    }
+
+    private IEnumerator CheckDistanceToRearm()
+    {
+        Transform planet = this.transform;
+        Transform playerTransform = player.transform;
+
+        while (Vector3.Distance(playerTransform.position, planet.position) < exitDistanceThreshold)
+        {
+            yield return null;
+        }
+
+        Debug.Log("[PlanetInteraction] Player is far enough from planet. Question can now re-trigger.");
+        canTriggerQuestion = true;
     }
 }
