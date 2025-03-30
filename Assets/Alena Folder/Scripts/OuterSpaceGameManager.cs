@@ -1,8 +1,13 @@
 using UnityEngine;
-using UnityEngine.SceneManagement; 
+using UnityEngine.SceneManagement;
+
 public class OuterSpaceGameManager : MonoBehaviour
 {
     public static OuterSpaceGameManager instance;
+
+    [Header("Audio")]
+    public AudioSource engineAudioSource;
+    public string engineSceneName = "Codex"; // Update this to match your scene name
 
     private void Awake()
     {
@@ -10,11 +15,17 @@ public class OuterSpaceGameManager : MonoBehaviour
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
+            UnityEngine.SceneManagement.SceneManager.sceneLoaded += OnSceneLoaded;
         }
         else
         {
-            Destroy(gameObject); // Prevent duplicates
+            Destroy(gameObject);
         }
+    }
+
+    private void OnDestroy()
+    {
+        UnityEngine.SceneManagement.SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
     public void LoadScene(string sceneName)
@@ -33,6 +44,24 @@ public class OuterSpaceGameManager : MonoBehaviour
         else
         {
             Debug.LogError("Scene name is empty or null.");
+        }
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == engineSceneName)
+        {
+            Debug.Log("[OuterSpaceGameManager] Loaded space exploration scene.");
+
+            if (engineAudioSource != null && !engineAudioSource.isPlaying)
+            {
+                engineAudioSource.Play();
+                Debug.Log("[OuterSpaceGameManager] Engine audio started.");
+            }
+            else if (engineAudioSource == null)
+            {
+                Debug.LogWarning("[OuterSpaceGameManager] Engine AudioSource not assigned.");
+            }
         }
     }
 }

@@ -12,24 +12,45 @@ public class PlanetInteraction : MonoBehaviour
     [Header("Question System")]
     public QuestionHelperCodex questionHelperCodex;
 
+    [Header("View Detection Settings")]
+    public float viewThreshold = 0.97f; // Adjust this value if needed
+
     private bool hasPlayedAudio = false;
     private bool canTriggerQuestion = true;
 
     [Header("Question Trigger Settings")]
     public float exitDistanceThreshold = 20f;
 
+    private void Update()
+    {
+        if (!hasPlayedAudio && player != null)
+        {
+            Vector3 toPlanet = (transform.position - player.transform.position).normalized;
+            Vector3 playerForward = player.transform.forward;
+
+            float dot = Vector3.Dot(playerForward, toPlanet);
+
+            if (dot > viewThreshold)
+            {
+                if (planetFoundAudio != null)
+                {
+                    planetFoundAudio.Play();
+                    Debug.Log("[PlanetInteraction] Target acquired sound played (planet in view).");
+                }
+                else
+                {
+                    Debug.LogError("[PlanetInteraction] planetFoundAudio not assigned.");
+                }
+
+                hasPlayedAudio = true;
+            }
+        }
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject == player && canTriggerQuestion)
         {
-            Debug.Log($"[PlanetInteraction] Player entered planet zone: {gameObject.name}");
-
-            if (!hasPlayedAudio && planetFoundAudio != null)
-            {
-                planetFoundAudio.Play();
-                hasPlayedAudio = true;
-            }
-
             if (questionHelperCodex != null)
             {
                 questionHelperCodex.DisplayNewQuestion();

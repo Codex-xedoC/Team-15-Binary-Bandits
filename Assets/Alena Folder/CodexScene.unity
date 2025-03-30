@@ -1316,6 +1316,7 @@ MonoBehaviour:
   player: {fileID: 57637204}
   planetFoundAudio: {fileID: 1145677071}
   questionHelperCodex: {fileID: 475502966}
+  viewThreshold: 0.97
   exitDistanceThreshold: 20
 --- !u!135 &39537582
 SphereCollider:
@@ -1623,6 +1624,7 @@ MonoBehaviour:
   player: {fileID: 57637204}
   planetFoundAudio: {fileID: 1145677071}
   questionHelperCodex: {fileID: 475502966}
+  viewThreshold: 0.97
   exitDistanceThreshold: 20
 --- !u!135 &43581182
 SphereCollider:
@@ -2449,6 +2451,7 @@ MonoBehaviour:
   player: {fileID: 57637204}
   planetFoundAudio: {fileID: 1145677071}
   questionHelperCodex: {fileID: 475502966}
+  viewThreshold: 0.97
   exitDistanceThreshold: 20
 --- !u!135 &54311472
 SphereCollider:
@@ -4576,6 +4579,7 @@ MonoBehaviour:
   player: {fileID: 57637204}
   planetFoundAudio: {fileID: 1145677071}
   questionHelperCodex: {fileID: 475502966}
+  viewThreshold: 0.97
   exitDistanceThreshold: 20
 --- !u!135 &184526660
 SphereCollider:
@@ -5315,6 +5319,7 @@ MonoBehaviour:
   player: {fileID: 57637204}
   planetFoundAudio: {fileID: 1145677071}
   questionHelperCodex: {fileID: 475502966}
+  viewThreshold: 0.97
   exitDistanceThreshold: 20
 --- !u!135 &214244345
 SphereCollider:
@@ -5975,6 +5980,7 @@ MonoBehaviour:
   player: {fileID: 57637204}
   planetFoundAudio: {fileID: 1145677071}
   questionHelperCodex: {fileID: 475502966}
+  viewThreshold: 0.97
   exitDistanceThreshold: 20
 --- !u!135 &236988168
 SphereCollider:
@@ -6416,6 +6422,7 @@ MonoBehaviour:
   player: {fileID: 57637204}
   planetFoundAudio: {fileID: 1145677071}
   questionHelperCodex: {fileID: 475502966}
+  viewThreshold: 0.97
   exitDistanceThreshold: 20
 --- !u!135 &249571809
 SphereCollider:
@@ -7644,6 +7651,7 @@ MonoBehaviour:
   player: {fileID: 57637204}
   planetFoundAudio: {fileID: 1145677071}
   questionHelperCodex: {fileID: 475502966}
+  viewThreshold: 0.97
   exitDistanceThreshold: 20
 --- !u!135 &304150135
 SphereCollider:
@@ -8312,6 +8320,7 @@ MonoBehaviour:
   player: {fileID: 57637204}
   planetFoundAudio: {fileID: 1145677071}
   questionHelperCodex: {fileID: 475502966}
+  viewThreshold: 0.97
   exitDistanceThreshold: 20
 --- !u!114 &330571477
 MonoBehaviour:
@@ -8625,6 +8634,7 @@ MonoBehaviour:
   player: {fileID: 57637204}
   planetFoundAudio: {fileID: 1145677071}
   questionHelperCodex: {fileID: 475502966}
+  viewThreshold: 0.97
   exitDistanceThreshold: 20
 --- !u!135 &334505619
 SphereCollider:
@@ -9009,6 +9019,7 @@ MonoBehaviour:
   player: {fileID: 57637204}
   planetFoundAudio: {fileID: 1145677071}
   questionHelperCodex: {fileID: 475502966}
+  viewThreshold: 0.97
   exitDistanceThreshold: 20
 --- !u!135 &346804153
 SphereCollider:
@@ -10343,6 +10354,7 @@ MonoBehaviour:
   player: {fileID: 57637204}
   planetFoundAudio: {fileID: 1145677071}
   questionHelperCodex: {fileID: 475502966}
+  viewThreshold: 0.97
   exitDistanceThreshold: 20
 --- !u!114 &371592559
 MonoBehaviour:
@@ -11572,6 +11584,7 @@ MonoBehaviour:
   player: {fileID: 57637204}
   planetFoundAudio: {fileID: 1145677071}
   questionHelperCodex: {fileID: 475502966}
+  viewThreshold: 0.97
   exitDistanceThreshold: 20
 --- !u!135 &398857567
 SphereCollider:
@@ -12360,6 +12373,7 @@ MonoBehaviour:
   player: {fileID: 57637204}
   planetFoundAudio: {fileID: 1145677071}
   questionHelperCodex: {fileID: 475502966}
+  viewThreshold: 0.97
   exitDistanceThreshold: 20
 --- !u!114 &408000874
 MonoBehaviour:
@@ -12565,6 +12579,7 @@ MonoBehaviour:
   player: {fileID: 57637204}
   planetFoundAudio: {fileID: 1145677071}
   questionHelperCodex: {fileID: 475502966}
+  viewThreshold: 0.97
   exitDistanceThreshold: 20
 --- !u!114 &419684707
 MonoBehaviour:
@@ -12872,6 +12887,7 @@ MonoBehaviour:
   player: {fileID: 57637204}
   planetFoundAudio: {fileID: 1145677071}
   questionHelperCodex: {fileID: 475502966}
+  viewThreshold: 0.97
   exitDistanceThreshold: 20
 --- !u!135 &429281038
 SphereCollider:
@@ -14025,6 +14041,7 @@ MonoBehaviour:
   player: {fileID: 57637204}
   planetFoundAudio: {fileID: 1145677071}
   questionHelperCodex: {fileID: 475502966}
+  viewThreshold: 0.97
   exitDistanceThreshold: 20
 --- !u!135 &463655468
 SphereCollider:
@@ -14854,6 +14871,7 @@ MonoBehaviour:
   player: {fileID: 57637204}
   planetFoundAudio: {fileID: 1145677071}
   questionHelperCodex: {fileID: 475502966}
+  viewThreshold: 0.97
   exitDistanceThreshold: 20
 --- !u!135 &495026908
 SphereCollider:
@@ -16767,6 +16785,7 @@ MonoBehaviour:
   player: {fileID: 57637204}
   planetFoundAudio: {fileID: 1145677071}
   questionHelperCodex: {fileID: 475502966}
+  viewThreshold: 0.97
   exitDistanceThreshold: 20
 --- !u!114 &614570303
 MonoBehaviour:
@@ -17501,6 +17520,7 @@ MonoBehaviour:
   player: {fileID: 57637204}
   planetFoundAudio: {fileID: 1145677071}
   questionHelperCodex: {fileID: 475502966}
+  viewThreshold: 0.97
   exitDistanceThreshold: 20
 --- !u!135 &666010947
 SphereCollider:
@@ -18070,6 +18090,7 @@ MonoBehaviour:
   player: {fileID: 57637204}
   planetFoundAudio: {fileID: 1145677071}
   questionHelperCodex: {fileID: 475502966}
+  viewThreshold: 0.97
   exitDistanceThreshold: 20
 --- !u!135 &679544193
 SphereCollider:
@@ -18606,6 +18627,7 @@ MonoBehaviour:
   player: {fileID: 57637204}
   planetFoundAudio: {fileID: 1145677071}
   questionHelperCodex: {fileID: 475502966}
+  viewThreshold: 0.97
   exitDistanceThreshold: 20
 --- !u!135 &694026541
 SphereCollider:
@@ -19049,6 +19071,7 @@ MonoBehaviour:
   player: {fileID: 57637204}
   planetFoundAudio: {fileID: 1145677071}
   questionHelperCodex: {fileID: 475502966}
+  viewThreshold: 0.97
   exitDistanceThreshold: 20
 --- !u!135 &716283619
 SphereCollider:
@@ -19586,6 +19609,7 @@ MonoBehaviour:
   player: {fileID: 57637204}
   planetFoundAudio: {fileID: 1145677071}
   questionHelperCodex: {fileID: 475502966}
+  viewThreshold: 0.97
   exitDistanceThreshold: 20
 --- !u!114 &726380339
 MonoBehaviour:
@@ -19899,6 +19923,7 @@ MonoBehaviour:
   player: {fileID: 57637204}
   planetFoundAudio: {fileID: 1145677071}
   questionHelperCodex: {fileID: 475502966}
+  viewThreshold: 0.97
   exitDistanceThreshold: 20
 --- !u!135 &755271387
 SphereCollider:
@@ -20854,6 +20879,7 @@ MonoBehaviour:
   player: {fileID: 57637204}
   planetFoundAudio: {fileID: 1145677071}
   questionHelperCodex: {fileID: 475502966}
+  viewThreshold: 0.97
   exitDistanceThreshold: 20
 --- !u!135 &770346201
 SphereCollider:
@@ -21931,6 +21957,7 @@ MonoBehaviour:
   player: {fileID: 57637204}
   planetFoundAudio: {fileID: 1145677071}
   questionHelperCodex: {fileID: 475502966}
+  viewThreshold: 0.97
   exitDistanceThreshold: 20
 --- !u!135 &833120498
 SphereCollider:
@@ -22238,6 +22265,7 @@ MonoBehaviour:
   player: {fileID: 57637204}
   planetFoundAudio: {fileID: 1145677071}
   questionHelperCodex: {fileID: 475502966}
+  viewThreshold: 0.97
   exitDistanceThreshold: 20
 --- !u!135 &841525007
 SphereCollider:
@@ -22545,6 +22573,7 @@ MonoBehaviour:
   player: {fileID: 57637204}
   planetFoundAudio: {fileID: 1145677071}
   questionHelperCodex: {fileID: 475502966}
+  viewThreshold: 0.97
   exitDistanceThreshold: 20
 --- !u!135 &843724562
 SphereCollider:
@@ -23383,6 +23412,7 @@ MonoBehaviour:
   player: {fileID: 57637204}
   planetFoundAudio: {fileID: 1145677071}
   questionHelperCodex: {fileID: 475502966}
+  viewThreshold: 0.97
   exitDistanceThreshold: 20
 --- !u!135 &882620563
 SphereCollider:
@@ -23751,6 +23781,7 @@ MonoBehaviour:
   player: {fileID: 57637204}
   planetFoundAudio: {fileID: 1145677071}
   questionHelperCodex: {fileID: 475502966}
+  viewThreshold: 0.97
   exitDistanceThreshold: 20
 --- !u!135 &889076278
 SphereCollider:
@@ -24903,6 +24934,7 @@ MonoBehaviour:
   player: {fileID: 57637204}
   planetFoundAudio: {fileID: 1145677071}
   questionHelperCodex: {fileID: 475502966}
+  viewThreshold: 0.97
   exitDistanceThreshold: 20
 --- !u!114 &936386232
 MonoBehaviour:
@@ -25141,6 +25173,7 @@ MonoBehaviour:
   player: {fileID: 57637204}
   planetFoundAudio: {fileID: 1145677071}
   questionHelperCodex: {fileID: 475502966}
+  viewThreshold: 0.97
   exitDistanceThreshold: 20
 --- !u!135 &938905631
 SphereCollider:
@@ -25947,6 +25980,7 @@ MonoBehaviour:
   player: {fileID: 57637204}
   planetFoundAudio: {fileID: 1145677071}
   questionHelperCodex: {fileID: 475502966}
+  viewThreshold: 0.97
   exitDistanceThreshold: 20
 --- !u!135 &978736963
 SphereCollider:
@@ -26805,6 +26839,7 @@ MonoBehaviour:
   player: {fileID: 57637204}
   planetFoundAudio: {fileID: 1145677071}
   questionHelperCodex: {fileID: 475502966}
+  viewThreshold: 0.97
   exitDistanceThreshold: 20
 --- !u!135 &1024187124
 SphereCollider:
@@ -27423,6 +27458,7 @@ MonoBehaviour:
   player: {fileID: 57637204}
   planetFoundAudio: {fileID: 1145677071}
   questionHelperCodex: {fileID: 475502966}
+  viewThreshold: 0.97
   exitDistanceThreshold: 20
 --- !u!135 &1035626101
 SphereCollider:
@@ -27814,6 +27850,7 @@ MonoBehaviour:
   player: {fileID: 57637204}
   planetFoundAudio: {fileID: 1145677071}
   questionHelperCodex: {fileID: 475502966}
+  viewThreshold: 0.97
   exitDistanceThreshold: 20
 --- !u!135 &1036335470
 SphereCollider:
@@ -29658,6 +29695,7 @@ MonoBehaviour:
   player: {fileID: 57637204}
   planetFoundAudio: {fileID: 1145677071}
   questionHelperCodex: {fileID: 475502966}
+  viewThreshold: 0.97
   exitDistanceThreshold: 20
 --- !u!114 &1088740978
 MonoBehaviour:
@@ -29965,6 +30003,7 @@ MonoBehaviour:
   player: {fileID: 57637204}
   planetFoundAudio: {fileID: 1145677071}
   questionHelperCodex: {fileID: 475502966}
+  viewThreshold: 0.97
   exitDistanceThreshold: 20
 --- !u!114 &1091446255
 MonoBehaviour:
@@ -30965,6 +31004,7 @@ MonoBehaviour:
   player: {fileID: 57637204}
   planetFoundAudio: {fileID: 1145677071}
   questionHelperCodex: {fileID: 475502966}
+  viewThreshold: 0.97
   exitDistanceThreshold: 20
 --- !u!135 &1121291489
 SphereCollider:
@@ -31353,6 +31393,7 @@ MonoBehaviour:
   player: {fileID: 57637204}
   planetFoundAudio: {fileID: 1145677071}
   questionHelperCodex: {fileID: 475502966}
+  viewThreshold: 0.97
   exitDistanceThreshold: 20
 --- !u!135 &1132925421
 SphereCollider:
@@ -31731,6 +31772,7 @@ MonoBehaviour:
   player: {fileID: 57637204}
   planetFoundAudio: {fileID: 1145677071}
   questionHelperCodex: {fileID: 475502966}
+  viewThreshold: 0.97
   exitDistanceThreshold: 20
 --- !u!135 &1144839625
 SphereCollider:
@@ -31855,11 +31897,11 @@ AudioSource:
   m_GameObject: {fileID: 1145677069}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: 1915dc4ae05e04947ada38446f62d7d5, type: 2}
   m_audioClip: {fileID: 8300000, guid: bb7ec78307977b54b99abcf4e1f744d8, type: 3}
   m_Resource: {fileID: 8300000, guid: bb7ec78307977b54b99abcf4e1f744d8, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.5
+  m_Volume: 0.777
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -31952,13 +31994,13 @@ AudioSource:
   m_GameObject: {fileID: 1145677069}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: 1915dc4ae05e04947ada38446f62d7d5, type: 2}
   m_audioClip: {fileID: 8300000, guid: b6056674947946249bdad8fe2d3d44e8, type: 3}
   m_Resource: {fileID: 8300000, guid: b6056674947946249bdad8fe2d3d44e8, type: 3}
-  m_PlayOnAwake: 1
-  m_Volume: 0.05
+  m_PlayOnAwake: 0
+  m_Volume: 0.666
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -32054,13 +32096,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   engineSource: {fileID: 1145677071}
   effectSource: {fileID: 1145677070}
-  spaceshipEngineIdle: {fileID: 8300000, guid: b6056674947946249bdad8fe2d3d44e8, type: 3}
-  spaceshipEngineThrust: {fileID: 8300000, guid: b6056674947946249bdad8fe2d3d44e8, type: 3}
+  backgroundEngineSound: {fileID: 8300000, guid: b6056674947946249bdad8fe2d3d44e8, type: 3}
+  targetAcquiredSound: {fileID: 8300000, guid: bb7ec78307977b54b99abcf4e1f744d8, type: 3}
   buttonPress: {fileID: 8300000, guid: 5e0e5f5b2e1d5874aad33b1fc93772b5, type: 3}
   teleportSound: {fileID: 8300000, guid: 9fc03a91b5216b74394a6166059d68f2, type: 3}
-  targetAcquiredSound: {fileID: 8300000, guid: bb7ec78307977b54b99abcf4e1f744d8, type: 3}
   xrOriginCamera: {fileID: 2002296088}
-  playerShipRigidbody: {fileID: 57637206}
 --- !u!4 &1145677073
 Transform:
   m_ObjectHideFlags: 0
@@ -35066,6 +35106,7 @@ MonoBehaviour:
   player: {fileID: 57637204}
   planetFoundAudio: {fileID: 1145677071}
   questionHelperCodex: {fileID: 475502966}
+  viewThreshold: 0.97
   exitDistanceThreshold: 20
 --- !u!135 &1295103886
 SphereCollider:
@@ -35800,6 +35841,7 @@ MonoBehaviour:
   player: {fileID: 57637204}
   planetFoundAudio: {fileID: 1145677071}
   questionHelperCodex: {fileID: 475502966}
+  viewThreshold: 0.97
   exitDistanceThreshold: 20
 --- !u!135 &1320800759
 SphereCollider:
@@ -36337,6 +36379,7 @@ MonoBehaviour:
   player: {fileID: 57637204}
   planetFoundAudio: {fileID: 1145677071}
   questionHelperCodex: {fileID: 475502966}
+  viewThreshold: 0.97
   exitDistanceThreshold: 20
 --- !u!135 &1342375523
 SphereCollider:
@@ -36874,6 +36917,7 @@ MonoBehaviour:
   player: {fileID: 57637204}
   planetFoundAudio: {fileID: 1145677071}
   questionHelperCodex: {fileID: 475502966}
+  viewThreshold: 0.97
   exitDistanceThreshold: 20
 --- !u!135 &1357901607
 SphereCollider:
@@ -37752,6 +37796,7 @@ MonoBehaviour:
   player: {fileID: 57637204}
   planetFoundAudio: {fileID: 1145677071}
   questionHelperCodex: {fileID: 475502966}
+  viewThreshold: 0.97
   exitDistanceThreshold: 20
 --- !u!135 &1375570226
 SphereCollider:
@@ -38102,6 +38147,7 @@ MonoBehaviour:
   player: {fileID: 57637204}
   planetFoundAudio: {fileID: 1145677071}
   questionHelperCodex: {fileID: 475502966}
+  viewThreshold: 0.97
   exitDistanceThreshold: 20
 --- !u!135 &1384801349
 SphereCollider:
@@ -38772,6 +38818,7 @@ MonoBehaviour:
   player: {fileID: 57637204}
   planetFoundAudio: {fileID: 1145677071}
   questionHelperCodex: {fileID: 475502966}
+  viewThreshold: 0.97
   exitDistanceThreshold: 20
 --- !u!135 &1396976501
 SphereCollider:
@@ -39079,6 +39126,7 @@ MonoBehaviour:
   player: {fileID: 57637204}
   planetFoundAudio: {fileID: 1145677071}
   questionHelperCodex: {fileID: 475502966}
+  viewThreshold: 0.97
   exitDistanceThreshold: 20
 --- !u!135 &1397762357
 SphereCollider:
@@ -39386,6 +39434,7 @@ MonoBehaviour:
   player: {fileID: 57637204}
   planetFoundAudio: {fileID: 1145677071}
   questionHelperCodex: {fileID: 475502966}
+  viewThreshold: 0.97
   exitDistanceThreshold: 20
 --- !u!135 &1399364882
 SphereCollider:
@@ -39693,6 +39742,7 @@ MonoBehaviour:
   player: {fileID: 57637204}
   planetFoundAudio: {fileID: 1145677071}
   questionHelperCodex: {fileID: 475502966}
+  viewThreshold: 0.97
   exitDistanceThreshold: 20
 --- !u!135 &1399998128
 SphereCollider:
@@ -40563,6 +40613,7 @@ MonoBehaviour:
   player: {fileID: 57637204}
   planetFoundAudio: {fileID: 1145677071}
   questionHelperCodex: {fileID: 475502966}
+  viewThreshold: 0.97
   exitDistanceThreshold: 20
 --- !u!135 &1436948481
 SphereCollider:
@@ -40944,6 +40995,7 @@ MonoBehaviour:
   player: {fileID: 57637204}
   planetFoundAudio: {fileID: 1145677071}
   questionHelperCodex: {fileID: 475502966}
+  viewThreshold: 0.97
   exitDistanceThreshold: 20
 --- !u!114 &1445652546
 MonoBehaviour:
@@ -42273,6 +42325,7 @@ MonoBehaviour:
   player: {fileID: 57637204}
   planetFoundAudio: {fileID: 1145677071}
   questionHelperCodex: {fileID: 475502966}
+  viewThreshold: 0.97
   exitDistanceThreshold: 20
 --- !u!114 &1529234131
 MonoBehaviour:
@@ -43666,6 +43719,7 @@ MonoBehaviour:
   player: {fileID: 57637204}
   planetFoundAudio: {fileID: 1145677071}
   questionHelperCodex: {fileID: 475502966}
+  viewThreshold: 0.97
   exitDistanceThreshold: 20
 --- !u!114 &1583133339
 MonoBehaviour:
@@ -44695,6 +44749,7 @@ MonoBehaviour:
   player: {fileID: 57637204}
   planetFoundAudio: {fileID: 1145677071}
   questionHelperCodex: {fileID: 475502966}
+  viewThreshold: 0.97
   exitDistanceThreshold: 20
 --- !u!135 &1595503325
 SphereCollider:
@@ -45146,6 +45201,7 @@ MonoBehaviour:
   player: {fileID: 57637204}
   planetFoundAudio: {fileID: 1145677071}
   questionHelperCodex: {fileID: 475502966}
+  viewThreshold: 0.97
   exitDistanceThreshold: 20
 --- !u!114 &1600754068
 MonoBehaviour:
@@ -45384,6 +45440,7 @@ MonoBehaviour:
   player: {fileID: 57637204}
   planetFoundAudio: {fileID: 1145677071}
   questionHelperCodex: {fileID: 475502966}
+  viewThreshold: 0.97
   exitDistanceThreshold: 20
 --- !u!135 &1601753608
 SphereCollider:
@@ -45802,6 +45859,7 @@ MonoBehaviour:
   player: {fileID: 57637204}
   planetFoundAudio: {fileID: 1145677071}
   questionHelperCodex: {fileID: 475502966}
+  viewThreshold: 0.97
   exitDistanceThreshold: 20
 --- !u!135 &1607404679
 SphereCollider:
@@ -46439,6 +46497,7 @@ MonoBehaviour:
   player: {fileID: 57637204}
   planetFoundAudio: {fileID: 1145677071}
   questionHelperCodex: {fileID: 475502966}
+  viewThreshold: 0.97
   exitDistanceThreshold: 20
 --- !u!135 &1633957300
 SphereCollider:
@@ -46823,6 +46882,7 @@ MonoBehaviour:
   player: {fileID: 57637204}
   planetFoundAudio: {fileID: 1145677071}
   questionHelperCodex: {fileID: 475502966}
+  viewThreshold: 0.97
   exitDistanceThreshold: 20
 --- !u!135 &1645791244
 SphereCollider:
@@ -47162,6 +47222,7 @@ MonoBehaviour:
   player: {fileID: 57637204}
   planetFoundAudio: {fileID: 1145677071}
   questionHelperCodex: {fileID: 475502966}
+  viewThreshold: 0.97
   exitDistanceThreshold: 20
 --- !u!114 &1653569188
 MonoBehaviour:
@@ -48392,6 +48453,7 @@ MonoBehaviour:
   player: {fileID: 57637204}
   planetFoundAudio: {fileID: 1145677071}
   questionHelperCodex: {fileID: 475502966}
+  viewThreshold: 0.97
   exitDistanceThreshold: 20
 --- !u!135 &1701085051
 SphereCollider:
@@ -51492,6 +51554,7 @@ MonoBehaviour:
   player: {fileID: 57637204}
   planetFoundAudio: {fileID: 1145677071}
   questionHelperCodex: {fileID: 475502966}
+  viewThreshold: 0.97
   exitDistanceThreshold: 20
 --- !u!135 &1806087979
 SphereCollider:
@@ -52355,6 +52418,7 @@ MonoBehaviour:
   player: {fileID: 57637204}
   planetFoundAudio: {fileID: 1145677071}
   questionHelperCodex: {fileID: 475502966}
+  viewThreshold: 0.97
   exitDistanceThreshold: 20
 --- !u!114 &1829547624
 MonoBehaviour:
@@ -52936,6 +53000,7 @@ MonoBehaviour:
   player: {fileID: 57637204}
   planetFoundAudio: {fileID: 1145677071}
   questionHelperCodex: {fileID: 475502966}
+  viewThreshold: 0.97
   exitDistanceThreshold: 20
 --- !u!114 &1846869530
 MonoBehaviour:
@@ -59542,6 +59607,7 @@ MonoBehaviour:
   player: {fileID: 57637204}
   planetFoundAudio: {fileID: 1145677071}
   questionHelperCodex: {fileID: 475502966}
+  viewThreshold: 0.97
   exitDistanceThreshold: 20
 --- !u!114 &1884368135
 MonoBehaviour:
@@ -59855,6 +59921,7 @@ MonoBehaviour:
   player: {fileID: 57637204}
   planetFoundAudio: {fileID: 1145677071}
   questionHelperCodex: {fileID: 475502966}
+  viewThreshold: 0.97
   exitDistanceThreshold: 20
 --- !u!135 &1885504627
 SphereCollider:
@@ -60537,6 +60604,7 @@ MonoBehaviour:
   player: {fileID: 57637204}
   planetFoundAudio: {fileID: 1145677071}
   questionHelperCodex: {fileID: 475502966}
+  viewThreshold: 0.97
   exitDistanceThreshold: 20
 --- !u!114 &1899499164
 MonoBehaviour:
@@ -61892,6 +61960,7 @@ MonoBehaviour:
   player: {fileID: 57637204}
   planetFoundAudio: {fileID: 1145677071}
   questionHelperCodex: {fileID: 475502966}
+  viewThreshold: 0.97
   exitDistanceThreshold: 20
 --- !u!114 &1981550796
 MonoBehaviour:
@@ -62268,6 +62337,7 @@ MonoBehaviour:
   player: {fileID: 57637204}
   planetFoundAudio: {fileID: 1145677071}
   questionHelperCodex: {fileID: 475502966}
+  viewThreshold: 0.97
   exitDistanceThreshold: 20
 --- !u!135 &2002138676
 SphereCollider:
@@ -62818,6 +62888,7 @@ MonoBehaviour:
   player: {fileID: 57637204}
   planetFoundAudio: {fileID: 1145677071}
   questionHelperCodex: {fileID: 475502966}
+  viewThreshold: 0.97
   exitDistanceThreshold: 20
 --- !u!135 &2006199053
 SphereCollider:
@@ -63125,6 +63196,7 @@ MonoBehaviour:
   player: {fileID: 57637204}
   planetFoundAudio: {fileID: 1145677071}
   questionHelperCodex: {fileID: 475502966}
+  viewThreshold: 0.97
   exitDistanceThreshold: 20
 --- !u!135 &2016637048
 SphereCollider:
@@ -63432,6 +63504,7 @@ MonoBehaviour:
   player: {fileID: 57637204}
   planetFoundAudio: {fileID: 1145677071}
   questionHelperCodex: {fileID: 475502966}
+  viewThreshold: 0.97
   exitDistanceThreshold: 20
 --- !u!135 &2023086681
 SphereCollider:
@@ -64018,6 +64091,7 @@ MonoBehaviour:
   player: {fileID: 57637204}
   planetFoundAudio: {fileID: 1145677071}
   questionHelperCodex: {fileID: 475502966}
+  viewThreshold: 0.97
   exitDistanceThreshold: 20
 --- !u!114 &2038629157
 MonoBehaviour:
@@ -64644,6 +64718,7 @@ MonoBehaviour:
   player: {fileID: 57637204}
   planetFoundAudio: {fileID: 1145677071}
   questionHelperCodex: {fileID: 475502966}
+  viewThreshold: 0.97
   exitDistanceThreshold: 20
 --- !u!135 &2081266912
 SphereCollider:
@@ -65273,6 +65348,7 @@ MonoBehaviour:
   player: {fileID: 57637204}
   planetFoundAudio: {fileID: 1145677071}
   questionHelperCodex: {fileID: 475502966}
+  viewThreshold: 0.97
   exitDistanceThreshold: 20
 --- !u!135 &2108941610
 SphereCollider:
@@ -66513,6 +66589,7 @@ MonoBehaviour:
   player: {fileID: 57637204}
   planetFoundAudio: {fileID: 1145677071}
   questionHelperCodex: {fileID: 475502966}
+  viewThreshold: 0.97
   exitDistanceThreshold: 20
 --- !u!135 &2135897076
 SphereCollider:
@@ -66980,6 +67057,7 @@ MonoBehaviour:
   player: {fileID: 57637204}
   planetFoundAudio: {fileID: 1145677071}
   questionHelperCodex: {fileID: 475502966}
+  viewThreshold: 0.97
   exitDistanceThreshold: 20
 --- !u!135 &2143081807
 SphereCollider:
@@ -67728,6 +67806,7 @@ MonoBehaviour:
   playerShip: {fileID: 57637204}
   questionPanel: {fileID: 297947483}
   fadeScreen: {fileID: 1608167829}
+  engineSource: {fileID: 0}
 --- !u!114 &8703770671702221403
 MonoBehaviour:
   m_ObjectHideFlags: 0

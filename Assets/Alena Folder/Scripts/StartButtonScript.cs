@@ -7,10 +7,11 @@ public class StartButtonScript : XRBaseInteractable
 {
     public GameObject startPanel;
     public GameObject environmentObjects;
-    public GameObject uiRoot;             
+    public GameObject uiRoot;
     public GameObject playerShip;
-    public GameObject questionPanel;      
+    public GameObject questionPanel;
     public FadeScreen fadeScreen;
+    public AudioSource engineSource; 
 
     private XRShipMovement shipMovementScript;
     private bool gameStarted = false;
@@ -36,31 +37,34 @@ public class StartButtonScript : XRBaseInteractable
         {
             Debug.LogError("StartButtonScript: Player Ship not assigned.");
         }
+
+        if (engineSource == null)
+        {
+            Debug.LogWarning("StartButtonScript: Engine audio source not assigned.");
+        }
     }
 
     void Start()
     {
         if (startPanel != null)
         {
-            startPanel.SetActive(true); // Show Start UI when scene loads
+            startPanel.SetActive(true);
         }
 
         if (environmentObjects != null)
         {
-            environmentObjects.SetActive(false); // Disable planets/asteroids
+            environmentObjects.SetActive(false);
         }
 
         if (uiRoot != null)
         {
-            uiRoot.SetActive(false); // Disable UI canvas with question panels
+            uiRoot.SetActive(false);
         }
 
         if (questionPanel != null)
         {
-            questionPanel.SetActive(false); // Make sure no questions show on load
+            questionPanel.SetActive(false);
         }
-
-        // Ship movement is already active — don't disable it
     }
 
     protected override void OnSelectEntered(SelectEnterEventArgs args)
@@ -84,11 +88,9 @@ public class StartButtonScript : XRBaseInteractable
 
     IEnumerator FadeThenLoad()
     {
-        // Fade to black
         fadeScreen.FadeOut();
         yield return new WaitForSeconds(fadeScreen.fadeDuration);
 
-        // Hide start panel
         if (startPanel != null)
         {
             startPanel.SetActive(false);
@@ -96,18 +98,23 @@ public class StartButtonScript : XRBaseInteractable
             Debug.Log("Start panel hidden.");
         }
 
-        // Enable planets/asteroids
         if (environmentObjects != null)
         {
             environmentObjects.SetActive(true);
             Debug.Log("Environment objects enabled.");
         }
 
-        // Enable question UI
         if (uiRoot != null)
         {
             uiRoot.SetActive(true);
             Debug.Log("UI root enabled.");
+        }
+
+        // Start the engine sound manually here
+        if (engineSource != null && !engineSource.isPlaying)
+        {
+            engineSource.Play();
+            Debug.Log("Engine audio started.");
         }
 
         fadeScreen.FadeIn();
