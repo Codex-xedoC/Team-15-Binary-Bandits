@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.Tutorials.Core.Editor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 //using UnityEngine.SocialPlatforms.Impl;
@@ -121,7 +120,7 @@ public class QuizManager : MonoBehaviour
         
             for (int i = 0; i < options.Length; i++)
             {
-                if (!currQuestion.Choices[i].IsNullOrEmpty())
+                if (currQuestion.Choices[i] != null || currQuestion.Choices[i] != "")
                 {
                     optionss[i].SetActive(true);
                     options[i].GetComponent<AnswerScript>().isCorrect = false;
