@@ -35,6 +35,7 @@ public class JuliansLevelControl : MonoBehaviour
     public GameObject player;
     private int index = 0;
     public GameObject StartButton, Correct, Wrong;
+    public GameObject HowToPlay;
 
     //public GameObject fishSpawnPoint;
     //public GameObject[] fishSpawns;
@@ -417,6 +418,7 @@ public class JuliansLevelControl : MonoBehaviour
         //sharkQuestion = false;
         //shark.SetActive(false);
         StartButton.SetActive(false);
+        HowToPlay.SetActive(false);
 
         currentQuestion = GetRandomQuestion();
 
