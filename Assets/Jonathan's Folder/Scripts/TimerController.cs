@@ -5,6 +5,8 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
+using UnityEngine.XR.Interaction.Toolkit;
 
 public class TimerController : MonoBehaviour
 {
@@ -13,6 +15,9 @@ public class TimerController : MonoBehaviour
     [SerializeField] private int sec;
     [SerializeField] private Text timerText;
     [SerializeField] public bool stop = false;
+    public QuizManager quizManager;
+
+
 
     private void Update()
     {
@@ -34,13 +39,13 @@ public class TimerController : MonoBehaviour
         timeCounter = 0;
         min = 0;
         sec = 0;
-        timerText.text = "{0:00}";
+        //timerText.text = "{0:00}";
     }
 
     private void GameOver()
     {
         Reset();
-        UnityEngine.SceneManagement.SceneManager.LoadScene("Maze1");
+        quizManager.Retry();
     }
 
 }

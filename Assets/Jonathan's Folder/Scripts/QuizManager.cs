@@ -29,19 +29,34 @@ public class QuizManager : MonoBehaviour
     public List<Questions> questionsList;
     private Questions currQuestion;
     public Image imageDisplay;
+    public GameObject imageBackground;
     public int numQuestions;
     public Questions q;
-  
-  
+    public SceneManager sceneManager;
+
+
     private void Start()
     {
-        imageDisplay.gameObject.SetActive(false);
+        DisplayImage(false);
         LoadQuestions();
         //totalQuestions = questionsList.Count;
         GoPanel.SetActive(false);
         GenerateQuestion();
     }
-    
+    private void DisplayImage(bool q)
+    {
+        if (q == true)
+        {
+            imageDisplay.gameObject.SetActive(true);
+            imageBackground.gameObject.SetActive(true);
+        }
+        else
+        {
+            imageBackground.gameObject.SetActive(false);
+            imageDisplay.gameObject.SetActive(false);
+        }
+    }
+
    public void GoBack()
     {
         XRRig.transform.position = new Vector3(0,0.97f,1);
@@ -52,18 +67,20 @@ public class QuizManager : MonoBehaviour
         panelNum = 0;
         //wrongAnswers.text = wscore.ToString();
         Quizpanel.SetActive(false);
+        DisplayImage(false);
         GoPanel.SetActive(true);
         GoPanel.transform.GetChild(0).GetComponent<Text>().text = Time.text;
-        UnityEngine.SceneManagement.SceneManager.LoadScene("Maze1");
+        //UnityEngine.SceneManagement.SceneManager.LoadScene("Maze1");
     }
 
   
     public void Correct()
     {
-        //MainMenuHandler.Instance.questionCorrect();
+        MainMenuHandler.Instance.questionCorrect();
         if (panelNum <= 5) //5
         {
             //questionsList.Remove(currQuestion);
+            DisplayImage(false);
             ParentPanel.transform.position = coords[panelNum];
             panelNum++;
             GenerateQuestion();
@@ -78,9 +95,12 @@ public class QuizManager : MonoBehaviour
 
     public void Retry()
     {
-        GoBack();
+        //GoBack();
+        DisplayImage(false);
         timerText.text = "{0:00}";
-        UnityEngine.SceneManagement.SceneManager.LoadScene("Maze1");
+        //UnityEngine.SceneManagement.SceneManager.LoadScene("Maze1");
+        sceneManager.ReturnMainMenu();
+        //GoBack();
     }
 
     public void Quit()
@@ -89,7 +109,8 @@ public class QuizManager : MonoBehaviour
     }
     public void Wrong()
     {
-        //MainMenuHandler.Instance.questionWrong();
+        DisplayImage(false);
+        MainMenuHandler.Instance.questionWrong();
         wscore += 1;
         //questionsList.Remove(currQuestion);
         GenerateQuestion();
@@ -133,18 +154,18 @@ public class QuizManager : MonoBehaviour
             SetAnswers();
             if(currQuestion.QuestionType == "Image Question")
             {
-                imageDisplay.gameObject.SetActive(true);
+                DisplayImage(true);
                 string imageName = "Q" + currQuestion.QNumber;
                 Sprite questionImage = Resources.Load<Sprite>(imageName);
                 if (questionImage != null)
                 {
                     imageDisplay.sprite = questionImage; // Set the image on the UI Image component
-                    imageDisplay.gameObject.SetActive(true); // Ensure the image is visible
-                }
+                    DisplayImage(true); // Ensure the image is visible
+            }
                 else
                 {
                     Debug.LogWarning($"Image {imageName} not found in Resources.");
-                    imageDisplay.gameObject.SetActive(false); // Hide the image object if not found
+                    DisplayImage(false); // Hide the image object if not found
                 }
             }
 
