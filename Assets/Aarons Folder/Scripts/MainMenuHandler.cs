@@ -61,8 +61,8 @@ public class MainMenuHandler : MonoBehaviour
     {
         numCorrect++;
         numStreak++;
-        if (scoreManager != null)
-            scoreManager.inputScore = numCorrect;
+        //if (scoreManager != null)
+            //scoreManager.inputScore = numCorrect;
         AccuracyRate = (numCorrect / (numWrong + numCorrect)) * 100;
     }
 

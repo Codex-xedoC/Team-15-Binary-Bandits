@@ -9,6 +9,7 @@ TagManager:
   - Asteroid
   - teleportArea
   - StartButton
+  - fish
   layers:
   - Default
   - TransparentFX
