@@ -20,8 +20,7 @@ public class JuliansLevelControl : MonoBehaviour
 
 
     public GameObject EndButton; // Button to restart or return to menu
-    private int questionLimit = 16; // Max number of questions
-    private int questionCount = 0;  // Tracks how many questions have been asked
+   
 
     private string text;
 
@@ -29,13 +28,15 @@ public class JuliansLevelControl : MonoBehaviour
 
     
     */
+    //private int questionLimit = 16; // Max number of questions
+    //private int questionCount = 0;  // Tracks how many questions have been asked
     public GameObject UIEmpty;
     public GameObject[] grabables;
 
     public GameObject player;
     private int index = 0;
     public GameObject StartButton, Correct, Wrong;
-    public GameObject HowToPlay;
+    public GameObject HowToPlay, EndPanel;
 
     //public GameObject fishSpawnPoint;
     //public GameObject[] fishSpawns;
@@ -247,19 +248,21 @@ public class JuliansLevelControl : MonoBehaviour
             player.transform.position = grabables[1 + index].transform.position + new Vector3(0, -1, -1.5f);
             UIEmpty.transform.position = grabables[1 + index].transform.position + new Vector3(0.3f, 0.5f, 0);
             index++;
-            //RestartGame();
+            Correct.SetActive(false);
+            RestartGame();
         }
         else
         {
-            Debug.Log("All questions answered. Showing End Button.");
-            //EndButton.SetActive(true);
+            Debug.Log("All questions answered. Showing End Panel.");
+            EndPanel.SetActive(true);
+            Correct.SetActive(false);
         }
 
         //Fish1.SetActive(false);
+        
+        //Correct.SetActive(false);
 
-        Correct.SetActive(false);
-
-        RestartGame();
+        //RestartGame();
     }
 
     /*
@@ -415,10 +418,9 @@ public class JuliansLevelControl : MonoBehaviour
 
     public void startGamePressed()
     {
-        //sharkQuestion = false;
-        //shark.SetActive(false);
         StartButton.SetActive(false);
         HowToPlay.SetActive(false);
+        EndPanel.SetActive(false);
 
         currentQuestion = GetRandomQuestion();
 
