@@ -13,7 +13,7 @@ public class PlanetInteraction : MonoBehaviour
     public QuestionHelperCodex questionHelperCodex;
 
     [Header("View Detection Settings")]
-    public float viewThreshold = 0.97f; // Adjust this value if needed
+    public float viewThreshold = 0.97f;
 
     private bool hasPlayedAudio = false;
     private bool canTriggerQuestion = true;
@@ -37,10 +37,6 @@ public class PlanetInteraction : MonoBehaviour
                     planetFoundAudio.Play();
                     Debug.Log("[PlanetInteraction] Target acquired sound played (planet in view).");
                 }
-                else
-                {
-                    Debug.LogError("[PlanetInteraction] planetFoundAudio not assigned.");
-                }
 
                 hasPlayedAudio = true;
             }
@@ -57,10 +53,6 @@ public class PlanetInteraction : MonoBehaviour
                 canTriggerQuestion = false;
                 Debug.Log("[PlanetInteraction] Triggered question display.");
             }
-            else
-            {
-                Debug.LogError("PlanetInteraction: QuestionHelperCodex not assigned.");
-            }
         }
     }
 
@@ -68,7 +60,6 @@ public class PlanetInteraction : MonoBehaviour
     {
         if (other.gameObject == player)
         {
-            Debug.Log($"[PlanetInteraction] Player exited planet zone: {gameObject.name}");
             hasPlayedAudio = false;
             StartCoroutine(CheckDistanceToRearm());
         }
@@ -84,7 +75,7 @@ public class PlanetInteraction : MonoBehaviour
             yield return null;
         }
 
-        Debug.Log("[PlanetInteraction] Player is far enough from planet. Question can now re-trigger.");
         canTriggerQuestion = true;
+        Debug.Log("[PlanetInteraction] Player is far enough. Question can now re-trigger.");
     }
 }

@@ -32,6 +32,9 @@ public class QuestionHelperCodex : MonoBehaviour
     private Question currentQuestion;
     private GameObject lastActivePanel;
 
+    private Vector3 lastQuestionPosition;
+    private Quaternion lastQuestionRotation;
+
     [System.Serializable]
     public class Question
     {
@@ -95,7 +98,10 @@ public class QuestionHelperCodex : MonoBehaviour
         }
 
         currentQuestion = questions[Random.Range(0, questions.Count)];
+
         HideAllPanels();
+
+        GameObject activePanel = null;
 
         switch (currentQuestion.QuestionType)
         {
@@ -104,8 +110,7 @@ public class QuestionHelperCodex : MonoBehaviour
                 MultipleChoiceQuestionText.text = "Question: " + currentQuestion.QuestionText;
                 MultipleChoiceDropdown.ClearOptions();
                 MultipleChoiceDropdown.AddOptions(new List<string>(currentQuestion.Choices));
-                PositionPanel(MultipleChoice);
-                lastActivePanel = MultipleChoice;
+                activePanel = MultipleChoice;
                 break;
 
             case "True/False":
@@ -113,8 +118,7 @@ public class QuestionHelperCodex : MonoBehaviour
                 TrueFalseQuestionText.text = "Question: " + currentQuestion.QuestionText;
                 TrueFalseDropdown.ClearOptions();
                 TrueFalseDropdown.AddOptions(new List<string> { "True", "False" });
-                PositionPanel(TrueFalse);
-                lastActivePanel = TrueFalse;
+                activePanel = TrueFalse;
                 break;
 
             case "Image Question":
@@ -134,16 +138,19 @@ public class QuestionHelperCodex : MonoBehaviour
 
                 ImageQuestionDropdown.ClearOptions();
                 ImageQuestionDropdown.AddOptions(new List<string>(currentQuestion.Choices));
-                PositionPanel(ImageQuestion);
-                lastActivePanel = ImageQuestion;
+                activePanel = ImageQuestion;
                 break;
 
             default:
                 Debug.LogWarning("Unsupported question type: " + currentQuestion.QuestionType);
-                break;
+                return;
         }
 
-        Debug.Log("[QuestionHelperCodex] Displayed new question.");
+        if (activePanel != null)
+        {
+            PositionPanel(activePanel);
+            lastActivePanel = activePanel;
+        }
     }
 
     private void PositionPanel(GameObject panel)
@@ -154,17 +161,28 @@ public class QuestionHelperCodex : MonoBehaviour
         panel.transform.SetParent(null);
         panel.transform.position = spawnPos;
         panel.transform.rotation = Quaternion.LookRotation(cam.forward, cam.up);
+        panel.transform.localScale = Vector3.one * 0.005f;
+
+        lastQuestionPosition = spawnPos;
+        lastQuestionRotation = panel.transform.rotation;
 
         if (BackPanel != null)
         {
             BackPanel.transform.SetParent(null);
-            BackPanel.transform.localScale = Vector3.one;
             BackPanel.transform.rotation = panel.transform.rotation;
 
-            Vector3 offset = panel.transform.right * -3f;
-            BackPanel.transform.position = panel.transform.position + offset;
-
+            Vector3 sideOffset = panel.transform.right * -2.5f;
+            BackPanel.transform.position = panel.transform.position + sideOffset;
+            BackPanel.transform.localScale = Vector3.one;
             BackPanel.SetActive(true);
+
+            CanvasGroup backGroup = BackPanel.GetComponent<CanvasGroup>();
+            if (backGroup != null)
+            {
+                backGroup.alpha = 1f;
+                backGroup.interactable = true;
+                backGroup.blocksRaycasts = true;
+            }
         }
 
         CanvasGroup group = panel.GetComponent<CanvasGroup>();
@@ -185,9 +203,7 @@ public class QuestionHelperCodex : MonoBehaviour
         WrongPanel.SetActive(false);
 
         if (BackPanel != null)
-        {
             BackPanel.SetActive(false);
-        }
     }
 
     public void SubmitAnswer()
@@ -210,31 +226,46 @@ public class QuestionHelperCodex : MonoBehaviour
             ImageQuestion.SetActive(false);
         }
 
-        bool isCorrect = selected == currentQuestion.CorrectAnswer;
-        StartCoroutine(ShowResultPanel(isCorrect));
+        if (selected == currentQuestion.CorrectAnswer)
+        {
+            XRGameScore.Instance.AddScore(10);
+            ShowPanelImmediate(CorrectPanel);
+        }
+        else
+        {
+            ShowPanelImmediate(WrongPanel);
+        }
     }
 
-    private IEnumerator ShowResultPanel(bool isCorrect)
+    private void ShowPanelImmediate(GameObject panel)
     {
-        yield return new WaitForSeconds(0.2f);
-
-        GameObject resultPanel = isCorrect ? CorrectPanel : WrongPanel;
-        resultPanel.SetActive(true);
-
-        if (lastActivePanel != null)
+        if (panel == null)
         {
-            resultPanel.transform.position = lastActivePanel.transform.position;
-            resultPanel.transform.rotation = lastActivePanel.transform.rotation;
+            Debug.LogError("Result panel is null.");
+            return;
         }
 
-        resultPanel.transform.localScale = Vector3.one * 1.5f;
-
-        if (isCorrect)
+        Transform t = panel.transform;
+        while (t != null)
         {
-            XRShipHealth.Instance.AddScore(10);
+            t.gameObject.SetActive(true);
+            t = t.parent;
         }
 
-        yield return new WaitForSeconds(3f);
-        resultPanel.SetActive(false);
+        panel.SetActive(true);
+
+        CanvasGroup cg = panel.GetComponent<CanvasGroup>();
+        if (cg != null)
+        {
+            cg.alpha = 1f;
+            cg.interactable = true;
+            cg.blocksRaycasts = true;
+        }
+
+        panel.transform.position = lastQuestionPosition + Camera.main.transform.forward * 0.5f;
+        panel.transform.rotation = lastQuestionRotation;
+        panel.transform.localScale = Vector3.one * 0.007f;
+
+        Debug.Log("Showing panel: " + panel.name + " at position " + panel.transform.position);
     }
 }

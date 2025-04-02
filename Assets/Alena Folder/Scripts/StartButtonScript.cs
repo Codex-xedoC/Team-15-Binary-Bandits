@@ -7,11 +7,10 @@ public class StartButtonScript : XRBaseInteractable
 {
     public GameObject startPanel;
     public GameObject environmentObjects;
-    public GameObject uiRoot;
     public GameObject playerShip;
     public GameObject questionPanel;
+    public GameObject tutorialRoot; // ADD THIS in Inspector
     public FadeScreen fadeScreen;
-    public AudioSource engineSource; 
 
     private XRShipMovement shipMovementScript;
     private bool gameStarted = false;
@@ -20,7 +19,7 @@ public class StartButtonScript : XRBaseInteractable
     {
         base.Awake();
 
-        if (startPanel == null || environmentObjects == null || uiRoot == null || fadeScreen == null || questionPanel == null)
+        if (startPanel == null || environmentObjects == null || fadeScreen == null || questionPanel == null)
         {
             Debug.LogError("StartButtonScript: Missing required components in Inspector.");
         }
@@ -37,41 +36,28 @@ public class StartButtonScript : XRBaseInteractable
         {
             Debug.LogError("StartButtonScript: Player Ship not assigned.");
         }
-
-        if (engineSource == null)
-        {
-            Debug.LogWarning("StartButtonScript: Engine audio source not assigned.");
-        }
     }
 
     void Start()
     {
         if (startPanel != null)
-        {
             startPanel.SetActive(true);
-        }
 
         if (environmentObjects != null)
-        {
             environmentObjects.SetActive(false);
-        }
-
-        if (uiRoot != null)
-        {
-            uiRoot.SetActive(false);
-        }
 
         if (questionPanel != null)
-        {
             questionPanel.SetActive(false);
-        }
+
+        if (tutorialRoot != null)
+            tutorialRoot.SetActive(true);
     }
 
     protected override void OnSelectEntered(SelectEnterEventArgs args)
     {
         base.OnSelectEntered(args);
 
-        if (!gameStarted)
+        if (!gameStarted && args.interactorObject.transform.name.Contains("RightHand"))
         {
             StartGame();
         }
@@ -92,34 +78,20 @@ public class StartButtonScript : XRBaseInteractable
         yield return new WaitForSeconds(fadeScreen.fadeDuration);
 
         if (startPanel != null)
-        {
             startPanel.SetActive(false);
-            Canvas.ForceUpdateCanvases();
-            Debug.Log("Start panel hidden.");
-        }
+
+        if (tutorialRoot != null)
+            tutorialRoot.SetActive(false);
 
         if (environmentObjects != null)
-        {
             environmentObjects.SetActive(true);
-            Debug.Log("Environment objects enabled.");
-        }
 
-        if (uiRoot != null)
-        {
-            uiRoot.SetActive(true);
-            Debug.Log("UI root enabled.");
-        }
-
-        // Start the engine sound manually here
-        if (engineSource != null && !engineSource.isPlaying)
-        {
-            engineSource.Play();
-            Debug.Log("Engine audio started.");
-        }
+        if (questionPanel != null)
+            questionPanel.SetActive(false);
 
         fadeScreen.FadeIn();
         yield return new WaitForSeconds(fadeScreen.fadeDuration);
 
-        Debug.Log("Game started successfully.");
+        Debug.Log("Game started.");
     }
 }

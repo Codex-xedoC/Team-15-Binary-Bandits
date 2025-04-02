@@ -9,6 +9,9 @@ public class XRShipMovement : MonoBehaviour
 
     private ShipControls controls;
 
+    [Header("Movement Control")]
+    public bool isMovementLocked = false;
+
     void Awake()
     {
         controls = new ShipControls();
@@ -26,6 +29,9 @@ public class XRShipMovement : MonoBehaviour
 
     void Update()
     {
+        if (isMovementLocked)
+            return;
+
         Vector2 moveInput = controls.Ship.Move.ReadValue<Vector2>();
         Vector2 turnInput = controls.Ship.Turn.ReadValue<Vector2>();
         float upInput = controls.Ship.Up.ReadValue<float>();
@@ -52,5 +58,10 @@ public class XRShipMovement : MonoBehaviour
         {
             transform.Translate(Vector3.down * verticalSpeed * Time.deltaTime, Space.World);
         }
+    }
+
+    public void SetMovementLocked(bool locked)
+    {
+        isMovementLocked = locked;
     }
 }

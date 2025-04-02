@@ -18,8 +18,11 @@ public class SpaceshipAudioController : MonoBehaviour
 
     private string lastDetectedPlanet = "";
     private Dictionary<string, float> planetPingTimestamps = new Dictionary<string, float>();
-    private float reacquireDistance = 100f;
-    private float reacquireCooldown = 10f;
+
+    [Header("Detection Settings")]
+    public float reacquireDistance = 100f;
+    public float reacquireCooldown = 10f;
+    public float detectionRange = 100f;
 
     void Start()
     {
@@ -27,15 +30,15 @@ public class SpaceshipAudioController : MonoBehaviour
 
         if (engineSource == null)
         {
-            Debug.LogError("engineSource is NOT assigned");
+            Debug.LogError("[SpaceshipAudioController] engineSource is NOT assigned");
         }
         if (effectSource == null)
         {
-            Debug.LogError("effectSource is NOT assigned");
+            Debug.LogError("[SpaceshipAudioController] effectSource is NOT assigned");
         }
         if (backgroundEngineSound == null)
         {
-            Debug.LogError("backgroundEngineSound is NOT assigned");
+            Debug.LogError("[SpaceshipAudioController] backgroundEngineSound is NOT assigned");
         }
 
         if (engineSource != null && backgroundEngineSound != null)
@@ -44,39 +47,30 @@ public class SpaceshipAudioController : MonoBehaviour
             engineSource.loop = true;
             engineSource.playOnAwake = false;
             engineSource.Play();
-            Debug.Log("backgroundEngineSound forced to play at Start()");
+            Debug.Log("[SpaceshipAudioController] background engine sound started");
         }
 
         if (xrOriginCamera == null)
         {
-            Debug.LogWarning("xrOriginCamera is not assigned — target acquired may not work");
+            Debug.LogWarning("[SpaceshipAudioController] xrOriginCamera is not assigned — target acquired may not work");
         }
     }
 
     void Update()
     {
         DetectPlanetInView();
-
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            if (effectSource != null && targetAcquiredSound != null)
-            {
-                effectSource.PlayOneShot(targetAcquiredSound);
-                Debug.Log("Manual test: Played targetAcquiredSound via P key");
-            }
-        }
     }
 
     void DetectPlanetInView()
     {
-        if (xrOriginCamera == null) return;
+        if (xrOriginCamera == null)
+            return;
 
         RaycastHit hit;
         Vector3 origin = xrOriginCamera.transform.position;
         Vector3 direction = xrOriginCamera.transform.forward;
-        float maxDistance = 100f;
 
-        if (Physics.Raycast(origin, direction, out hit, maxDistance))
+        if (Physics.Raycast(origin, direction, out hit, detectionRange))
         {
             GameObject hitObject = hit.collider.gameObject;
 
@@ -89,7 +83,7 @@ public class SpaceshipAudioController : MonoBehaviour
                     if (effectSource != null && targetAcquiredSound != null)
                     {
                         effectSource.PlayOneShot(targetAcquiredSound);
-                        Debug.Log("Target Acquired: " + planetName);
+                        Debug.Log("[SpaceshipAudioController] Target Acquired: " + planetName);
                     }
 
                     lastDetectedPlanet = planetName;
@@ -107,12 +101,7 @@ public class SpaceshipAudioController : MonoBehaviour
         float timeSinceLastPing = Time.time - planetPingTimestamps[planetName];
         float distance = Vector3.Distance(xrOriginCamera.transform.position, planetPosition);
 
-        if (distance > reacquireDistance && timeSinceLastPing > reacquireCooldown)
-        {
-            return true;
-        }
-
-        return false;
+        return (distance > reacquireDistance && timeSinceLastPing > reacquireCooldown);
     }
 
     public void PlayButtonSound()

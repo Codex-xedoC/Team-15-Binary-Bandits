@@ -1,7 +1,6 @@
 using UnityEngine;
 using TMPro;
 using System.Collections;
-using UnityEngine.SceneManagement;
 
 public class XRShipHealth : MonoBehaviour
 {
@@ -13,6 +12,8 @@ public class XRShipHealth : MonoBehaviour
 
     [Header("Score Settings")]
     public int score = 0;
+    public int correctAnswers = 0;
+    public int wrongAnswers = 0;
 
     [Header("UI Elements")]
     public TextMeshProUGUI healthText;
@@ -58,7 +59,13 @@ public class XRShipHealth : MonoBehaviour
     public void AddScore(int points)
     {
         score += points;
+        correctAnswers++;
         UpdateScoreUI();
+    }
+
+    public void AddWrong()
+    {
+        wrongAnswers++;
     }
 
     private void UpdateHealthUI()
@@ -78,14 +85,51 @@ public class XRShipHealth : MonoBehaviour
         if (GameOverUI != null)
             GameOverUI.SetActive(true);
 
-        // Optional: return to main menu after 3 seconds
+        SubmitFinalScore();
         StartCoroutine(ReturnToMainMenu());
     }
 
     IEnumerator ReturnToMainMenu()
     {
         yield return new WaitForSeconds(3f);
-        UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu"); // Replace with your menu scene name
+
+        Leaderboard leaderboard = FindObjectOfType<Leaderboard>();
+        if (leaderboard != null)
+        {
+            leaderboard.SetLeaderboardEntry(score);
+        }
+
+        UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu");
+    }
+
+    public void SubmitFinalScore()
+    {
+        ScoreManager scoreManager = FindObjectOfType<ScoreManager>();
+        if (scoreManager != null)
+        {
+            scoreManager.SubmitScore();
+        }
+
+        Leaderboard leaderboard = FindObjectOfType<Leaderboard>();
+        if (leaderboard != null)
+        {
+            leaderboard.SetLeaderboardEntry(score);
+        }
+    }
+
+    public void SubmitScoreExternally()
+    {
+        ScoreManager scoreManager = FindObjectOfType<ScoreManager>();
+        if (scoreManager != null)
+        {
+            scoreManager.SubmitScore();
+        }
+
+        Leaderboard leaderboard = FindObjectOfType<Leaderboard>();
+        if (leaderboard != null)
+        {
+            leaderboard.SetLeaderboardEntry(score);
+        }
     }
 
     public void ShowDamageText(int amount)
@@ -105,5 +149,12 @@ public class XRShipHealth : MonoBehaviour
         yield return new WaitForSeconds(2f);
         if (DamageTextUI != null)
             DamageTextUI.SetActive(false);
+    }
+
+    public float GetAccuracy()
+    {
+        int total = correctAnswers + wrongAnswers;
+        if (total == 0) return 0;
+        return ((float)correctAnswers / total) * 100f;
     }
 }

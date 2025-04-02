@@ -7,7 +7,7 @@ public class OuterSpaceGameManager : MonoBehaviour
 
     [Header("Audio")]
     public AudioSource engineAudioSource;
-    public string engineSceneName = "Codex"; // Update this to match your scene name
+    public string engineSceneName = "Codex";
 
     private void Awake()
     {
@@ -32,6 +32,8 @@ public class OuterSpaceGameManager : MonoBehaviour
     {
         if (!string.IsNullOrEmpty(sceneName))
         {
+            SubmitFinalScoreBeforeExit();
+
             if (MainMenuHandler.Instance != null)
             {
                 MainMenuHandler.Instance.LoadScene(sceneName);
@@ -39,11 +41,25 @@ public class OuterSpaceGameManager : MonoBehaviour
             else
             {
                 Debug.LogError("MainMenuHandler instance not found! Cannot load scene.");
+                UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName); 
             }
         }
         else
         {
             Debug.LogError("Scene name is empty or null.");
+        }
+    }
+
+    private void SubmitFinalScoreBeforeExit()
+    {
+        if (XRShipHealth.Instance != null)
+        {
+            XRShipHealth.Instance.SubmitScoreExternally();
+            Debug.Log("[OuterSpaceGameManager] Score submitted before exiting scene.");
+        }
+        else
+        {
+            Debug.LogWarning("[OuterSpaceGameManager] XRShipHealth not found. Score not submitted.");
         }
     }
 
