@@ -20,6 +20,10 @@ public class PaulinaControl : MonoBehaviour
     private List<GameObject> spawnedFish = new List<GameObject>();
     public Image imageDisplay;
 
+    TextMeshProUGUI multipleC1, multipleC2, multipleC3, multipleC14;
+    TextMeshProUGUI true1, false2;
+
+
     [System.Serializable]
     public class Question
     {
@@ -189,6 +193,7 @@ public class PaulinaControl : MonoBehaviour
             Dropdown dropdown = ImageQuestion.transform.Find("Dropdown").GetComponent<Dropdown>();
             dropdown.ClearOptions(); // Clear existing options
             dropdown.AddOptions(new List<string> { currentQuestion.Choices[0], currentQuestion.Choices[1], currentQuestion.Choices[2], currentQuestion.Choices[3] });
+
         }
         else if (currentQuestion.QuestionType == "True/False")
         {
@@ -207,7 +212,7 @@ public class PaulinaControl : MonoBehaviour
         DisplayQuestion(currentQuestion);
     }
 
-     public void SubmitAnswer()
+    public void SubmitAnswer()
     {
         if (currentQuestion.QuestionType == "Multiple Choice")
         {
@@ -254,6 +259,12 @@ public class PaulinaControl : MonoBehaviour
                 StartCoroutine(WrongAnswerTimer());
             }
         }
+    }
+
+    public FadeScreen fadeScreen;
+    public void teleport()
+    {
+        fadeScreen = GameObject.Find("Fader Screen").GetComponent<FadeScreen>();
     }
 
 
