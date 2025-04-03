@@ -15,67 +15,27 @@ public class PlanetInteraction : MonoBehaviour
     [Header("View Detection Settings")]
     public float viewThreshold = 0.97f;
 
-    private bool hasPlayedAudio = false;
+    public static bool hasPlayedAudio = false; // public static allows the questions to reset this without a refrence to the planet.
     private bool canTriggerQuestion = true;
+    public static bool questionIsBeingDisplayed = false; // Used to make sure a new question is not generated before a player is done.
 
     [Header("Question Trigger Settings")]
     public float exitDistanceThreshold = 20f;
 
-    private void Update()
-    {
-        if (!hasPlayedAudio && player != null)
-        {
-            Vector3 toPlanet = (transform.position - player.transform.position).normalized;
-            Vector3 playerForward = player.transform.forward;
-
-            float dot = Vector3.Dot(playerForward, toPlanet);
-
-            if (dot > viewThreshold)
-            {
-                if (planetFoundAudio != null)
-                {
-                    planetFoundAudio.Play();
-                    Debug.Log("[PlanetInteraction] Target acquired sound played (planet in view).");
-                }
-
-                hasPlayedAudio = true;
-            }
-        }
-    }
-
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject == player && canTriggerQuestion)
+        if (other.gameObject == player && canTriggerQuestion && !questionIsBeingDisplayed)
         {
             if (questionHelperCodex != null)
             {
                 questionHelperCodex.DisplayNewQuestion();
                 canTriggerQuestion = false;
                 Debug.Log("[PlanetInteraction] Triggered question display.");
+
+                player.GetComponent<XRShipMovement>().isMovementLocked = true; // Locks player movement when question pops up
+                questionIsBeingDisplayed = true; // Stops duplicate questions.
+                SpaceshipAudioController.stopTargetAquiredSound = true; // Stops sound from playing alot.
             }
         }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject == player)
-        {
-            hasPlayedAudio = false;
-            StartCoroutine(CheckDistanceToRearm());
-        }
-    }
-
-    private IEnumerator CheckDistanceToRearm()
-    {
-        Transform planet = this.transform;
-        Transform playerTransform = player.transform;
-
-        while (Vector3.Distance(playerTransform.position, planet.position) < exitDistanceThreshold)
-        {
-            yield return null;
-        }
-
-        canTriggerQuestion = true;
-        Debug.Log("[PlanetInteraction] Player is far enough. Question can now re-trigger.");
     }
 }

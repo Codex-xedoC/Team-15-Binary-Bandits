@@ -28,6 +28,9 @@ public class QuestionHelperCodex : MonoBehaviour
     [Header("Navigation UI")]
     public GameObject BackPanel;
 
+    [Header("Player")]
+    public GameObject player; // Get player to restore movement.
+
     private List<Question> questions = new List<Question>();
     private Question currentQuestion;
     private GameObject lastActivePanel;
@@ -267,5 +270,9 @@ public class QuestionHelperCodex : MonoBehaviour
         panel.transform.localScale = Vector3.one * 0.007f;
 
         Debug.Log("Showing panel: " + panel.name + " at position " + panel.transform.position);
+
+        player.GetComponent<XRShipMovement>().isMovementLocked = false; // Restores player movement.
+        PlanetInteraction.questionIsBeingDisplayed = false; // Allows players to recieve questions again.
+        SpaceshipAudioController.stopTargetAquiredSound = false; // Allows target aquired audio to be played.
     }
 }

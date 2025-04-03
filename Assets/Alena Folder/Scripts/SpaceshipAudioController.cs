@@ -13,6 +13,8 @@ public class SpaceshipAudioController : MonoBehaviour
     public AudioClip buttonPress;
     public AudioClip teleportSound;
 
+    public static bool stopTargetAquiredSound = false; // Used to make sure sound doesnt play to often.
+
     [Header("XR References")]
     public Camera xrOriginCamera;
 
@@ -66,28 +68,31 @@ public class SpaceshipAudioController : MonoBehaviour
         if (xrOriginCamera == null)
             return;
 
-        RaycastHit hit;
-        Vector3 origin = xrOriginCamera.transform.position;
-        Vector3 direction = xrOriginCamera.transform.forward;
-
-        if (Physics.Raycast(origin, direction, out hit, detectionRange))
+        if (!stopTargetAquiredSound) // If its played already dont play again.
         {
-            GameObject hitObject = hit.collider.gameObject;
+            RaycastHit hit;
+            Vector3 origin = xrOriginCamera.transform.position;
+            Vector3 direction = xrOriginCamera.transform.forward;
 
-            if (hitObject.CompareTag("Planet"))
+            if (Physics.Raycast(origin, direction, out hit, detectionRange))
             {
-                string planetName = hitObject.name;
+                GameObject hitObject = hit.collider.gameObject;
 
-                if (CanReacquirePlanet(planetName, hitObject.transform.position))
+                if (hitObject.CompareTag("Planet"))
                 {
-                    if (effectSource != null && targetAcquiredSound != null)
-                    {
-                        effectSource.PlayOneShot(targetAcquiredSound);
-                        Debug.Log("[SpaceshipAudioController] Target Acquired: " + planetName);
-                    }
+                    string planetName = hitObject.name;
 
-                    lastDetectedPlanet = planetName;
-                    planetPingTimestamps[planetName] = Time.time;
+                    if (CanReacquirePlanet(planetName, hitObject.transform.position))
+                    {
+                        if (effectSource != null && targetAcquiredSound != null)
+                        {
+                            effectSource.PlayOneShot(targetAcquiredSound);
+                            Debug.Log("[SpaceshipAudioController] Target Acquired: " + planetName);
+                        }
+
+                        lastDetectedPlanet = planetName;
+                        planetPingTimestamps[planetName] = Time.time;
+                    }
                 }
             }
         }

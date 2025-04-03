@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Windows;
 
 public class XRShipMovement : MonoBehaviour
 {
@@ -29,15 +30,23 @@ public class XRShipMovement : MonoBehaviour
 
     void Update()
     {
-        if (isMovementLocked)
-            return;
+        // On update gather player input if movement is locked only get rotation input.
 
-        Vector2 moveInput = controls.Ship.Move.ReadValue<Vector2>();
+        // Set up variables.
+        Vector2 moveInput = new Vector2(0, 0);
+        float upInput = 0;
+        float downInput = 0;
         Vector2 turnInput = controls.Ship.Turn.ReadValue<Vector2>();
-        float upInput = controls.Ship.Up.ReadValue<float>();
-        float downInput = controls.Ship.Down.ReadValue<float>();
 
-        HandleMovement(moveInput, turnInput, upInput, downInput);
+        // If movement is locked do not get player movement inputs (left stick).
+        if (!isMovementLocked)
+        {
+            moveInput = controls.Ship.Move.ReadValue<Vector2>();
+            upInput = controls.Ship.Up.ReadValue<float>();
+            downInput = controls.Ship.Down.ReadValue<float>();
+        }
+
+        HandleMovement(moveInput, turnInput, upInput, downInput); // Call function to apply player input.
     }
 
     void HandleMovement(Vector2 moveInput, Vector2 turnInput, float upInput, float downInput)
@@ -60,6 +69,7 @@ public class XRShipMovement : MonoBehaviour
         }
     }
 
+    // Why is a setter needed for a public variable?
     public void SetMovementLocked(bool locked)
     {
         isMovementLocked = locked;
