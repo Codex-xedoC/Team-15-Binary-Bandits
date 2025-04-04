@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections.Generic;
+using System.Collections;
 
 public class TutorialCardManager : MonoBehaviour
 {
@@ -13,13 +14,14 @@ public class TutorialCardManager : MonoBehaviour
     public Button ContinueButton;
 
     private int currentCardIndex = 0;
+    bool buttonCanBePressed = true; // used to stop duplicate calls in fractions of a second
 
     void Start()
     {
         ShowCard(currentCardIndex);
 
         if (ContinueButton != null)
-            ContinueButton.onClick.AddListener(AdvanceCard);
+           ContinueButton.onClick.AddListener(AdvanceCard);
     }
 
     void ShowCard(int index)
@@ -37,13 +39,27 @@ public class TutorialCardManager : MonoBehaviour
 
     public void AdvanceCard()
     {
-        currentCardIndex++;
-
-        if (currentCardIndex >= TutorialCards.Count)
+        if (buttonCanBePressed) // Checks to make sure the button has not been called in the last second
         {
-            currentCardIndex = 0;
-        }
+            StartCoroutine(ButtonDelay()); // Start 1 second delay
 
-        ShowCard(currentCardIndex);
+            currentCardIndex++;
+
+            if (currentCardIndex >= TutorialCards.Count)
+            {
+                currentCardIndex = 0;
+            }
+
+            ShowCard(currentCardIndex);
+        }
+    }
+
+    // Give the button a delay because it was getting double clicking
+    IEnumerator ButtonDelay()
+    {
+
+        buttonCanBePressed = false;
+        yield return new WaitForSeconds(1);
+        buttonCanBePressed = true;
     }
 }
