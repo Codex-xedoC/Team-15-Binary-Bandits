@@ -15,6 +15,7 @@ public class XRShipHealth : MonoBehaviour
     public int correctAnswers = 0;
     public int wrongAnswers = 0;
 
+    // Necesary variables for fuel system.
     [Header("Fuel System")]
     public int maxFuel = 100;
     public float currentFuel;
@@ -193,7 +194,7 @@ public class XRShipHealth : MonoBehaviour
     private void UpdateFuelUI()
     {
         if (fuelText != null)
-            fuelText.text = "Fuel: " + Mathf.Floor(currentFuel);
+            fuelText.text = "Fuel: " + Mathf.Floor(currentFuel); // Update text for UI
     }
 
     // Reset current fule too full

@@ -11,18 +11,9 @@ public class EnemyManager : MonoBehaviour
 
     [Header("Enemy Atributes")]
     [SerializeField] int health = 20;
-    [SerializeField] float sightrange;
-    [SerializeField] LayerMask playerLayermask;
-    bool playerInSight;
-
-
-
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    [SerializeField] float sightrange; // range of sight check
+    [SerializeField] LayerMask playerLayermask; // layer the player is on
+    bool playerInSight; // Holds if player is in sight
 
     // Update is called once per frame
     void Update()
@@ -30,23 +21,21 @@ public class EnemyManager : MonoBehaviour
         playerInSight = Physics.CheckSphere(transform.position, sightrange, playerLayermask); // Checks if player is in range
         if (playerInSight)
         {
-            transform.LookAt(player.transform);
-            Debug.Log("Fire");
-            bulletSpawner.GetComponent<EnemyBulletSpawner>().SpawnBullet();
+            transform.LookAt(player.transform); // Turn enemy to player
+            bulletSpawner.GetComponent<EnemyBulletSpawner>().SpawnBullet(); // Spawn a bullet and fire at player
         }
     }
 
+    // When hit by something
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log(collision.gameObject.tag);
+        // If a bullet hits the player, destroy the bullet and reduce health
         if (collision.gameObject.tag == "Player Bullet")
         {
             Destroy(collision.gameObject);
             health -= 10;
             if (health <= 0)
             {
-                //End Game
-                
                 Destroy(gameObject);
             }
         }
