@@ -233,6 +233,7 @@ public class QuestionHelperCodex : MonoBehaviour
         {
             XRGameScore.Instance.AddScore(10);
             ShowPanelImmediate(CorrectPanel);
+            player.GetComponent<XRShipHealth>().Refuel(); // When correct refuel the ship
         }
         else
         {

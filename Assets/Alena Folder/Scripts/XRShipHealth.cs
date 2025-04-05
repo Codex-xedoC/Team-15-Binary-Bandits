@@ -15,9 +15,14 @@ public class XRShipHealth : MonoBehaviour
     public int correctAnswers = 0;
     public int wrongAnswers = 0;
 
+    [Header("Fuel System")]
+    public int maxFuel = 100;
+    public float currentFuel;
+
     [Header("UI Elements")]
     public TextMeshProUGUI healthText;
     public TextMeshProUGUI scoreText;
+    public TextMeshProUGUI fuelText;
     public GameObject GameOverUI;
     public GameObject DamageTextUI;
     public TextMeshProUGUI damageTextTMP;
@@ -41,6 +46,8 @@ public class XRShipHealth : MonoBehaviour
 
         if (DamageTextUI != null)
             DamageTextUI.SetActive(false);
+
+        Refuel(); // Reset current fuel to full
     }
 
     public void TakeDamage(int damage)
@@ -167,5 +174,31 @@ public class XRShipHealth : MonoBehaviour
             Destroy(collision.gameObject);
             TakeDamage(5);
         }
+    }
+
+    // Reduce fuel level
+    public void UpdateFuel(float fuelUsed)
+    {
+        currentFuel -= fuelUsed;
+        UpdateFuelUI();
+
+        if (currentFuel <= 0)
+        {
+            GameOver();
+        }
+        
+    }
+
+    // Updates fuel UI
+    private void UpdateFuelUI()
+    {
+        if (fuelText != null)
+            fuelText.text = "Fuel: " + Mathf.Floor(currentFuel);
+    }
+
+    // Reset current fule too full
+    public void Refuel()
+    {
+        currentFuel = maxFuel;
     }
 }
