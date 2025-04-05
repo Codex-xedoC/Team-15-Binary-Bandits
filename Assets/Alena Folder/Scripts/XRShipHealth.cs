@@ -157,4 +157,15 @@ public class XRShipHealth : MonoBehaviour
         if (total == 0) return 0;
         return ((float)correctAnswers / total) * 100f;
     }
+
+    // When something colides witht he ship
+    private void OnCollisionEnter(Collision collision)
+    {
+        // If its an enemy bullet destroy bullet and deal damage
+        if (collision.gameObject.tag == "Enemy Bullet")
+        {
+            Destroy(collision.gameObject);
+            TakeDamage(5);
+        }
+    }
 }
