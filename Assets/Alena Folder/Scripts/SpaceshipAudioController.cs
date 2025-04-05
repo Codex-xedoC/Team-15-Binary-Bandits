@@ -13,7 +13,7 @@ public class SpaceshipAudioController : MonoBehaviour
     public AudioClip buttonPress;
     public AudioClip teleportSound;
 
-    public static bool stopTargetAquiredSound = false; // Used to make sure sound doesnt play to often.
+    public static bool stopTargetAquiredSound = false;
 
     [Header("XR References")]
     public Camera xrOriginCamera;
@@ -68,7 +68,7 @@ public class SpaceshipAudioController : MonoBehaviour
         if (xrOriginCamera == null)
             return;
 
-        if (!stopTargetAquiredSound) // If its played already dont play again.
+        if (!stopTargetAquiredSound)
         {
             RaycastHit hit;
             Vector3 origin = xrOriginCamera.transform.position;
