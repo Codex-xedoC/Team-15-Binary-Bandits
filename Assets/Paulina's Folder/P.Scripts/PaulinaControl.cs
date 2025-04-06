@@ -7,18 +7,17 @@ using UnityEngine.UI;
 
 public class PaulinaControl : MonoBehaviour
 {
-    public GameObject UIEmpty;
-    public GameObject StartUpUI;
-
+    public GameObject UIEmpty, StartUpUI;
     public GameObject CorrectUI, WrongUI, ErrorUI, QuestionPUI;
     public GameObject timesUpUI, timerUI;
+    public GameObject ImageButtonUI;
     TextMeshProUGUI numCorrectT;
 
     public GameObject MultipleChoice, ImageQuestion, TrueFalse;
     private List<Question> questions = new List<Question>();
     private Question currentQuestion;
 
-    public Image imageDisplay;
+    public Image imageDisplay, imageDisplay2;
 
     public TextMeshProUGUI QuestionUI, multipleC1, multipleC2, multipleC3, multipleC4;
     public TextMeshProUGUI imageC1, imageC2, imageC3, imageC4;
@@ -36,6 +35,8 @@ public class PaulinaControl : MonoBehaviour
 
     public float gameDuration = 180f; // 3 minutes in seconds
     private float timeRemaining;
+    private bool timerStarted = false;
+
     public TextMeshProUGUI timerText; // Assign your UI Text here in the Inspector
     public GameObject gameOverScreen; // Assign your Game Over panel here
 
@@ -108,6 +109,7 @@ public class PaulinaControl : MonoBehaviour
             {
                 Debug.Log($"{i + 1}. {q.Choices[i]}");
             }
+            Debug.Log($"Choices count: {q.Choices.Length}");
             Debug.Log($"Correct Answer: {q.CorrectAnswer}");
         }
     }
@@ -122,10 +124,16 @@ public class PaulinaControl : MonoBehaviour
 
         currentQuestion = GetRandomQuestion();
 
-        timerUI.SetActive(true);
-        timeRemaining = gameDuration;
-        gameOverScreen.SetActive(false); // Make sure it's hidden at start
-        StartCoroutine(StartCountdown());
+        // Start timer only if it hasn't started yet
+        if (!timerStarted)
+        {
+            timerStarted = true;
+
+            timerUI.SetActive(true);
+            timeRemaining = gameDuration;
+            gameOverScreen.SetActive(false); // Make sure it's hidden at start
+            StartCoroutine(StartCountdown());
+        }
 
         if (currentQuestion.QuestionType == "Multiple Choice")
         {
@@ -149,20 +157,28 @@ public class PaulinaControl : MonoBehaviour
         }
         else if (currentQuestion.QuestionType == "Image Question")
         {
-            string imageName = "Q" + currentQuestion.QNumber; // Assuming QNumber is an integer or string storing the correct question number
-            Sprite questionImage = Resources.Load<Sprite>(imageName); // Load the image from Resources
+            string imageName = "Q" + currentQuestion.QNumber.Trim(); // Assuming QNumber is an integer or string storing the correct question number
+            //Sprite questionImage = Resources.Load<Sprite>(imageName); // Load the image from Resou
+            
+            //string imageName = currentQuestion.ImageName.Trim();
+            Debug.Log($"[Image Question] Trying to load image: Resources/Images/{imageName}");
 
+            Sprite questionImage = Resources.Load<Sprite>(imageName);
             if (questionImage != null)
             {
-                imageDisplay.sprite = questionImage; // Set the image on the UI Image component
-                imageDisplay.gameObject.SetActive(true); // Ensure the image is visible
+                imageDisplay.sprite = questionImage;
+                imageDisplay.gameObject.SetActive(true);
+                Debug.Log("[Image Question] Image loaded and assigned successfully.");
+
+                imageDisplay2.sprite = questionImage;
             }
             else
             {
-                Debug.LogWarning($"Image {imageName} not found in Resources.");
-                imageDisplay.gameObject.SetActive(false); // Hide the image object if not found
+                Debug.LogWarning($"[Image Question] Image NOT found: Resources/Images/{imageName}. Make sure the image is in Assets/Resources/Images and has no extension in the name.");
+                imageDisplay.gameObject.SetActive(false);
             }
 
+            ImageButtonUI.SetActive(true);
             QuestionPUI.SetActive(true);
             MultipleChoice.SetActive(false);
             TrueFalse.SetActive(false);
@@ -194,9 +210,15 @@ public class PaulinaControl : MonoBehaviour
             headerText.text = "Question: " + currentQuestion.QuestionText;
             */
 
-            choice1.text = currentQuestion.Choices[0];
-            choice2.text = currentQuestion.Choices[1];
-
+            if (currentQuestion.Choices.Length >= 2)
+            {
+                choice1.text = currentQuestion.Choices[0];
+                choice2.text = currentQuestion.Choices[1];
+            }
+            else
+            {
+                Debug.LogError("True/False question is missing choices!");
+            }
         }
         else
         {
@@ -264,6 +286,11 @@ public class PaulinaControl : MonoBehaviour
     multipleC2.text = currentQuestion.Choices[1];
     multipleC3.text = currentQuestion.Choices[2];
     multipleC4.text = currentQuestion.Choices[3];
+
+    imageC1.text = currentQuestion.Choices[0];
+    imageC2.text = currentQuestion.Choices[1];
+    imageC3.text = currentQuestion.Choices[2];
+    imageC4.text = currentQuestion.Choices[3];
     }
 
 
@@ -341,6 +368,7 @@ public class PaulinaControl : MonoBehaviour
     {
         gameEnded = true;
         Debug.Log("Time's up!");
+        timerUI.SetActive(false);
         UIEmpty.SetActive(false);
 
         StartCoroutine(TimesUp());
