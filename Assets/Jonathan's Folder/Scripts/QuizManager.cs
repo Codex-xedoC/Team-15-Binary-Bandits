@@ -76,7 +76,7 @@ public class QuizManager : MonoBehaviour
     public void Correct()
     {
         MainMenuHandler.Instance.questionCorrect();
-        if (panelNum <= 5) //5
+        if (panelNum <= 7) //7
         {
             //questionsList.Remove(currQuestion);
             DisplayImage(false);
