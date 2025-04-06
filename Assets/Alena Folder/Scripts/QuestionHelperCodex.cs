@@ -233,10 +233,12 @@ public class QuestionHelperCodex : MonoBehaviour
         {
             XRGameScore.Instance.AddScore(10);
             ShowPanelImmediate(CorrectPanel);
+            MainMenuHandler.Instance.questionCorrect();
         }
         else
         {
             ShowPanelImmediate(WrongPanel);
+            MainMenuHandler.Instance.questionWrong();
         }
     }
 

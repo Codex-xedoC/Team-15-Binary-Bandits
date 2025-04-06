@@ -1,0 +1,10 @@
+# ninja log v5
+22	747	7656198207042849	GameActivity/CMakeFiles/game.dir/UGAInputKeyEvent.cpp.o	f3be4732859ed4a0
+12	774	7656198207366250	GameActivity/CMakeFiles/game.dir/UGAEntry.cpp.o	52eb92015f469a14
+9	778	7656198207386007	GameActivity/CMakeFiles/game.dir/UGAConfiguration.cpp.o	1d5897ef390cff88
+35	798	7656198207590316	GameActivity/CMakeFiles/game.dir/UGAInputMotionEvent.cpp.o	4ff0a1203ad62d4d
+29	846	7656198208066517	GameActivity/CMakeFiles/game.dir/UGASoftKeyboard.cpp.o	6bbfe8f8e2688019
+0	895	7656198208564925	GameActivity/CMakeFiles/game.dir/UGADebug.cpp.o	283eca4b707910b5
+17	1012	7656198209766154	GameActivity/CMakeFiles/game.dir/UGAInput.cpp.o	a8bf847900a77cfd
+5	1169	7656198211166468	GameActivity/CMakeFiles/game.dir/UGAApplication.cpp.o	dec100c526671034
+1169	1355	7656198213079660	C:/Users/aaron/OneDrive/Documentos/GitHub/Team-15-Binary-Bandits/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/1b2o4t51/obj/arm64-v8a/libgame.so	c8664fa03142e279

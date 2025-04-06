@@ -85,7 +85,6 @@ public class XRShipHealth : MonoBehaviour
         if (GameOverUI != null)
             GameOverUI.SetActive(true);
 
-        SubmitFinalScore();
         StartCoroutine(ReturnToMainMenu());
     }
 
@@ -93,43 +92,7 @@ public class XRShipHealth : MonoBehaviour
     {
         yield return new WaitForSeconds(3f);
 
-        Leaderboard leaderboard = FindObjectOfType<Leaderboard>();
-        if (leaderboard != null)
-        {
-            leaderboard.SetLeaderboardEntry(score);
-        }
-
         UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu");
-    }
-
-    public void SubmitFinalScore()
-    {
-        ScoreManager scoreManager = FindObjectOfType<ScoreManager>();
-        if (scoreManager != null)
-        {
-            scoreManager.SubmitScore();
-        }
-
-        Leaderboard leaderboard = FindObjectOfType<Leaderboard>();
-        if (leaderboard != null)
-        {
-            leaderboard.SetLeaderboardEntry(score);
-        }
-    }
-
-    public void SubmitScoreExternally()
-    {
-        ScoreManager scoreManager = FindObjectOfType<ScoreManager>();
-        if (scoreManager != null)
-        {
-            scoreManager.SubmitScore();
-        }
-
-        Leaderboard leaderboard = FindObjectOfType<Leaderboard>();
-        if (leaderboard != null)
-        {
-            leaderboard.SetLeaderboardEntry(score);
-        }
     }
 
     public void ShowDamageText(int amount)
