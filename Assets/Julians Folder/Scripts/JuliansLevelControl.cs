@@ -17,7 +17,7 @@ public class JuliansLevelControl : MonoBehaviour
     public GameObject player;
     private int index = 0;
     public GameObject StartButton, Correct, Wrong;
-    public GameObject HowToPlay, EndPanel;
+    public GameObject HowToPlay, EndPanel, MenuPanel;
 
     public GameObject MultipleChoice, ImageQuestion, TrueFalse;
 
@@ -28,7 +28,8 @@ public class JuliansLevelControl : MonoBehaviour
 
     public Transform xrCamera; //For UI management
     public GameObject sea;
-    public float seaRiseAmount = 0.3f; // How much it rises per wrong answer
+    public GameObject failPanel;
+    public float seaRiseAmount = 0.1f; // How much it rises per wrong answer
 
     [System.Serializable]
 
@@ -305,13 +306,14 @@ public class JuliansLevelControl : MonoBehaviour
         sea.transform.position += new Vector3(0, seaRiseAmount, 0);
 
         // Check if ocean reached or passed player's head
-        float seaY = sea.transform.position.y;
+        float seaY = ((sea.transform.position.y) - 6);
         float playerY = xrCamera.position.y;
 
-        if (seaY >= playerY)
+        if (seaY > playerY)
         {
             Debug.Log("Game Over: The Sea has claimed the Player!");
-            EndPanel.SetActive(true);
+            Wrong.SetActive(false);
+            failPanel.SetActive(true);
             yield break; // End the coroutine early
         }
 
@@ -433,24 +435,98 @@ public class JuliansLevelControl : MonoBehaviour
 
     public void lastTeleport()
     {
+        StartCoroutine(DelayedUIPosition());
+        MenuPanel.SetActive(true);
         EndPanel.SetActive(true);
     }
 
-    public void afterTeleport() 
-    { 
-        currentQuestion = GetRandomQuestion();
+    IEnumerator DelayedUIPosition()
+    {
+        // Wait a moment for teleport to settle
+        yield return new WaitForSeconds(0.1f);
 
+        // Get flat forward direction from camera
         Vector3 forward = xrCamera.forward;
         forward.y = 0;
         forward.Normalize();
 
+        // Position UI in front of camera
+        Vector3 uiPosition = xrCamera.position + forward * 0.1f;
+        uiPosition.y = xrCamera.position.y + 0.3f;
+
+        UIEmpty.transform.position = uiPosition;
+
+        // Make it face the camera horizontally
+        UIEmpty.transform.LookAt(new Vector3(xrCamera.position.x, UIEmpty.transform.position.y, xrCamera.position.z));
+        UIEmpty.transform.Rotate(0, 180, 0);
+    }
+    public void afterTeleport() 
+    {
+        StartCoroutine(DelayedUIPosition());
+        
+        currentQuestion = GetRandomQuestion();
+        MenuPanel.SetActive(true);
+
+        /*
+        Vector3 forward = xrCamera.forward;
+        Vector3 position = xrCamera.position + forward.normalized * 2f;
+
+        UIEmpty.transform.position = position;
+
+        // This makes the UI face the player (xrCamera)
+        Vector3 lookDirection = xrCamera.position - UIEmpty.transform.position;
+        lookDirection.y = 0; // Keeps it upright (no tilt)
+        UIEmpty.transform.rotation = Quaternion.LookRotation(lookDirection);
+        */
+
+        /*
+        // Get the flat forward direction of the XR camera (ignore vertical tilt)
+        Vector3 forward = xrCamera.forward;
+        forward.y = 0;
+        forward.Normalize();
+
+        // Position the UI 2 meters in front of the player's headset
         Vector3 uiPosition = xrCamera.position + forward * 2f;
-        uiPosition.y += 0.2f; // optional: slight vertical offset
+
+        // Optional small vertical offset
+        uiPosition.y = xrCamera.position.y + 0.1f;
+
+        // Move the UI there
+        UIEmpty.transform.position = uiPosition;
+
+        // Make the UI face the camera
+        UIEmpty.transform.LookAt(new Vector3(xrCamera.position.x, UIEmpty.transform.position.y, xrCamera.position.z));
+
+        // Flip it 180 degrees because it's facing *away* by default
+        UIEmpty.transform.Rotate(0, 180, 0);
+        */
+        /*
+        Vector3 forward = xrCamera.forward;
+        forward.y = 0;
+        forward.Normalize();
+
+        // Position UI 2 meters in front of camera
+        Vector3 uiPosition = xrCamera.position + forward * 2f;
+
+        // Raise it high to avoid terrain first
+        uiPosition.y += 5f;
+
+        // Cast a ray downward to find terrain height
+        if (Physics.Raycast(uiPosition, Vector3.down, out RaycastHit hit, 10f))
+        {
+            // Place UI just above terrain
+            uiPosition.y = hit.point.y + 1.5f;
+        }
+        else
+        {
+            // No terrain hit? Just keep it at camera height
+            uiPosition.y = xrCamera.position.y;
+        }
 
         UIEmpty.transform.position = uiPosition;
         UIEmpty.transform.LookAt(xrCamera);
         UIEmpty.transform.Rotate(0, 180, 0); // flip to face player
-
+        */
         int randomNumber1 = Random.Range(1, 4); // Upper bound is exclusive, so use 6
         Debug.Log(randomNumber1);
         /*
