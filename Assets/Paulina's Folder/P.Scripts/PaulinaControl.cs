@@ -8,12 +8,11 @@ using UnityEngine.UI;
 public class PaulinaControl : MonoBehaviour
 {
     public GameObject UIEmpty, StartUpUI;
-    public GameObject CorrectUI, WrongUI, ErrorUI, QuestionPUI;
+    public GameObject ErrorUI, QuestionPUI;
     public GameObject timesUpUI, timerUI;
-    public GameObject ImageButtonUI;
-    TextMeshProUGUI numCorrectT;
-
+    public GameObject ImageButtonUI, NumberCorrectUI;
     public GameObject MultipleChoice, ImageQuestion, TrueFalse;
+
     private List<Question> questions = new List<Question>();
     private Question currentQuestion;
 
@@ -88,7 +87,6 @@ public class PaulinaControl : MonoBehaviour
         StartUpUI.SetActive(false);
     }
 
-    
     Question GetRandomQuestion()
     {
         if (questions.Count == 0)
@@ -114,8 +112,10 @@ public class PaulinaControl : MonoBehaviour
         }
     }
     
+    private int numQuests = 0;
+
     public void teleportQuest()
-    {
+    {   
         QuestionPUI.SetActive(false);
         MultipleChoice.SetActive(false);
         ImageQuestion.SetActive(false);
@@ -127,6 +127,8 @@ public class PaulinaControl : MonoBehaviour
         // Start timer only if it hasn't started yet
         if (!timerStarted)
         {
+            NumberCorrectUI.SetActive(true);
+            
             timerStarted = true;
 
             timerUI.SetActive(true);
@@ -138,9 +140,9 @@ public class PaulinaControl : MonoBehaviour
         if (currentQuestion.QuestionType == "Multiple Choice")
         {
             QuestionPUI.SetActive(true);
+            MultipleChoice.SetActive(true);
             ImageQuestion.SetActive(false);
             TrueFalse.SetActive(false);
-            MultipleChoice.SetActive(true);
 
             QuestionUI.text = "Question: " + currentQuestion.QuestionText;
 
@@ -152,6 +154,8 @@ public class PaulinaControl : MonoBehaviour
             dropdown.ClearOptions(); // Clear existing options
             dropdown.AddOptions(new List<string> { currentQuestion.Choices[0], currentQuestion.Choices[1], currentQuestion.Choices[2], currentQuestion.Choices[3] });
             */
+
+            numQuests++;
             SetMultipleChoiceAnswers();
 
         }
@@ -180,9 +184,9 @@ public class PaulinaControl : MonoBehaviour
 
             ImageButtonUI.SetActive(true);
             QuestionPUI.SetActive(true);
+            ImageQuestion.SetActive(true);
             MultipleChoice.SetActive(false);
             TrueFalse.SetActive(false);
-            ImageQuestion.SetActive(true);
 
             QuestionUI.text = "Question: " + currentQuestion.QuestionText;
 
@@ -194,14 +198,16 @@ public class PaulinaControl : MonoBehaviour
             dropdown.ClearOptions(); // Clear existing options
             dropdown.AddOptions(new List<string> { currentQuestion.Choices[0], currentQuestion.Choices[1], currentQuestion.Choices[2], currentQuestion.Choices[3] });
             */
+
+            numQuests++;
             SetMultipleChoiceAnswers();
         }
         else if (currentQuestion.QuestionType == "True/False")
         {
             QuestionPUI.SetActive(true);
+            TrueFalse.SetActive(true);
             MultipleChoice.SetActive(false);
             ImageQuestion.SetActive(false);
-            TrueFalse.SetActive(true);
 
             QuestionUI.text = "Question: " + currentQuestion.QuestionText;
 
@@ -209,6 +215,8 @@ public class PaulinaControl : MonoBehaviour
             Text headerText = TrueFalse.transform.Find("Header Text").GetComponent<Text>();
             headerText.text = "Question: " + currentQuestion.QuestionText;
             */
+
+            numQuests++;
 
             if (currentQuestion.Choices.Length >= 2)
             {
@@ -228,100 +236,113 @@ public class PaulinaControl : MonoBehaviour
         DisplayQuestion(currentQuestion);
     }
 
-    public void SubmitAnswer(Text choiceMade)
+    public void SetMultipleChoiceAnswers()
+    {
+        multipleC1.text = currentQuestion.Choices[0];
+        multipleC2.text = currentQuestion.Choices[1];
+        multipleC3.text = currentQuestion.Choices[2];
+        multipleC4.text = currentQuestion.Choices[3];
+
+        imageC1.text = currentQuestion.Choices[0];
+        imageC2.text = currentQuestion.Choices[1];
+        imageC3.text = currentQuestion.Choices[2];
+        imageC4.text = currentQuestion.Choices[3];
+    }
+
+    public void SubmitAnswer(TextMeshProUGUI choiceMade)
     {
         if (currentQuestion.QuestionType == "Multiple Choice")
         {
             //Text answerSubmitted = MultipleChoice.transform.Find("Dropdown").transform.Find("Label").GetComponent<Text>();
-            Text answerSubmitted = choiceMade;
-            MultipleChoice.SetActive(false);
-            if (answerSubmitted.text.ToLower() == currentQuestion.CorrectAnswer.ToLower())
+            //Text answerSubmitted = choiceMade.text;
+            
+            if (choiceMade.text.ToLower() == currentQuestion.CorrectAnswer.ToLower())
             {
+                Debug.Log("Going into CorrectAnswerTimer");
                 // Correct
-                StartCoroutine(CorrectAnswerTimer());
+                StartCoroutine(CorrectAnswerTimer(choiceMade));
             }
             else
             {
+                Debug.Log("Going into WrongAnswerTimer");
                 // Wrong
-                StartCoroutine(WrongAnswerTimer());
+                StartCoroutine(WrongAnswerTimer(choiceMade));
+                
             }
         }
         else if (currentQuestion.QuestionType == "Image Question")
         {
             //Text answerSubmitted = MultipleChoice.transform.Find("Dropdown").transform.Find("Label").GetComponent<Text>();
-            Text answerSubmitted = choiceMade;
-            ImageQuestion.SetActive(false);
-            if (answerSubmitted.text.ToLower() == currentQuestion.CorrectAnswer.ToLower())
+            //Text answerSubmitted = choiceMade;
+            if (choiceMade.text.ToLower() == currentQuestion.CorrectAnswer.ToLower())
             {
                 // Correct
-                StartCoroutine(CorrectAnswerTimer());
+                StartCoroutine(CorrectAnswerTimer(choiceMade));
             }
             else
             {
                 // Wrong
-                StartCoroutine(WrongAnswerTimer());
+                StartCoroutine(WrongAnswerTimer(choiceMade));
             }
         }
         else if (currentQuestion.QuestionType == "True/False")
         {
-            Text answerSubmitted = choiceMade;
-            TrueFalse.SetActive(false);
+            //Text answerSubmitted = choiceMade;
             //Text answerSubmitted = TrueFalse.transform.Find("Dropdown").transform.Find("Label").GetComponent<Text>();
-            if (answerSubmitted.text.ToLower() == currentQuestion.CorrectAnswer.ToLower())
+            if (choiceMade.text.ToLower() == currentQuestion.CorrectAnswer.ToLower())
             {
                 // Correct
-                StartCoroutine(CorrectAnswerTimer());
+                StartCoroutine(CorrectAnswerTimer(choiceMade));
             }
             else
             {
                 // Wrong
-                StartCoroutine(WrongAnswerTimer());
+                StartCoroutine(WrongAnswerTimer(choiceMade));
             }
         }
     }
 
-    public void SetMultipleChoiceAnswers()
-    {
-    multipleC1.text = currentQuestion.Choices[0];
-    multipleC2.text = currentQuestion.Choices[1];
-    multipleC3.text = currentQuestion.Choices[2];
-    multipleC4.text = currentQuestion.Choices[3];
-
-    imageC1.text = currentQuestion.Choices[0];
-    imageC2.text = currentQuestion.Choices[1];
-    imageC3.text = currentQuestion.Choices[2];
-    imageC4.text = currentQuestion.Choices[3];
-    }
-
-
-    public TextMeshProUGUI numCorrectText; // Assign this in Unity Inspector
+    public TextMeshProUGUI numCorrectText, numCorrectFinal, numPercent; // Assign this in Unity Inspector
     private int numCorrect = 0; // Counter for correct answers
 
-    
-    private IEnumerator CorrectAnswerTimer()
+    private IEnumerator CorrectAnswerTimer(TextMeshProUGUI choiceMade)
     {
+        Debug.Log("Starting CorrectAnswerTimer");
         MainMenuHandler.Instance.questionCorrect();
 
-        CorrectUI.SetActive(true);
+        // Go up from choiceMade to button front
+        Transform buttonFront = choiceMade.transform.parent;
+        // Find correctUI and wrongUI under button front
+        Transform correctUI = buttonFront.Find("CorrectSprite");
+
+        correctUI.gameObject.SetActive(true);
+
         numCorrect++; // Increment the correct answers count
         numCorrectText.text = numCorrect.ToString(); // Update the UI
 
         // Wait for the specified duration
         yield return new WaitForSeconds(5f);
 
-        CorrectUI.SetActive(false);
+        correctUI.gameObject.SetActive(false);
+
         UIEmpty.SetActive(false);
     }
 
-    private IEnumerator WrongAnswerTimer()
+    private IEnumerator WrongAnswerTimer(TextMeshProUGUI choiceMade)
     {
+        Debug.Log("Starting WrongAnswerTimer");
         MainMenuHandler.Instance.questionWrong();
-        WrongUI.SetActive(true);
+
+        Transform buttonFront = choiceMade.transform.parent;
+        Transform wrongUI = buttonFront.Find("WrongSprite");
+
+        wrongUI.gameObject.SetActive(true);
 
         // Wait for the specified duration
         yield return new WaitForSeconds(5f);
 
-        WrongUI.SetActive(false);
+        wrongUI.gameObject.SetActive(false);
+
     }
 
     private IEnumerator ErrorTimer()
@@ -369,9 +390,12 @@ public class PaulinaControl : MonoBehaviour
         gameEnded = true;
         Debug.Log("Time's up!");
         timerUI.SetActive(false);
+        NumberCorrectUI.SetActive(false);
         UIEmpty.SetActive(false);
 
         StartCoroutine(TimesUp());
+
+        DisplayPercentAccuracy();
 
         gameOverScreen.SetActive(true);
         // disable gameplay or stop player input here
@@ -387,11 +411,12 @@ public class PaulinaControl : MonoBehaviour
         }
     }
 
-
-    public FadeScreen fadeScreen;
-    public void teleport()
+    public void DisplayPercentAccuracy()
     {
-        fadeScreen = GameObject.Find("Fader Screen").GetComponent<FadeScreen>();
+        float numPercentAcc = ((float)numCorrect / numQuests) * 100;
+        numCorrectFinal.text = "Number Correct: " + numCorrect.ToString(); // Update the UI
+        numPercent.text = "Percent Accuracy: " + numPercentAcc.ToString("F2") + "% ";
+
     }
 
 }
