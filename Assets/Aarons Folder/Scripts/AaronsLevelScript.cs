@@ -4,30 +4,36 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
+using Unity.VisualScripting;
 
 public class AaronsLevelScript : MonoBehaviour
 {
-    public GameObject StartButton, Correct, Wrong;
-
-    public GameObject fishSpawnPoint;
-    public GameObject[] fishSpawns;
-
-
-    public GameObject MultipleChoice, ImageQuestion, TrueFalse;
-
-
+    private List<GameObject> spawnedFish = new List<GameObject>();
     public GameObject Fish1;
 
     public GameObject shark, sharkReal;
 
     private bool sharkQuestion = false;
+    public GameObject fishSpawnPoint;
+    public GameObject[] fishSpawns;
+
+    public GameObject UIEmpty, StartUpUI;
+    public GameObject ErrorUI, QuestionPUI;
+    public GameObject ImageButtonUI;
+    public GameObject MultipleChoice, ImageQuestion, TrueFalse;
 
     private List<Question> questions = new List<Question>();
     private Question currentQuestion;
 
-    private List<GameObject> spawnedFish = new List<GameObject>();
+    public UnityEngine.UI.Image imageDisplay, imageDisplay2;
 
-    public Image imageDisplay;
+    public TextMeshProUGUI QuestionUI, multipleC1, multipleC2, multipleC3, multipleC4;
+    public TextMeshProUGUI imageC1, imageC2, imageC3, imageC4;
+    public TextMeshProUGUI choice1, choice2;
+
+    private bool timerGoingCorrect = false;
+    private bool timerGoingWrong = false;
 
     [System.Serializable]
     public class Question
@@ -41,6 +47,9 @@ public class AaronsLevelScript : MonoBehaviour
 
     void Start()
     {
+
+        //LoadQuestionsFromFile();
+
         LoadQuestions();
         //Question randomQuestion = GetRandomQuestion();
         //DisplayQuestion(randomQuestion);
@@ -77,18 +86,10 @@ public class AaronsLevelScript : MonoBehaviour
         }
     }
 
-    void DisplayQuestion(Question q)
+    public void startGamePressed()
     {
-        if (q != null)
-        {
-            Debug.Log($"Question: {q.QuestionText}");
-            Debug.Log($"Question Type: {q.QuestionType}"); // Display question type
-            for (int i = 0; i < q.Choices.Length; i++)
-            {
-                Debug.Log($"{i + 1}. {q.Choices[i]}");
-            }
-            Debug.Log($"Correct Answer: {q.CorrectAnswer}");
-        }
+        StartUpUI.SetActive(false);
+        StartGame();
     }
 
     Question GetRandomQuestion()
@@ -101,8 +102,210 @@ public class AaronsLevelScript : MonoBehaviour
         return questions[Random.Range(0, questions.Count)];
     }
 
-    private IEnumerator CorrectAnswerTimer()
+    void DisplayQuestion(Question q)
     {
+        if (q != null)
+        {
+            Debug.Log($"Question: {q.QuestionText}");
+            Debug.Log($"Question Type: {q.QuestionType}"); // Display question type
+            for (int i = 0; i < q.Choices.Length; i++)
+            {
+                Debug.Log($"{i + 1}. {q.Choices[i]}");
+            }
+            Debug.Log($"Choices count: {q.Choices.Length}");
+            Debug.Log($"Correct Answer: {q.CorrectAnswer}");
+        }
+    }
+
+    public void SetMultipleChoiceAnswers()
+    {
+        multipleC1.text = currentQuestion.Choices[0];
+        multipleC2.text = currentQuestion.Choices[1];
+        multipleC3.text = currentQuestion.Choices[2];
+        multipleC4.text = currentQuestion.Choices[3];
+
+        imageC1.text = currentQuestion.Choices[0];
+        imageC2.text = currentQuestion.Choices[1];
+        imageC3.text = currentQuestion.Choices[2];
+        imageC4.text = currentQuestion.Choices[3];
+    }
+
+    public void StartGame()
+    {
+        QuestionPUI.SetActive(false);
+        MultipleChoice.SetActive(false);
+        ImageQuestion.SetActive(false);
+        TrueFalse.SetActive(false);
+        UIEmpty.SetActive(true);
+
+        currentQuestion = GetRandomQuestion();
+
+        sharkReal.SetActive(false);
+
+        sharkQuestion = false;
+        shark.SetActive(false);
+        int randomNumber1 = Random.Range(1, 4); // Upper bound is exclusive, so use 6
+        if (randomNumber1 == 3)
+        {
+            sharkQuestion = true;
+            shark.SetActive(true);
+        }
+
+        if (currentQuestion.QuestionType == "Multiple Choice")
+        {
+            QuestionPUI.SetActive(true);
+            MultipleChoice.SetActive(true);
+            ImageQuestion.SetActive(false);
+            TrueFalse.SetActive(false);
+
+            QuestionUI.text = "Question: " + currentQuestion.QuestionText;
+
+            /*
+            Text headerText = MultipleChoice.transform.Find("Header Text").GetComponent<Text>();
+            headerText.text = "Question: " + currentQuestion.QuestionText;
+            
+            Dropdown dropdown = MultipleChoice.transform.Find("Dropdown").GetComponent<Dropdown>();
+            dropdown.ClearOptions(); // Clear existing options
+            dropdown.AddOptions(new List<string> { currentQuestion.Choices[0], currentQuestion.Choices[1], currentQuestion.Choices[2], currentQuestion.Choices[3] });
+            */
+
+            SetMultipleChoiceAnswers();
+
+        }
+        else if (currentQuestion.QuestionType == "Image Question")
+        {
+            string imageName = "Q" + currentQuestion.QNumber.Trim(); // Assuming QNumber is an integer or string storing the correct question number
+                                                                     //Sprite questionImage = Resources.Load<Sprite>(imageName); // Load the image from Resou
+
+            //string imageName = currentQuestion.ImageName.Trim();
+            Debug.Log($"[Image Question] Trying to load image: Resources/Images/{imageName}");
+
+            Sprite questionImage = Resources.Load<Sprite>(imageName);
+            if (questionImage != null)
+            {
+                imageDisplay.sprite = questionImage;
+                imageDisplay.gameObject.SetActive(true);
+                Debug.Log("[Image Question] Image loaded and assigned successfully.");
+
+                imageDisplay2.sprite = questionImage;
+            }
+            else
+            {
+                Debug.LogWarning($"[Image Question] Image NOT found: Resources/Images/{imageName}. Make sure the image is in Assets/Resources/Images and has no extension in the name.");
+                imageDisplay.gameObject.SetActive(false);
+            }
+
+            ImageButtonUI.SetActive(true);
+            QuestionPUI.SetActive(true);
+            ImageQuestion.SetActive(true);
+            MultipleChoice.SetActive(false);
+            TrueFalse.SetActive(false);
+
+            QuestionUI.text = "Question: " + currentQuestion.QuestionText;
+
+            /*
+            Text headerText = ImageQuestion.transform.Find("Header Text").GetComponent<Text>();
+            headerText.text = "Question: " + currentQuestion.QuestionText;
+            
+            Dropdown dropdown = ImageQuestion.transform.Find("Dropdown").GetComponent<Dropdown>();
+            dropdown.ClearOptions(); // Clear existing options
+            dropdown.AddOptions(new List<string> { currentQuestion.Choices[0], currentQuestion.Choices[1], currentQuestion.Choices[2], currentQuestion.Choices[3] });
+            */
+
+            SetMultipleChoiceAnswers();
+        }
+        else if (currentQuestion.QuestionType == "True/False")
+        {
+            QuestionPUI.SetActive(true);
+            TrueFalse.SetActive(true);
+            MultipleChoice.SetActive(false);
+            ImageQuestion.SetActive(false);
+
+            QuestionUI.text = "Question: " + currentQuestion.QuestionText;
+
+            /*
+            Text headerText = TrueFalse.transform.Find("Header Text").GetComponent<Text>();
+            headerText.text = "Question: " + currentQuestion.QuestionText;
+            */
+
+
+            if (currentQuestion.Choices.Length >= 2)
+            {
+                choice1.text = currentQuestion.Choices[0];
+                choice2.text = currentQuestion.Choices[1];
+            }
+            else
+            {
+                Debug.LogError("True/False question is missing choices!");
+            }
+        }
+        else
+        {
+            Debug.Log("CRASH!!!");
+        }
+
+        DisplayQuestion(currentQuestion);
+    }
+
+    public void SubmitAnswer(TextMeshProUGUI choiceMade)
+    {
+        if (currentQuestion.QuestionType == "Multiple Choice")
+        {
+            //Text answerSubmitted = MultipleChoice.transform.Find("Dropdown").transform.Find("Label").GetComponent<Text>();
+            //Text answerSubmitted = choiceMade.text;
+
+            if (choiceMade.text.ToLower() == currentQuestion.CorrectAnswer.ToLower())
+            {
+                Debug.Log("Going into CorrectAnswerTimer");
+                // Correct
+                StartCoroutine(CorrectAnswerTimer(choiceMade));
+            }
+            else
+            {
+                Debug.Log("Going into WrongAnswerTimer");
+                // Wrong
+                StartCoroutine(WrongAnswerTimer(choiceMade));
+
+            }
+        }
+        else if (currentQuestion.QuestionType == "Image Question")
+        {
+            //Text answerSubmitted = MultipleChoice.transform.Find("Dropdown").transform.Find("Label").GetComponent<Text>();
+            //Text answerSubmitted = choiceMade;
+            if (choiceMade.text.ToLower() == currentQuestion.CorrectAnswer.ToLower())
+            {
+                // Correct
+                StartCoroutine(CorrectAnswerTimer(choiceMade));
+            }
+            else
+            {
+                // Wrong
+                StartCoroutine(WrongAnswerTimer(choiceMade));
+            }
+        }
+        else if (currentQuestion.QuestionType == "True/False")
+        {
+            //Text answerSubmitted = choiceMade;
+            //Text answerSubmitted = TrueFalse.transform.Find("Dropdown").transform.Find("Label").GetComponent<Text>();
+            if (choiceMade.text.ToLower() == currentQuestion.CorrectAnswer.ToLower())
+            {
+                // Correct
+                StartCoroutine(CorrectAnswerTimer(choiceMade));
+            }
+            else
+            {
+                // Wrong
+                StartCoroutine(WrongAnswerTimer(choiceMade));
+            }
+        }
+    }
+
+    private IEnumerator CorrectAnswerTimer(TextMeshProUGUI choiceMade)
+    {
+        if (timerGoingCorrect)
+            yield break;
+        timerGoingCorrect = true;
+        Debug.Log("Starting CorrectAnswerTimer");
         MainMenuHandler.Instance.questionCorrect();
 
         Fish1.SetActive(true);
@@ -113,34 +316,36 @@ public class AaronsLevelScript : MonoBehaviour
 
         spawnedFish.Add(newFish);
 
-        Correct.SetActive(true);
+        // Go up from choiceMade to button front
+        Transform buttonFront = choiceMade.transform.parent;
+        // Find correctUI and wrongUI under button front
+        Transform correctUI = buttonFront.Find("CorrectSprite");
+
+        correctUI.gameObject.SetActive(true);
 
         // Wait for the specified duration
         yield return new WaitForSeconds(5f);
 
+        correctUI.gameObject.SetActive(false);
+
         Fish1.SetActive(false);
-
-        Correct.SetActive(false);
-
-        RestartGame();
+        UIEmpty.SetActive(false);
+        StartGame();
+        timerGoingCorrect = false;
     }
 
-    private void DestroyAllFish()
+    private IEnumerator WrongAnswerTimer(TextMeshProUGUI choiceMade)
     {
-        foreach (GameObject fish in spawnedFish)
-        {
-            if (fish != null) // Ensure the fish hasn't already been destroyed
-            {
-                Destroy(fish);
-            }
-        }
-        spawnedFish.Clear(); // Clear the list after destroying all fish
-    }
-
-    private IEnumerator WrongAnswerTimer()
-    {
+        if (timerGoingWrong)
+            yield break;
+        timerGoingWrong = true;
+        Debug.Log("Starting WrongAnswerTimer");
         MainMenuHandler.Instance.questionWrong();
-        Wrong.SetActive(true);
+
+        Transform buttonFront = choiceMade.transform.parent;
+        Transform wrongUI = buttonFront.Find("WrongSprite");
+
+        wrongUI.gameObject.SetActive(true);
 
         if (sharkQuestion)
         {
@@ -153,123 +358,19 @@ public class AaronsLevelScript : MonoBehaviour
         // Wait for the specified duration
         yield return new WaitForSeconds(5f);
 
-        Wrong.SetActive(false);
-        sharkReal.SetActive(false);
-        RestartGame();
+        wrongUI.gameObject.SetActive(false);
+        timerGoingWrong = false;
     }
 
-    public void RestartGame()
+    private void DestroyAllFish()
     {
-        startGamePressed();
-    }
-
-    public void SubmitAnswer()
-    {
-        if (currentQuestion.QuestionType == "Multiple Choice")
+        foreach (GameObject fish in spawnedFish)
         {
-            Text answerSubmitted = MultipleChoice.transform.Find("Dropdown").transform.Find("Label").GetComponent<Text>();
-            MultipleChoice.SetActive(false);
-            if (answerSubmitted.text == currentQuestion.CorrectAnswer)
+            if (fish != null) // Ensure the fish hasn't already been destroyed
             {
-                // Correct
-                StartCoroutine(CorrectAnswerTimer());
-            }
-            else
-            {
-                // Wrong
-                StartCoroutine(WrongAnswerTimer());
+                Destroy(fish);
             }
         }
-        else if (currentQuestion.QuestionType == "Image Question")
-        {
-            Text answerSubmitted = MultipleChoice.transform.Find("Dropdown").transform.Find("Label").GetComponent<Text>();
-            ImageQuestion.SetActive(false);
-            if (answerSubmitted.text == currentQuestion.CorrectAnswer)
-            {
-                // Correct
-                StartCoroutine(CorrectAnswerTimer());
-            }
-            else
-            {
-                // Wrong
-                StartCoroutine(WrongAnswerTimer());
-            }
-        }
-        else if (currentQuestion.QuestionType == "True/False")
-        {
-            TrueFalse.SetActive(false);
-            Text answerSubmitted = TrueFalse.transform.Find("Dropdown").transform.Find("Label").GetComponent<Text>();
-            if (answerSubmitted.text.ToLower() == currentQuestion.CorrectAnswer.ToLower())
-            {
-                // Correct
-                StartCoroutine(CorrectAnswerTimer());
-            }
-            else
-            {
-                // Wrong
-                StartCoroutine(WrongAnswerTimer());
-            }
-        }
-    }
-
-    public void startGamePressed()
-    {
-        sharkQuestion = false;
-        shark.SetActive(false);
-        StartButton.SetActive(false);
-
-        currentQuestion = GetRandomQuestion();
-
-        int randomNumber1 = Random.Range(1, 4); // Upper bound is exclusive, so use 6
-        Debug.Log(randomNumber1);
-        if (randomNumber1 == 3)
-        {
-            sharkQuestion = true;
-            shark.SetActive(true);
-        }
-
-        if (currentQuestion.QuestionType == "Multiple Choice")
-        {
-            MultipleChoice.SetActive(true);
-            Text headerText = MultipleChoice.transform.Find("Header Text").GetComponent<Text>();
-            headerText.text = "Question: " + currentQuestion.QuestionText;
-            Dropdown dropdown = MultipleChoice.transform.Find("Dropdown").GetComponent<Dropdown>();
-            dropdown.ClearOptions(); // Clear existing options
-            dropdown.AddOptions(new List<string> { currentQuestion.Choices[0], currentQuestion.Choices[1], currentQuestion.Choices[2], currentQuestion.Choices[3] });
-        }
-        else if (currentQuestion.QuestionType == "Image Question")
-        {
-            string imageName = "Q" + currentQuestion.QNumber; // Assuming QNumber is an integer or string storing the correct question number
-            Sprite questionImage = Resources.Load<Sprite>(imageName); // Load the image from Resources
-
-            if (questionImage != null)
-            {
-                imageDisplay.sprite = questionImage; // Set the image on the UI Image component
-                imageDisplay.gameObject.SetActive(true); // Ensure the image is visible
-            }
-            else
-            {
-                Debug.LogWarning($"Image {imageName} not found in Resources.");
-                imageDisplay.gameObject.SetActive(false); // Hide the image object if not found
-            }
-            ImageQuestion.SetActive(true);
-            Text headerText = ImageQuestion.transform.Find("Header Text").GetComponent<Text>();
-            headerText.text = "Question: " + currentQuestion.QuestionText;
-            Dropdown dropdown = ImageQuestion.transform.Find("Dropdown").GetComponent<Dropdown>();
-            dropdown.ClearOptions(); // Clear existing options
-            dropdown.AddOptions(new List<string> { currentQuestion.Choices[0], currentQuestion.Choices[1], currentQuestion.Choices[2], currentQuestion.Choices[3] });
-        }
-        else if (currentQuestion.QuestionType == "True/False")
-        {
-            TrueFalse.SetActive(true);
-            Text headerText = TrueFalse.transform.Find("Header Text").GetComponent<Text>();
-            headerText.text = "Question: " + currentQuestion.QuestionText;
-        }
-        else
-        {
-            Debug.Log("CRASH!!!");
-        }
-
-        DisplayQuestion(currentQuestion);
+        spawnedFish.Clear(); // Clear the list after destroying all fish
     }
 }
