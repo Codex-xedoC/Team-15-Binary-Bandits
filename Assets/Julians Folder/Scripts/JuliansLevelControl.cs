@@ -8,26 +8,7 @@ using Unity.VisualScripting;
 
 public class JuliansLevelControl : MonoBehaviour
 {
-    /*
-    
-    public TextMeshProUGUI QuestionBoxText;
-    public GameObject StartButton;
 
-    public GameObject Button1, Button2, Button3;
-
-    public GameObject CorrectUI, WrongUI;
-
-
-
-    public GameObject EndButton; // Button to restart or return to menu
-   
-
-    private string text;
-
-    private List<string> questionsAndAnswers = new List<string>();
-
-    
-    */
     //private int questionLimit = 16; // Max number of questions
     //private int questionCount = 0;  // Tracks how many questions have been asked
     public GameObject UIEmpty;
@@ -36,27 +17,19 @@ public class JuliansLevelControl : MonoBehaviour
     public GameObject player;
     private int index = 0;
     public GameObject StartButton, Correct, Wrong;
-    public GameObject HowToPlay, EndPanel;
-
-    //public GameObject fishSpawnPoint;
-    //public GameObject[] fishSpawns;
-
+    public GameObject HowToPlay, EndPanel, MenuPanel;
 
     public GameObject MultipleChoice, ImageQuestion, TrueFalse;
-
-
-    //public GameObject Fish1;
-
-    //public GameObject shark, sharkReal;
-
-    //private bool sharkQuestion = false;
 
     private List<Question> questions = new List<Question>();
     private Question currentQuestion;
 
-    //private List<GameObject> spawnedFish = new List<GameObject>();
-
     public Image imageDisplay;
+
+    public Transform xrCamera; //For UI management
+    public GameObject sea, killSea;
+    public GameObject failPanel;
+    public float seaRiseAmount = 0.5f; // How much it rises per wrong answer
 
     [System.Serializable]
 
@@ -230,26 +203,26 @@ public class JuliansLevelControl : MonoBehaviour
     {
         MainMenuHandler.Instance.questionCorrect();
 
-        //Fish1.SetActive(true);
-
+    
 
         int randomNumber = Random.Range(0, 3); // Upper bound is exclusive, so use 6
-        //GameObject newFish = Instantiate(fishSpawns[randomNumber], fishSpawnPoint.transform.position, fishSpawnPoint.transform.rotation);
 
-        //spawnedFish.Add(newFish);
 
         Correct.SetActive(true);
 
         // Wait for the specified duration
         yield return new WaitForSeconds(5f);
-
+        /*
         if (index + 1 < grabables.Length)
         {
-            player.transform.position = grabables[1 + index].transform.position + new Vector3(0, -1, -1.5f);
-            UIEmpty.transform.position = grabables[1 + index].transform.position + new Vector3(0.3f, 0.5f, 0);
+            //player.transform.position = grabables[1 + index].transform.position + new Vector3(0, -1, -1.5f);
+            //UIEmpty.transform.position = grabables[1 + index].transform.position + new Vector3(0.3f, 0.5f, 0);
+
+
+
             index++;
             Correct.SetActive(false);
-            RestartGame();
+            //RestartGame();
         }
         else
         {
@@ -257,10 +230,11 @@ public class JuliansLevelControl : MonoBehaviour
             EndPanel.SetActive(true);
             Correct.SetActive(false);
         }
+        */
 
-        //Fish1.SetActive(false);
+       
         
-        //Correct.SetActive(false);
+        Correct.SetActive(false);
 
         //RestartGame();
     }
@@ -328,6 +302,22 @@ public class JuliansLevelControl : MonoBehaviour
         MainMenuHandler.Instance.questionWrong();
         Wrong.SetActive(true);
 
+        // Raise the ocean
+        sea.transform.position += new Vector3(0, seaRiseAmount, 0);
+
+        // Check if ocean reached or passed player's head
+        //float seaY = ((sea.transform.position.y) - 3.45f);
+        float seaY = (killSea.transform.position.y + 2);
+        float playerY = (xrCamera.position.y);
+
+        if (seaY > playerY)
+        {
+            Debug.Log("Game Over: The Sea has claimed the Player!");
+            Wrong.SetActive(false);
+            failPanel.SetActive(true);
+            yield break; // End the coroutine early
+        }
+
         // Wait for the specified duration
         yield return new WaitForSeconds(3f);
 
@@ -338,32 +328,52 @@ public class JuliansLevelControl : MonoBehaviour
 
     private void RestartGame()
     {
-        /*
-        questionCount++; // Increment question count
+        //afterTeleport();
+        currentQuestion = GetRandomQuestion();
 
-        if (questionCount >= questionLimit)
+        if (currentQuestion.QuestionType == "Multiple Choice")
         {
-            // Hide answer buttons
-            Button1.SetActive(false);
-            Button2.SetActive(false);
-            Button3.SetActive(false);
+            MultipleChoice.SetActive(true);
+            Text headerText = MultipleChoice.transform.Find("Header Text").GetComponent<Text>();
+            headerText.text = "Question: " + currentQuestion.QuestionText;
+            Dropdown dropdown = MultipleChoice.transform.Find("Dropdown").GetComponent<Dropdown>();
+            dropdown.ClearOptions(); // Clear existing options
+            dropdown.AddOptions(new List<string> { currentQuestion.Choices[0], currentQuestion.Choices[1], currentQuestion.Choices[2], currentQuestion.Choices[3] });
+        }
+        else if (currentQuestion.QuestionType == "Image Question")
+        {
+            string imageName = "Q" + currentQuestion.QNumber; // Assuming QNumber is an integer or string storing the correct question number
+            Sprite questionImage = Resources.Load<Sprite>(imageName); // Load the image from Resources
 
-            
-            
-            // Show the end button -- should be true but the menu button is already there => redundant
-            EndButton.SetActive(false);
-            return; // Stop asking new questions
+            if (questionImage != null)
+            {
+                imageDisplay.sprite = questionImage; // Set the image on the UI Image component
+                imageDisplay.gameObject.SetActive(true); // Ensure the image is visible
+            }
+            else
+            {
+                Debug.LogWarning($"Image {imageName} not found in Resources.");
+                imageDisplay.gameObject.SetActive(false); // Hide the image object if not found
+            }
+            ImageQuestion.SetActive(true);
+            Text headerText = ImageQuestion.transform.Find("Header Text").GetComponent<Text>();
+            headerText.text = "Question: " + currentQuestion.QuestionText;
+            Dropdown dropdown = ImageQuestion.transform.Find("Dropdown").GetComponent<Dropdown>();
+            dropdown.ClearOptions(); // Clear existing options
+            dropdown.AddOptions(new List<string> { currentQuestion.Choices[0], currentQuestion.Choices[1], currentQuestion.Choices[2], currentQuestion.Choices[3] });
+        }
+        else if (currentQuestion.QuestionType == "True/False")
+        {
+            TrueFalse.SetActive(true);
+            Text headerText = TrueFalse.transform.Find("Header Text").GetComponent<Text>();
+            headerText.text = "Question: " + currentQuestion.QuestionText;
+        }
+        else
+        {
+            Debug.Log("CRASH!!!");
         }
 
-        Button1.SetActive(true);
-        Button2.SetActive(true);
-        Button3.SetActive(true);
-
-        (string question, string answer) = GetRandomQuestion();
-        text = answer;
-        QuestionBoxText.text = question;
-        */
-        startGamePressed();
+        DisplayQuestion(currentQuestion);
 
     }
 
@@ -421,9 +431,103 @@ public class JuliansLevelControl : MonoBehaviour
         StartButton.SetActive(false);
         HowToPlay.SetActive(false);
         EndPanel.SetActive(false);
+        //UIEmpty.SetActive(false); //Ensure question does
+    }
 
+    public void lastTeleport()
+    {
+        StartCoroutine(DelayedUIPosition());
+        MenuPanel.SetActive(true);
+        EndPanel.SetActive(true);
+    }
+
+    IEnumerator DelayedUIPosition()
+    {
+        // Wait a moment for teleport to settle
+        yield return new WaitForSeconds(0.1f);
+
+        // Get flat forward direction from camera
+        Vector3 forward = xrCamera.forward;
+        forward.y = 0;
+        forward.Normalize();
+
+        // Position UI in front of camera
+        Vector3 uiPosition = xrCamera.position + forward * 0.1f;
+        uiPosition.y = xrCamera.position.y + 0.3f;
+
+        UIEmpty.transform.position = uiPosition;
+
+        // Make it face the camera horizontally
+        UIEmpty.transform.LookAt(new Vector3(xrCamera.position.x, UIEmpty.transform.position.y, xrCamera.position.z));
+        UIEmpty.transform.Rotate(0, 180, 0);
+    }
+    public void afterTeleport() 
+    {
+        StartCoroutine(DelayedUIPosition());
+        
         currentQuestion = GetRandomQuestion();
+        MenuPanel.SetActive(true);
 
+        /*
+        Vector3 forward = xrCamera.forward;
+        Vector3 position = xrCamera.position + forward.normalized * 2f;
+
+        UIEmpty.transform.position = position;
+
+        // This makes the UI face the player (xrCamera)
+        Vector3 lookDirection = xrCamera.position - UIEmpty.transform.position;
+        lookDirection.y = 0; // Keeps it upright (no tilt)
+        UIEmpty.transform.rotation = Quaternion.LookRotation(lookDirection);
+        */
+
+        /*
+        // Get the flat forward direction of the XR camera (ignore vertical tilt)
+        Vector3 forward = xrCamera.forward;
+        forward.y = 0;
+        forward.Normalize();
+
+        // Position the UI 2 meters in front of the player's headset
+        Vector3 uiPosition = xrCamera.position + forward * 2f;
+
+        // Optional small vertical offset
+        uiPosition.y = xrCamera.position.y + 0.1f;
+
+        // Move the UI there
+        UIEmpty.transform.position = uiPosition;
+
+        // Make the UI face the camera
+        UIEmpty.transform.LookAt(new Vector3(xrCamera.position.x, UIEmpty.transform.position.y, xrCamera.position.z));
+
+        // Flip it 180 degrees because it's facing *away* by default
+        UIEmpty.transform.Rotate(0, 180, 0);
+        */
+        /*
+        Vector3 forward = xrCamera.forward;
+        forward.y = 0;
+        forward.Normalize();
+
+        // Position UI 2 meters in front of camera
+        Vector3 uiPosition = xrCamera.position + forward * 2f;
+
+        // Raise it high to avoid terrain first
+        uiPosition.y += 5f;
+
+        // Cast a ray downward to find terrain height
+        if (Physics.Raycast(uiPosition, Vector3.down, out RaycastHit hit, 10f))
+        {
+            // Place UI just above terrain
+            uiPosition.y = hit.point.y + 1.5f;
+        }
+        else
+        {
+            // No terrain hit? Just keep it at camera height
+            uiPosition.y = xrCamera.position.y;
+        }
+
+        UIEmpty.transform.position = uiPosition;
+        UIEmpty.transform.LookAt(xrCamera);
+        UIEmpty.transform.Rotate(0, 180, 0); // flip to face player
+        */
         int randomNumber1 = Random.Range(1, 4); // Upper bound is exclusive, so use 6
         Debug.Log(randomNumber1);
         /*

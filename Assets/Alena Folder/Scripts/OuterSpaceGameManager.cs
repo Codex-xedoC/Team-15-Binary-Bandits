@@ -32,7 +32,6 @@ public class OuterSpaceGameManager : MonoBehaviour
     {
         if (!string.IsNullOrEmpty(sceneName))
         {
-            SubmitFinalScoreBeforeExit();
 
             if (MainMenuHandler.Instance != null)
             {
@@ -47,19 +46,6 @@ public class OuterSpaceGameManager : MonoBehaviour
         else
         {
             Debug.LogError("Scene name is empty or null.");
-        }
-    }
-
-    private void SubmitFinalScoreBeforeExit()
-    {
-        if (XRShipHealth.Instance != null)
-        {
-            XRShipHealth.Instance.SubmitScoreExternally();
-            Debug.Log("[OuterSpaceGameManager] Score submitted before exiting scene.");
-        }
-        else
-        {
-            Debug.LogWarning("[OuterSpaceGameManager] XRShipHealth not found. Score not submitted.");
         }
     }
 

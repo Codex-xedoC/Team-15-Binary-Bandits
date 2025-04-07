@@ -1,0 +1,2 @@
+C:\Users\aaron\OneDrive\Documentos\GitHub\Team-15-Binary-Bandits\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\src\main\cpp\CMakeLists.txt
+C:\Users\aaron\OneDrive\Documentos\GitHub\Team-15-Binary-Bandits\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\src\main\cpp\GameActivity\CMakeLists.txt
