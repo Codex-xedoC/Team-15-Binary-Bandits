@@ -12,6 +12,7 @@ TagManager:
   - fish
   - Player Bullet
   - Enemy Bullet
+  - Enemy
   layers:
   - Default
   - TransparentFX
