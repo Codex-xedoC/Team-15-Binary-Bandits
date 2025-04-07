@@ -12,7 +12,7 @@ public class PointsCalc : MonoBehaviour
     // Update the points text display
     private void UpdatePointsText()
     {
-        pointsText.text = totalPoints.ToString();
+        //pointsText.text = totalPoints.ToString();
     }
 
     private void OnTriggerEnter(Collider other)
