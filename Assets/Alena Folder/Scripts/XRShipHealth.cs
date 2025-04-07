@@ -15,9 +15,15 @@ public class XRShipHealth : MonoBehaviour
     public int correctAnswers = 0;
     public int wrongAnswers = 0;
 
+    // Necesary variables for fuel system.
+    [Header("Fuel System")]
+    public int maxFuel = 100;
+    public float currentFuel;
+
     [Header("UI Elements")]
     public TextMeshProUGUI healthText;
     public TextMeshProUGUI scoreText;
+    public TextMeshProUGUI fuelText;
     public GameObject GameOverUI;
     public GameObject DamageTextUI;
     public TextMeshProUGUI damageTextTMP;
@@ -41,6 +47,8 @@ public class XRShipHealth : MonoBehaviour
 
         if (DamageTextUI != null)
             DamageTextUI.SetActive(false);
+
+        Refuel(); // Reset current fuel to full
     }
 
     public void TakeDamage(int damage)
@@ -119,5 +127,42 @@ public class XRShipHealth : MonoBehaviour
         int total = correctAnswers + wrongAnswers;
         if (total == 0) return 0;
         return ((float)correctAnswers / total) * 100f;
+    }
+
+    // When something colides witht he ship
+    private void OnCollisionEnter(Collision collision)
+    {
+        // If its an enemy bullet destroy bullet and deal damage
+        if (collision.gameObject.tag == "Enemy Bullet")
+        {
+            Destroy(collision.gameObject);
+            TakeDamage(5);
+        }
+    }
+
+    // Reduce fuel level
+    public void UpdateFuel(float fuelUsed)
+    {
+        currentFuel -= fuelUsed;
+        UpdateFuelUI();
+
+        if (currentFuel <= 0)
+        {
+            GameOver();
+        }
+        
+    }
+
+    // Updates fuel UI
+    private void UpdateFuelUI()
+    {
+        if (fuelText != null)
+            fuelText.text = "Fuel: " + Mathf.Floor(currentFuel); // Update text for UI
+    }
+
+    // Reset current fule too full
+    public void Refuel()
+    {
+        currentFuel = maxFuel;
     }
 }

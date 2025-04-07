@@ -67,6 +67,10 @@ public class XRShipMovement : MonoBehaviour
         {
             transform.Translate(Vector3.down * verticalSpeed * Time.deltaTime, Space.World);
         }
+
+        GetComponent<XRShipHealth>().UpdateFuel(moveDirection.magnitude * moveSpeed * Time.deltaTime); // updateds how much fuel was used
+
+        Debug.Log("Fuel Used: " + moveDirection.magnitude * moveSpeed * Time.deltaTime); // DEBUG: tells how much fuel was used
     }
 
     // Why is a setter needed for a public variable?

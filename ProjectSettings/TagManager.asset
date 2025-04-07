@@ -10,11 +10,14 @@ TagManager:
   - teleportArea
   - StartButton
   - fish
+  - Player Bullet
+  - Enemy Bullet
+  - Enemy
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Player
   - Water
   - UI
   - 

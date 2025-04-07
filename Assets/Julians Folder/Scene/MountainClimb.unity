@@ -28546,7 +28546,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3033035180685388460, guid: f718a10845157ee4da4f4604313f78e8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4.1
+      value: 6.5
       objectReference: {fileID: 0}
     - target: {fileID: 3033035180685388460, guid: f718a10845157ee4da4f4604313f78e8, type: 3}
       propertyPath: m_LocalPosition.z
@@ -28614,6 +28614,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2d285f4c1421af49a0a770871eb9d9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1255461812 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9098360961625796455, guid: f718a10845157ee4da4f4604313f78e8, type: 3}
+  m_PrefabInstance: {fileID: 1255461809}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1259614055
 GameObject:
   m_ObjectHideFlags: 0
@@ -37511,6 +37516,7 @@ MonoBehaviour:
   imageDisplay: {fileID: 812820683}
   xrCamera: {fileID: 1170193962}
   sea: {fileID: 1255461810}
+  killSea: {fileID: 1255461812}
   failPanel: {fileID: 1342966540}
   seaRiseAmount: 1
 --- !u!114 &1482431623
@@ -51530,11 +51536,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1568835888838292402, guid: fad94b617f0540568dbf4c9c4011248c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.96
+      value: 0.012
       objectReference: {fileID: 0}
     - target: {fileID: 1568835888838292402, guid: fad94b617f0540568dbf4c9c4011248c, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.03
+      value: -0.138
       objectReference: {fileID: 0}
     - target: {fileID: 1568835888838292402, guid: fad94b617f0540568dbf4c9c4011248c, type: 3}
       propertyPath: m_LocalRotation.w
