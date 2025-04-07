@@ -27,9 +27,9 @@ public class JuliansLevelControl : MonoBehaviour
     public Image imageDisplay;
 
     public Transform xrCamera; //For UI management
-    public GameObject sea;
+    public GameObject sea, killSea;
     public GameObject failPanel;
-    public float seaRiseAmount = 0.1f; // How much it rises per wrong answer
+    public float seaRiseAmount = 0.5f; // How much it rises per wrong answer
 
     [System.Serializable]
 
@@ -306,8 +306,9 @@ public class JuliansLevelControl : MonoBehaviour
         sea.transform.position += new Vector3(0, seaRiseAmount, 0);
 
         // Check if ocean reached or passed player's head
-        float seaY = ((sea.transform.position.y) - 6);
-        float playerY = xrCamera.position.y;
+        //float seaY = ((sea.transform.position.y) - 3.45f);
+        float seaY = (killSea.transform.position.y + 2);
+        float playerY = (xrCamera.position.y);
 
         if (seaY > playerY)
         {
