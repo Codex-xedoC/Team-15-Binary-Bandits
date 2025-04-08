@@ -49,6 +49,7 @@ public class XRShipHealth : MonoBehaviour
             DamageTextUI.SetActive(false);
 
         Refuel(); // Reset current fuel to full
+        UpdateFuelUI(); // Update fuel text on start
     }
 
     public void TakeDamage(int damage)
@@ -93,13 +94,18 @@ public class XRShipHealth : MonoBehaviour
         if (GameOverUI != null)
             GameOverUI.SetActive(true);
 
+        ScoreManager sm = FindObjectOfType<ScoreManager>();
+        if (sm != null)
+        {
+            sm.SubmitScore();
+        }
+
         StartCoroutine(ReturnToMainMenu());
     }
 
     IEnumerator ReturnToMainMenu()
     {
         yield return new WaitForSeconds(3f);
-
         UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu");
     }
 
@@ -150,7 +156,6 @@ public class XRShipHealth : MonoBehaviour
         {
             GameOver();
         }
-        
     }
 
     // Updates fuel UI
@@ -164,5 +169,12 @@ public class XRShipHealth : MonoBehaviour
     public void Refuel()
     {
         currentFuel = maxFuel;
+    }
+
+    // Public method to reset fuel and update UI
+    public void ResetFuel()
+    {
+        Refuel();
+        UpdateFuelUI();
     }
 }

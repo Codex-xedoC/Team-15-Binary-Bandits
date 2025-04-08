@@ -231,13 +231,20 @@ public class QuestionHelperCodex : MonoBehaviour
 
         if (selected == currentQuestion.CorrectAnswer)
         {
-            XRGameScore.Instance.AddScore(10);
+            XRShipHealth.Instance.AddScore(10);
             ShowPanelImmediate(CorrectPanel);
-            player.GetComponent<XRShipHealth>().Refuel(); // When correct refuel the ship
+            XRShipHealth.Instance.Refuel();
             MainMenuHandler.Instance.questionCorrect();
+
+            ScoreManager sm = FindObjectOfType<ScoreManager>();
+            if (sm != null)
+            {
+                sm.SubmitScore();
+            }
         }
         else
         {
+            XRShipHealth.Instance.AddWrong();
             ShowPanelImmediate(WrongPanel);
             MainMenuHandler.Instance.questionWrong();
         }

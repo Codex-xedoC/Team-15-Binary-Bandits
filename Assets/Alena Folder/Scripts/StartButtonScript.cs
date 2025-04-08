@@ -89,6 +89,10 @@ public class StartButtonScript : XRBaseInteractable
         if (questionPanel != null)
             questionPanel.SetActive(false);
 
+        // Reset fuel when starting actual game
+        if (XRShipHealth.Instance != null)
+            XRShipHealth.Instance.ResetFuel();
+
         fadeScreen.FadeIn();
         yield return new WaitForSeconds(fadeScreen.fadeDuration);
 
