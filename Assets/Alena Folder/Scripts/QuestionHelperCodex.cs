@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -12,15 +13,15 @@ public class QuestionHelperCodex : MonoBehaviour
     public GameObject CorrectPanel;
     public GameObject WrongPanel;
 
-    [Header("Dropdowns")]
-    public Dropdown MultipleChoiceDropdown;
-    public Dropdown TrueFalseDropdown;
-    public Dropdown ImageQuestionDropdown;
+    [Header("Answer Buttons")]
+    public List<TextMeshProUGUI> MultipleChoiceAnswers;
+    public List<TextMeshProUGUI> ImageQuestionAnswers;
+    public List<TextMeshProUGUI> TrueFalseAnswers;
 
     [Header("Question Texts")]
-    public Text MultipleChoiceQuestionText;
-    public Text TrueFalseQuestionText;
-    public Text ImageQuestionText;
+    public TextMeshProUGUI MultipleChoiceQuestionText;
+    public TextMeshProUGUI TrueFalseQuestionText;
+    public TextMeshProUGUI ImageQuestionText;
 
     [Header("Image Display")]
     public Image ImageDisplay;
@@ -57,10 +58,7 @@ public class QuestionHelperCodex : MonoBehaviour
     {
         TextAsset csvFile = Resources.Load<TextAsset>("QuestionBank");
         if (csvFile == null)
-        {
-            Debug.LogError("CSV file not found in Resources folder.");
             return;
-        }
 
         string[] lines = csvFile.text.Split('\n');
 
@@ -88,22 +86,16 @@ public class QuestionHelperCodex : MonoBehaviour
                 questions.Add(q);
             }
         }
-
-        Debug.Log($"Loaded {questions.Count} questions.");
     }
 
     public void DisplayNewQuestion()
     {
         if (questions.Count == 0)
-        {
-            Debug.LogError("No questions loaded.");
             return;
-        }
 
         currentQuestion = questions[Random.Range(0, questions.Count)];
 
         HideAllPanels();
-
         GameObject activePanel = null;
 
         switch (currentQuestion.QuestionType)
@@ -111,16 +103,16 @@ public class QuestionHelperCodex : MonoBehaviour
             case "Multiple Choice":
                 MultipleChoice.SetActive(true);
                 MultipleChoiceQuestionText.text = "Question: " + currentQuestion.QuestionText;
-                MultipleChoiceDropdown.ClearOptions();
-                MultipleChoiceDropdown.AddOptions(new List<string>(currentQuestion.Choices));
+                for (int i = 0; i < MultipleChoiceAnswers.Count; i++)
+                    MultipleChoiceAnswers[i].text = currentQuestion.Choices[i];
                 activePanel = MultipleChoice;
                 break;
 
             case "True/False":
                 TrueFalse.SetActive(true);
                 TrueFalseQuestionText.text = "Question: " + currentQuestion.QuestionText;
-                TrueFalseDropdown.ClearOptions();
-                TrueFalseDropdown.AddOptions(new List<string> { "True", "False" });
+                TrueFalseAnswers[0].text = currentQuestion.Choices[0];
+                TrueFalseAnswers[1].text = currentQuestion.Choices[1];
                 activePanel = TrueFalse;
                 break;
 
@@ -139,14 +131,11 @@ public class QuestionHelperCodex : MonoBehaviour
                     ImageDisplay.gameObject.SetActive(false);
                 }
 
-                ImageQuestionDropdown.ClearOptions();
-                ImageQuestionDropdown.AddOptions(new List<string>(currentQuestion.Choices));
+                for (int i = 0; i < ImageQuestionAnswers.Count; i++)
+                    ImageQuestionAnswers[i].text = currentQuestion.Choices[i];
+
                 activePanel = ImageQuestion;
                 break;
-
-            default:
-                Debug.LogWarning("Unsupported question type: " + currentQuestion.QuestionType);
-                return;
         }
 
         if (activePanel != null)
@@ -158,10 +147,13 @@ public class QuestionHelperCodex : MonoBehaviour
 
     private void PositionPanel(GameObject panel)
     {
-        Transform cam = Camera.main.transform;
-        Vector3 spawnPos = cam.position + cam.forward * 3f;
+        Transform cam = Camera.main != null ? Camera.main.transform : player.transform;
 
-        panel.transform.SetParent(null);
+        if (cam == null)
+            return;
+
+        Vector3 spawnPos = cam.position + cam.forward * 2.5f;
+
         panel.transform.position = spawnPos;
         panel.transform.rotation = Quaternion.LookRotation(cam.forward, cam.up);
         panel.transform.localScale = Vector3.one * 0.005f;
@@ -169,15 +161,21 @@ public class QuestionHelperCodex : MonoBehaviour
         lastQuestionPosition = spawnPos;
         lastQuestionRotation = panel.transform.rotation;
 
+        CanvasGroup group = panel.GetComponent<CanvasGroup>();
+        if (group != null)
+        {
+            group.alpha = 1f;
+            group.interactable = true;
+            group.blocksRaycasts = true;
+        }
+
+        panel.SetActive(true);
+
         if (BackPanel != null)
         {
-            BackPanel.transform.SetParent(null);
+            BackPanel.transform.position = spawnPos + panel.transform.right * -2f;
             BackPanel.transform.rotation = panel.transform.rotation;
-
-            Vector3 sideOffset = panel.transform.right * -2.5f;
-            BackPanel.transform.position = panel.transform.position + sideOffset;
             BackPanel.transform.localScale = Vector3.one;
-            BackPanel.SetActive(true);
 
             CanvasGroup backGroup = BackPanel.GetComponent<CanvasGroup>();
             if (backGroup != null)
@@ -186,14 +184,8 @@ public class QuestionHelperCodex : MonoBehaviour
                 backGroup.interactable = true;
                 backGroup.blocksRaycasts = true;
             }
-        }
 
-        CanvasGroup group = panel.GetComponent<CanvasGroup>();
-        if (group != null)
-        {
-            group.alpha = 1f;
-            group.interactable = true;
-            group.blocksRaycasts = true;
+            BackPanel.SetActive(true);
         }
     }
 
@@ -209,54 +201,39 @@ public class QuestionHelperCodex : MonoBehaviour
             BackPanel.SetActive(false);
     }
 
-    public void SubmitAnswer()
+    public void SubmitAnswer(TextMeshProUGUI selectedText)
     {
-        string selected = "";
+        string selected = selectedText.text.Trim();
+        bool isCorrect = selected.Equals(currentQuestion.CorrectAnswer.Trim(), System.StringComparison.OrdinalIgnoreCase);
 
         if (currentQuestion.QuestionType == "Multiple Choice")
-        {
-            selected = MultipleChoiceDropdown.options[MultipleChoiceDropdown.value].text;
             MultipleChoice.SetActive(false);
-        }
         else if (currentQuestion.QuestionType == "True/False")
-        {
-            selected = TrueFalseDropdown.options[TrueFalseDropdown.value].text;
             TrueFalse.SetActive(false);
-        }
         else if (currentQuestion.QuestionType == "Image Question")
-        {
-            selected = ImageQuestionDropdown.options[ImageQuestionDropdown.value].text;
             ImageQuestion.SetActive(false);
-        }
 
-        if (selected == currentQuestion.CorrectAnswer)
+        if (isCorrect)
         {
-            XRShipHealth.Instance.AddScore(10);
             ShowPanelImmediate(CorrectPanel);
             XRShipHealth.Instance.Refuel();
             MainMenuHandler.Instance.questionCorrect();
-
+            XRShipHealth.Instance.AddCorrect();
             ScoreManager sm = FindObjectOfType<ScoreManager>();
-            if (sm != null)
-            {
-                sm.SubmitScore();
-            }
+            if (sm != null) sm.SubmitScore();
         }
         else
         {
-            XRShipHealth.Instance.AddWrong();
             ShowPanelImmediate(WrongPanel);
             MainMenuHandler.Instance.questionWrong();
+            XRShipHealth.Instance.AddWrong();
         }
     }
 
     private void ShowPanelImmediate(GameObject panel)
     {
         if (panel == null)
-        {
-            Debug.LogError("Result panel is null.");
             return;
-        }
 
         Transform t = panel.transform;
         while (t != null)
@@ -264,8 +241,6 @@ public class QuestionHelperCodex : MonoBehaviour
             t.gameObject.SetActive(true);
             t = t.parent;
         }
-
-        panel.SetActive(true);
 
         CanvasGroup cg = panel.GetComponent<CanvasGroup>();
         if (cg != null)
