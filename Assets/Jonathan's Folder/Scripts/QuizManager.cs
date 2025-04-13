@@ -17,8 +17,12 @@ public class QuizManager : MonoBehaviour
     public Text QuestionTxt;
     public Text timerText;
     public GameObject Quizpanel;
+    public GameObject AnsC;
+    public GameObject AnsD;
     public GameObject GoPanel;
     public GameObject ParentPanel;
+    public GameObject WrongAns;
+    public GameObject CorrectAns;
     public Text wrongAnswers;
     public int panelNum = 0;
     public Text Time;
@@ -76,12 +80,20 @@ public class QuizManager : MonoBehaviour
     public void Correct()
     {
         MainMenuHandler.Instance.questionCorrect();
+        
         if (panelNum <= 7) //7
         {
             //questionsList.Remove(currQuestion);
             DisplayImage(false);
+            /*Quizpanel.SetActive(false);
+            CorrectAns.SetActive(true);
+            StartCoroutine(CorrectWait());
+            CorrectAns.SetActive(false);
+            Quizpanel.SetActive(true);
+            */
             ParentPanel.transform.position = coords[panelNum];
             panelNum++;
+           
             GenerateQuestion();
 
         }
@@ -91,7 +103,18 @@ public class QuizManager : MonoBehaviour
         }
         
     }
+   
+    public IEnumerator CorrectWait()
+    {
+        Debug.Log("Correct Wait");
+        yield return new WaitForSeconds(5);
 
+    }
+    public IEnumerator WrongWait()
+    {
+        Debug.Log("Wrong Wait");
+        yield return new WaitForSeconds(3);
+    }
     public void Retry()
     {
         //GoBack();
@@ -104,11 +127,21 @@ public class QuizManager : MonoBehaviour
 
     public void Quit()
     {
-        Application.Quit();
+        DisplayImage(false);
+        timerText.text = "{0:00}";
+        sceneManager.ReturnMainMenu();
+        //Application.Quit();
     }
     public void Wrong()
     {
         DisplayImage(false);
+        /*
+        Quizpanel.SetActive(false);
+        WrongAns.SetActive(true);
+        StartCoroutine(WrongWait());
+        WrongAns.SetActive(false);
+        Quizpanel.SetActive(true);
+        */
         MainMenuHandler.Instance.questionWrong();
         wscore += 1;
         //questionsList.Remove(currQuestion);
@@ -123,11 +156,12 @@ public class QuizManager : MonoBehaviour
                 if (currQuestion.Choices[i] != null || currQuestion.Choices[i] != "")
                 {
                     optionss[i].SetActive(true);
+                    
                     options[i].GetComponent<AnswerScript>().isCorrect = false;
                     // options[i].transform.GetChild(0).GetChild(0).GetComponent<Text>().text = QnA[currentQuestion].Answers[i];
                     options[i].transform.GetChild(0).GetChild(0).GetComponent<Text>().text
                          = currQuestion.Choices[i].ToString();
-                Debug.Log("setAnswers() || Correct Answer: " + currQuestion.CorrectAnswer + "\ncurrQuestion.Choices[i]: " + currQuestion.Choices[i]);
+                    Debug.Log("setAnswers() || Correct Answer: " + currQuestion.CorrectAnswer + "\ncurrQuestion.Choices[i]: " + currQuestion.Choices[i]);
                     if (currQuestion.CorrectAnswer.ToLower() == currQuestion.Choices[i].ToLower())
                     {
                     Debug.Log("Choices Index: " + i);
@@ -137,49 +171,75 @@ public class QuizManager : MonoBehaviour
                 }
                 else
                 {
+                
                     optionss[i].SetActive(false);
+                    
                 }
             }
         
     }
-    public void GenerateQuestion()
+    public void DisplayTF(bool flag)
     {
-        //if (questions.Count > 0)
-        
-            currentQuestion = Random.Range(0, numQuestions);
-            Debug.Log("GeneratingQuestions || CurrentQuestions: " + currentQuestion + "\nQuestionsList.Count: " + questionsList.Count);
-            currQuestion = questionsList[currentQuestion];
-            QuestionTxt.text = currQuestion.QuestionText;
-            SetAnswers();
-            if(currQuestion.QuestionType == "Image Question")
-            {
-                DisplayImage(true);
-                string imageName = "Q" + currQuestion.QNumber;
-                Sprite questionImage = Resources.Load<Sprite>(imageName);
-                if (questionImage != null)
-                {
-                    imageDisplay.sprite = questionImage; // Set the image on the UI Image component
-                    DisplayImage(true); // Ensure the image is visible
-            }
-                else
-                {
-                    Debug.LogWarning($"Image {imageName} not found in Resources.");
-                    DisplayImage(false); // Hide the image object if not found
-                }
-            }
-
-           
-        /*
+        //If not true or false, show all answers
+        if (flag)
+        {
+            AnsC.SetActive(false);
+            AnsD.SetActive(false);
+        }
         else
         {
-            GameOver();
-            Debug.Log("Out of Questions");
+            AnsC.SetActive(true);
+            AnsD.SetActive(true);
         }
-            */
     }
+            public void GenerateQuestion()
+            {
+                //if (questions.Count > 0)
+
+                currentQuestion = Random.Range(0, numQuestions);
+                Debug.Log("GeneratingQuestions || CurrentQuestions: " + currentQuestion + "\nQuestionsList.Count: " + questionsList.Count);
+                currQuestion = questionsList[currentQuestion];
+                QuestionTxt.text = currQuestion.QuestionText;
+                if (currQuestion.QuestionType == "True/False")
+                {
+                    DisplayTF(true);
+                    SetAnswers();
+                }
+                else
+                {
+                    DisplayTF(false);
+                    SetAnswers();
+                }
+                if (currQuestion.QuestionType == "Image Question")
+                {
+                    
+                    DisplayImage(true);
+                    string imageName = "Q" + currQuestion.QNumber;
+                    Sprite questionImage = Resources.Load<Sprite>(imageName);
+                    if (questionImage != null)
+                    {
+                        imageDisplay.sprite = questionImage; // Set the image on the UI Image component
+                        DisplayImage(true); // Ensure the image is visible
+                    }
+                    else
+                    {
+                        Debug.LogWarning($"Image {imageName} not found in Resources.");
+                        DisplayImage(false); // Hide the image object if not found
+                    }
+                }
+
+
+                /*
+                else
+                {
+                    GameOver();
+                    Debug.Log("Out of Questions");
+                }
+                    */
+        }
     //Other Peoples
 
-  
+
 
     public void LoadQuestions()
     {
