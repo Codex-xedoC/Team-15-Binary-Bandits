@@ -29,15 +29,15 @@ public class QuestionHelperCodex : MonoBehaviour
     [Header("Navigation UI")]
     public GameObject BackPanel;
 
-    [Header("Player")]
-    public GameObject player;
+    [Header("Question Display Panel (Left Side)")]
+    public GameObject QuestionPanelUI;
+
+    [Header("Player Camera")]
+    public Transform cameraRig;
 
     private List<Question> questions = new List<Question>();
     private Question currentQuestion;
-    private GameObject lastActivePanel;
-
-    private Vector3 lastQuestionPosition;
-    private Quaternion lastQuestionRotation;
+    private GameObject currentAnswerPanel;
 
     [System.Serializable]
     public class Question
@@ -51,21 +51,22 @@ public class QuestionHelperCodex : MonoBehaviour
 
     void Start()
     {
+        if (cameraRig == null && Camera.main != null)
+            cameraRig = Camera.main.transform;
+
         LoadQuestions();
     }
 
     private void LoadQuestions()
     {
         TextAsset csvFile = Resources.Load<TextAsset>("QuestionBank");
-        if (csvFile == null)
-            return;
+        if (csvFile == null) return;
 
         string[] lines = csvFile.text.Split('\n');
 
         for (int i = 1; i < lines.Length; i++)
         {
             string[] fields = lines[i].Split(',');
-
             if (fields.Length >= 8)
             {
                 Question q = new Question
@@ -82,7 +83,6 @@ public class QuestionHelperCodex : MonoBehaviour
                     },
                     CorrectAnswer = fields[7].Trim()
                 };
-
                 questions.Add(q);
             }
         }
@@ -90,12 +90,12 @@ public class QuestionHelperCodex : MonoBehaviour
 
     public void DisplayNewQuestion()
     {
-        if (questions.Count == 0)
-            return;
+        if (questions.Count == 0) return;
 
         currentQuestion = questions[Random.Range(0, questions.Count)];
-
         HideAllPanels();
+        ResetAnswerColors();
+
         GameObject activePanel = null;
 
         switch (currentQuestion.QuestionType)
@@ -119,7 +119,6 @@ public class QuestionHelperCodex : MonoBehaviour
             case "Image Question":
                 ImageQuestion.SetActive(true);
                 ImageQuestionText.text = "Question: " + currentQuestion.QuestionText;
-
                 Sprite loadedImage = Resources.Load<Sprite>("Q" + currentQuestion.QNumber);
                 if (loadedImage != null)
                 {
@@ -130,63 +129,121 @@ public class QuestionHelperCodex : MonoBehaviour
                 {
                     ImageDisplay.gameObject.SetActive(false);
                 }
-
                 for (int i = 0; i < ImageQuestionAnswers.Count; i++)
                     ImageQuestionAnswers[i].text = currentQuestion.Choices[i];
-
                 activePanel = ImageQuestion;
                 break;
         }
 
         if (activePanel != null)
         {
-            PositionPanel(activePanel);
-            lastActivePanel = activePanel;
+            currentAnswerPanel = activePanel;
+            PositionAllPanels();
         }
     }
 
-    private void PositionPanel(GameObject panel)
+    private void PositionAllPanels()
     {
-        Transform cam = Camera.main != null ? Camera.main.transform : player.transform;
+        if (cameraRig == null) return;
 
-        if (cam == null)
-            return;
+        Vector3 centerPos = cameraRig.position + cameraRig.forward * 5.5f;
 
-        Vector3 spawnPos = cam.position + cam.forward * 2.5f;
+        // lock to Y-axis only to keep upright
+        Quaternion uprightRotation = Quaternion.Euler(0, cameraRig.eulerAngles.y, 0);
 
-        panel.transform.position = spawnPos;
-        panel.transform.rotation = Quaternion.LookRotation(cam.forward, cam.up);
-        panel.transform.localScale = Vector3.one * 0.005f;
-
-        lastQuestionPosition = spawnPos;
-        lastQuestionRotation = panel.transform.rotation;
-
-        CanvasGroup group = panel.GetComponent<CanvasGroup>();
-        if (group != null)
+        // Question Panel Left
+        if (QuestionPanelUI != null)
         {
-            group.alpha = 1f;
-            group.interactable = true;
-            group.blocksRaycasts = true;
+            QuestionPanelUI.transform.SetParent(null);
+            QuestionPanelUI.transform.position = centerPos + -cameraRig.right * 2.5f;
+            QuestionPanelUI.transform.rotation = uprightRotation;
+            QuestionPanelUI.transform.localScale = Vector3.one;
+            EnableCanvasGroup(QuestionPanelUI);
         }
 
-        panel.SetActive(true);
+        // Answer Panel Right
+        if (currentAnswerPanel != null)
+        {
+            currentAnswerPanel.transform.SetParent(null);
+            currentAnswerPanel.transform.position = centerPos + cameraRig.right * 2.5f;
+            currentAnswerPanel.transform.rotation = uprightRotation;
+            currentAnswerPanel.transform.localScale = Vector3.one;
+            EnableCanvasGroup(currentAnswerPanel);
+        }
 
+        // Menu Button Center
         if (BackPanel != null)
         {
-            BackPanel.transform.position = spawnPos + panel.transform.right * -2f;
-            BackPanel.transform.rotation = panel.transform.rotation;
+            BackPanel.transform.SetParent(null);
+            BackPanel.transform.position = centerPos;
+            BackPanel.transform.rotation = uprightRotation;
             BackPanel.transform.localScale = Vector3.one;
-
-            CanvasGroup backGroup = BackPanel.GetComponent<CanvasGroup>();
-            if (backGroup != null)
-            {
-                backGroup.alpha = 1f;
-                backGroup.interactable = true;
-                backGroup.blocksRaycasts = true;
-            }
-
-            BackPanel.SetActive(true);
+            EnableCanvasGroup(BackPanel);
         }
+    }
+
+    public void SubmitAnswer(TextMeshProUGUI selectedText)
+    {
+        string selected = selectedText.text.Trim();
+        bool isCorrect = selected.Equals(currentQuestion.CorrectAnswer.Trim(), System.StringComparison.OrdinalIgnoreCase);
+
+        if (isCorrect)
+        {
+            currentAnswerPanel.SetActive(false);
+            ShowFeedback(CorrectPanel);
+            XRShipHealth.Instance.Refuel();
+            MainMenuHandler.Instance.questionCorrect();
+            XRShipHealth.Instance.AddCorrect();
+            ScoreManager sm = FindObjectOfType<ScoreManager>();
+            if (sm != null) sm.SubmitScore();
+        }
+        else
+        {
+            HighlightCorrectAnswer();
+            ShowFeedback(WrongPanel);
+            MainMenuHandler.Instance.questionWrong();
+            XRShipHealth.Instance.AddWrong();
+        }
+    }
+
+    private void ShowFeedback(GameObject panel)
+    {
+        if (panel == null || cameraRig == null) return;
+        panel.transform.SetParent(null);
+        panel.transform.position = cameraRig.position + cameraRig.forward * 3f;
+        panel.transform.rotation = Quaternion.Euler(0, cameraRig.eulerAngles.y, 0);
+        panel.transform.localScale = Vector3.one;
+        EnableCanvasGroup(panel);
+    }
+
+    private void HighlightCorrectAnswer()
+    {
+        List<TextMeshProUGUI> answers = null;
+
+        switch (currentQuestion.QuestionType)
+        {
+            case "Multiple Choice": answers = MultipleChoiceAnswers; break;
+            case "True/False": answers = TrueFalseAnswers; break;
+            case "Image Question": answers = ImageQuestionAnswers; break;
+        }
+
+        if (answers != null)
+        {
+            foreach (var a in answers)
+            {
+                if (a.text.Trim().Equals(currentQuestion.CorrectAnswer.Trim(), System.StringComparison.OrdinalIgnoreCase))
+                {
+                    a.color = Color.green;
+                }
+            }
+        }
+    }
+
+    private void ResetAnswerColors()
+    {
+        foreach (var a in MultipleChoiceAnswers) a.color = Color.white;
+        foreach (var a in TrueFalseAnswers) a.color = Color.white;
+        foreach (var a in ImageQuestionAnswers) a.color = Color.white;
     }
 
     private void HideAllPanels()
@@ -196,72 +253,20 @@ public class QuestionHelperCodex : MonoBehaviour
         ImageQuestion.SetActive(false);
         CorrectPanel.SetActive(false);
         WrongPanel.SetActive(false);
-
-        if (BackPanel != null)
-            BackPanel.SetActive(false);
+        if (QuestionPanelUI != null) QuestionPanelUI.SetActive(false);
+        if (BackPanel != null) BackPanel.SetActive(false);
     }
 
-    public void SubmitAnswer(TextMeshProUGUI selectedText)
+    private void EnableCanvasGroup(GameObject obj)
     {
-        string selected = selectedText.text.Trim();
-        bool isCorrect = selected.Equals(currentQuestion.CorrectAnswer.Trim(), System.StringComparison.OrdinalIgnoreCase);
-
-        if (currentQuestion.QuestionType == "Multiple Choice")
-            MultipleChoice.SetActive(false);
-        else if (currentQuestion.QuestionType == "True/False")
-            TrueFalse.SetActive(false);
-        else if (currentQuestion.QuestionType == "Image Question")
-            ImageQuestion.SetActive(false);
-
-        if (isCorrect)
-        {
-            ShowPanelImmediate(CorrectPanel);
-            XRShipHealth.Instance.Refuel();
-            MainMenuHandler.Instance.questionCorrect();
-            XRShipHealth.Instance.AddCorrect();
-            ScoreManager sm = FindObjectOfType<ScoreManager>();
-            if (sm != null) sm.SubmitScore();
-        }
-        else
-        {
-            ShowPanelImmediate(WrongPanel);
-            MainMenuHandler.Instance.questionWrong();
-            XRShipHealth.Instance.AddWrong();
-        }
-    }
-
-    private void ShowPanelImmediate(GameObject panel)
-    {
-        if (panel == null)
-            return;
-
-        Transform t = panel.transform;
-        while (t != null)
-        {
-            t.gameObject.SetActive(true);
-            t = t.parent;
-        }
-
-        CanvasGroup cg = panel.GetComponent<CanvasGroup>();
+        CanvasGroup cg = obj.GetComponent<CanvasGroup>();
         if (cg != null)
         {
             cg.alpha = 1f;
             cg.interactable = true;
             cg.blocksRaycasts = true;
         }
-
-        panel.transform.position = lastQuestionPosition + Camera.main.transform.forward * 0.5f;
-        panel.transform.rotation = lastQuestionRotation;
-        panel.transform.localScale = Vector3.one * 0.007f;
-
-        if (panel.GetComponent<BoxCollider>() == null)
-        {
-            BoxCollider collider = panel.AddComponent<BoxCollider>();
-            collider.size = new Vector3(500, 300, 10);
-            collider.isTrigger = false;
-        }
-
-        StartCoroutine(ResetTargetAcquiredFlag());
+        obj.SetActive(true);
     }
 
     private IEnumerator ResetTargetAcquiredFlag()
