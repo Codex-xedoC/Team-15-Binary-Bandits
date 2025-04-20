@@ -13,6 +13,8 @@ TagManager:
   - Player Bullet
   - Enemy Bullet
   - Enemy
+  - Tutorial Checkpoint
+  - Destructible
   layers:
   - Default
   - TransparentFX

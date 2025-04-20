@@ -10,12 +10,6 @@ public class XRShipHealth : MonoBehaviour
     public int maxHealth = 100;
     public int currentHealth;
 
-    [Header("Score Settings")]
-    public int score = 0;
-    public int correctAnswers = 0;
-    public int wrongAnswers = 0;
-
-    // Necesary variables for fuel system.
     [Header("Fuel System")]
     public int maxFuel = 100;
     public float currentFuel;
@@ -28,18 +22,30 @@ public class XRShipHealth : MonoBehaviour
     public GameObject DamageTextUI;
     public TextMeshProUGUI damageTextTMP;
 
+    [Header("Stats Tracking")]
+    private int numCorrect = 0;
+    private int numWrong = 0;
+    private int streak = 0;
+
     void Awake()
     {
         if (Instance == null)
+        {
             Instance = this;
+        }
         else
+        {
             Destroy(gameObject);
+        }
     }
 
     void Start()
     {
         currentHealth = maxHealth;
+        Refuel();
+
         UpdateHealthUI();
+        UpdateFuelUI();
         UpdateScoreUI();
 
         if (GameOverUI != null)
@@ -47,8 +53,6 @@ public class XRShipHealth : MonoBehaviour
 
         if (DamageTextUI != null)
             DamageTextUI.SetActive(false);
-
-        Refuel(); // Reset current fuel to full
     }
 
     public void TakeDamage(int damage)
@@ -64,28 +68,10 @@ public class XRShipHealth : MonoBehaviour
             GameOver();
     }
 
-    public void AddScore(int points)
-    {
-        score += points;
-        correctAnswers++;
-        UpdateScoreUI();
-    }
-
-    public void AddWrong()
-    {
-        wrongAnswers++;
-    }
-
     private void UpdateHealthUI()
     {
         if (healthText != null)
             healthText.text = "Health: " + currentHealth;
-    }
-
-    private void UpdateScoreUI()
-    {
-        if (scoreText != null)
-            scoreText.text = "Score: " + score;
     }
 
     private void GameOver()
@@ -93,13 +79,13 @@ public class XRShipHealth : MonoBehaviour
         if (GameOverUI != null)
             GameOverUI.SetActive(true);
 
+        SubmitScoreToLeaderboard();
         StartCoroutine(ReturnToMainMenu());
     }
 
     IEnumerator ReturnToMainMenu()
     {
         yield return new WaitForSeconds(3f);
-
         UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu");
     }
 
@@ -122,25 +108,15 @@ public class XRShipHealth : MonoBehaviour
             DamageTextUI.SetActive(false);
     }
 
-    public float GetAccuracy()
-    {
-        int total = correctAnswers + wrongAnswers;
-        if (total == 0) return 0;
-        return ((float)correctAnswers / total) * 100f;
-    }
-
-    // When something colides witht he ship
     private void OnCollisionEnter(Collision collision)
     {
-        // If its an enemy bullet destroy bullet and deal damage
-        if (collision.gameObject.tag == "Enemy Bullet")
+        if (collision.gameObject.CompareTag("Enemy Bullet"))
         {
             Destroy(collision.gameObject);
             TakeDamage(5);
         }
     }
 
-    // Reduce fuel level
     public void UpdateFuel(float fuelUsed)
     {
         currentFuel -= fuelUsed;
@@ -150,19 +126,86 @@ public class XRShipHealth : MonoBehaviour
         {
             GameOver();
         }
-        
     }
 
-    // Updates fuel UI
     private void UpdateFuelUI()
     {
         if (fuelText != null)
-            fuelText.text = "Fuel: " + Mathf.Floor(currentFuel); // Update text for UI
+            fuelText.text = "Fuel: " + Mathf.Floor(currentFuel);
     }
 
-    // Reset current fule too full
     public void Refuel()
     {
         currentFuel = maxFuel;
+    }
+
+    public void ResetFuel()
+    {
+        Refuel();
+        UpdateFuelUI();
+    }
+
+    public void AddCorrect()
+    {
+        numCorrect++;
+        streak++;
+        UpdateScoreUI();
+    }
+
+    public void AddWrong()
+    {
+        numWrong++;
+        streak = 0;
+        UpdateScoreUI();
+    }
+
+    private void UpdateScoreUI()
+    {
+        if (scoreText != null)
+            scoreText.text = "Score: " + numCorrect;
+    }
+
+    public void SubmitScoreToLeaderboard()
+    {
+        ScoreManager sm = FindObjectOfType<ScoreManager>();
+        if (sm != null)
+        {
+            sm.SubmitScore();
+        }
+    }
+
+    public void PushStatsToMainMenu()
+    {
+        GameObject correctGO = GameObject.Find("numCorrect");
+        GameObject wrongGO = GameObject.Find("numWrong");
+        GameObject streakGO = GameObject.Find("numStreak");
+        GameObject accuracyGO = GameObject.Find("AccuracyRate");
+
+        if (correctGO != null)
+            correctGO.GetComponent<TextMeshProUGUI>().text = "# Correct: " + numCorrect;
+        if (wrongGO != null)
+            wrongGO.GetComponent<TextMeshProUGUI>().text = "# Wrong: " + numWrong;
+        if (streakGO != null)
+            streakGO.GetComponent<TextMeshProUGUI>().text = "# Streak: " + streak;
+
+        if (accuracyGO != null)
+        {
+            int total = numCorrect + numWrong;
+            int accuracy = (total > 0) ? Mathf.RoundToInt((float)numCorrect / total * 100) : 0;
+            accuracyGO.GetComponent<TextMeshProUGUI>().text = "Accuracy Rate%: " + accuracy;
+        }
+
+        GameObject tenCorrect = GameObject.Find("tenCorrect");
+        GameObject hundredCorrect = GameObject.Find("hundredCorrect");
+        GameObject tenStreak = GameObject.Find("tenStreak");
+
+        if (tenCorrect != null)
+            tenCorrect.GetComponent<TextMeshProUGUI>().color = (numCorrect >= 10) ? Color.green : Color.red;
+
+        if (hundredCorrect != null)
+            hundredCorrect.GetComponent<TextMeshProUGUI>().color = (numCorrect >= 100) ? Color.green : Color.red;
+
+        if (tenStreak != null)
+            tenStreak.GetComponent<TextMeshProUGUI>().color = (streak >= 10) ? Color.green : Color.red;
     }
 }
