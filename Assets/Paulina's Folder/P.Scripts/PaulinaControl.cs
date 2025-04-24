@@ -116,10 +116,6 @@ public class PaulinaControl : MonoBehaviour
 
     public void teleportQuest()
     {   
-        QuestionPUI.SetActive(false);
-        MultipleChoice.SetActive(false);
-        ImageQuestion.SetActive(false);
-        TrueFalse.SetActive(false);
         UIEmpty.SetActive(true);
 
         currentQuestion = GetRandomQuestion();
@@ -139,10 +135,10 @@ public class PaulinaControl : MonoBehaviour
 
         if (currentQuestion.QuestionType == "Multiple Choice")
         {
-            QuestionPUI.SetActive(true);
-            MultipleChoice.SetActive(true);
             ImageQuestion.SetActive(false);
             TrueFalse.SetActive(false);
+            QuestionPUI.SetActive(true);
+            MultipleChoice.SetActive(true);
 
             QuestionUI.text = "Question: " + currentQuestion.QuestionText;
 
@@ -182,11 +178,11 @@ public class PaulinaControl : MonoBehaviour
                 imageDisplay.gameObject.SetActive(false);
             }
 
+            MultipleChoice.SetActive(false);
+            TrueFalse.SetActive(false);
             ImageButtonUI.SetActive(true);
             QuestionPUI.SetActive(true);
             ImageQuestion.SetActive(true);
-            MultipleChoice.SetActive(false);
-            TrueFalse.SetActive(false);
 
             QuestionUI.text = "Question: " + currentQuestion.QuestionText;
 
@@ -204,10 +200,10 @@ public class PaulinaControl : MonoBehaviour
         }
         else if (currentQuestion.QuestionType == "True/False")
         {
-            QuestionPUI.SetActive(true);
-            TrueFalse.SetActive(true);
             MultipleChoice.SetActive(false);
             ImageQuestion.SetActive(false);
+            QuestionPUI.SetActive(true);
+            TrueFalse.SetActive(true);
 
             QuestionUI.text = "Question: " + currentQuestion.QuestionText;
 
@@ -302,6 +298,15 @@ public class PaulinaControl : MonoBehaviour
         }
     }
 
+    public void TurnOffUI()
+    {
+        ImageButtonUI.SetActive(false);
+        QuestionPUI.SetActive(false);
+        ImageQuestion.SetActive(false);
+        MultipleChoice.SetActive(false);
+        TrueFalse.SetActive(false);
+    }
+
     public TextMeshProUGUI numCorrectText, numCorrectFinal, numPercent; // Assign this in Unity Inspector
     private int numCorrect = 0; // Counter for correct answers
 
@@ -325,6 +330,7 @@ public class PaulinaControl : MonoBehaviour
 
         correctUI.gameObject.SetActive(false);
 
+        TurnOffUI();
         UIEmpty.SetActive(false);
     }
 
@@ -342,7 +348,6 @@ public class PaulinaControl : MonoBehaviour
         yield return new WaitForSeconds(5f);
 
         wrongUI.gameObject.SetActive(false);
-
     }
 
     private IEnumerator ErrorTimer()

@@ -1,10 +1,19 @@
 # ninja log v5
-2	1749	1743440594870485245	GameActivity/CMakeFiles/game.dir/UGAEntry.cpp.o	1749b4ba0deed864
-3	1770	1743440594897364477	GameActivity/CMakeFiles/game.dir/UGAInputKeyEvent.cpp.o	1760199828eb5c99
-3	1854	1743440594981077893	GameActivity/CMakeFiles/game.dir/UGAInputMotionEvent.cpp.o	1bd20816c1d8a17e
-1	1905	1743440595032805805	GameActivity/CMakeFiles/game.dir/UGAConfiguration.cpp.o	6ea68497c4acd09f
-4	1918	1743440595045710753	GameActivity/CMakeFiles/game.dir/UGASoftKeyboard.cpp.o	59daf1431363a043
-1	2047	1743440595174826061	GameActivity/CMakeFiles/game.dir/UGADebug.cpp.o	42443ee981dee895
 0	2162	1743440595287726042	GameActivity/CMakeFiles/game.dir/UGAApplication.cpp.o	d952611e34780a8f
+1	2047	1743440595174826061	GameActivity/CMakeFiles/game.dir/UGADebug.cpp.o	42443ee981dee895
 2	2223	1743440595351192194	GameActivity/CMakeFiles/game.dir/UGAInput.cpp.o	cb5fd8579d440502
+4	1918	1743440595045710753	GameActivity/CMakeFiles/game.dir/UGASoftKeyboard.cpp.o	59daf1431363a043
+3	1854	1743440594981077893	GameActivity/CMakeFiles/game.dir/UGAInputMotionEvent.cpp.o	1bd20816c1d8a17e
+3	1770	1743440594897364477	GameActivity/CMakeFiles/game.dir/UGAInputKeyEvent.cpp.o	1760199828eb5c99
+1	1905	1743440595032805805	GameActivity/CMakeFiles/game.dir/UGAConfiguration.cpp.o	6ea68497c4acd09f
 2223	2451	1743440595572182622	/Users/paulinaroldan/Documents/GitHub/Team-15-Binary-Bandits/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/6t1c2o34/obj/arm64-v8a/libgame.so	f5f05b5e93dd6cae
+2	1749	1743440594870485245	GameActivity/CMakeFiles/game.dir/UGAEntry.cpp.o	1749b4ba0deed864
+10	8441	1744045506243793130	GameActivity/CMakeFiles/game.dir/UGAEntry.cpp.o	1749b4ba0deed864
+11	8442	1744045506242364363	GameActivity/CMakeFiles/game.dir/UGAInputKeyEvent.cpp.o	1760199828eb5c99
+8	8484	1744045506289605821	GameActivity/CMakeFiles/game.dir/UGAConfiguration.cpp.o	6ea68497c4acd09f
+11	8491	1744045506295935251	GameActivity/CMakeFiles/game.dir/UGAInputMotionEvent.cpp.o	1bd20816c1d8a17e
+12	8585	1744045506390764035	GameActivity/CMakeFiles/game.dir/UGASoftKeyboard.cpp.o	59daf1431363a043
+9	8609	1744045506414640864	GameActivity/CMakeFiles/game.dir/UGADebug.cpp.o	42443ee981dee895
+10	8721	1744045506528307941	GameActivity/CMakeFiles/game.dir/UGAInput.cpp.o	cb5fd8579d440502
+7	8812	1744045506617967108	GameActivity/CMakeFiles/game.dir/UGAApplication.cpp.o	d952611e34780a8f
+8812	12888	1744045510690540717	/Users/paulinaroldan/Documents/GitHub/Team-15-Binary-Bandits/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/6t1c2o34/obj/arm64-v8a/libgame.so	f5f05b5e93dd6cae
