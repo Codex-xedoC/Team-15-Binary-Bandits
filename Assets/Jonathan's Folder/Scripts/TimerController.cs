@@ -33,7 +33,7 @@ public class TimerController : MonoBehaviour
             GameOver();
         
     }
-
+    
     public void Reset()
     {
         timeCounter = 0;
@@ -41,7 +41,21 @@ public class TimerController : MonoBehaviour
         sec = 0;
         //timerText.text = "{0:00}";
     }
+    /*
+    public void Ga(){
+        int s = sec + 3;
+        while (sec < s)
+        {
+            Debug.Log("Inside: " + sec + " " + s);
+            quizManager.WrongAns.SetActive(true);
+            quizManager.Quizpanel.SetActive(false);
+        }
+        quizManager.WrongAns.SetActive(false);
+        quizManager.Quizpanel.SetActive(true);
+        Debug.Log("End");
 
+    }
+    */
     private void GameOver()
     {
         Reset();

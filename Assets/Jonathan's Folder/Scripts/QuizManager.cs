@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 //using UnityEngine.SocialPlatforms.Impl;
@@ -13,6 +14,7 @@ public class QuizManager : MonoBehaviour
     public GameObject[] options;
     public GameObject[] optionss;
     public int currentQuestion;
+    public TimerController timeObj;
     //public bool flag;
     public Text QuestionTxt;
     public Text timerText;
@@ -135,6 +137,7 @@ public class QuizManager : MonoBehaviour
     public void Wrong()
     {
         DisplayImage(false);
+        //timeObj.Ga();
         /*
         Quizpanel.SetActive(false);
         WrongAns.SetActive(true);
@@ -142,6 +145,7 @@ public class QuizManager : MonoBehaviour
         WrongAns.SetActive(false);
         Quizpanel.SetActive(true);
         */
+
         MainMenuHandler.Instance.questionWrong();
         wscore += 1;
         //questionsList.Remove(currQuestion);
